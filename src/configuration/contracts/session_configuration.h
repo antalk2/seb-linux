@@ -1,7 +1,7 @@
 #pragma once
 
-#include "../../seb_settings.h"
-#include "app_config.h"
+#include "seb_settings.h"
+#include "configuration/contracts/app_config.h"
 
 #include <QUuid>
 

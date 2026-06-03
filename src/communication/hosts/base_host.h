@@ -1,9 +1,9 @@
 #pragma once
 
-#include "../contracts/data/simple_message.h"
-#include "../contracts/data/simple_response.h"
-#include "../contracts/hosts/i_host_object_factory.h"
-#include "../contracts/i_communication_host.h"
+#include "communication/contracts/data/simple_message.h"
+#include "communication/contracts/data/simple_response.h"
+#include "communication/contracts/hosts/i_host_object_factory.h"
+#include "communication/contracts/i_communication_host.h"
 
 #include <QSet>
 

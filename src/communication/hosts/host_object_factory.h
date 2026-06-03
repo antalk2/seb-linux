@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../contracts/hosts/i_host_object_factory.h"
+#include "communication/contracts/hosts/i_host_object_factory.h"
 
 namespace seb::communication::hosts {
 

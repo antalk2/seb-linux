@@ -1,7 +1,7 @@
 #pragma once
 
-#include "../contracts/proxies/i_proxy_factory.h"
-#include "../contracts/proxies/i_proxy_object_factory.h"
+#include "communication/contracts/proxies/i_proxy_factory.h"
+#include "communication/contracts/proxies/i_proxy_object_factory.h"
 
 namespace seb::communication::proxies {
 

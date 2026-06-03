@@ -1,9 +1,9 @@
 #pragma once
 
-#include "FilterSettings.h"
-#include "PopupPolicy.h"
-#include "ProxySettings.h"
-#include "WindowSettings.h"
+#include "settings/Browser/FilterSettings.h"
+#include "settings/Browser/PopupPolicy.h"
+#include "settings/Browser/ProxySettings.h"
+#include "settings/Browser/WindowSettings.h"
 
 #include <QByteArray>
 #include <QString>

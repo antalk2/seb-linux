@@ -1,6 +1,6 @@
-#include "BrowserWindow.h"
+#include "browser/BrowserWindow.h"
 
-#include "../browser_window.h"
+#include "browser_window.h"
 
 namespace seb::browser {
 

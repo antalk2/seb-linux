@@ -1,7 +1,7 @@
 #pragma once
 
-#include "../applications/contracts/application.h"
-#include "../browser/contracts/IBrowserApplication.h"
+#include "applications/contracts/application.h"
+#include "browser/contracts/IBrowserApplication.h"
 
 #include <QList>
 class SebSession;

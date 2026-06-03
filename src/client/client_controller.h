@@ -1,7 +1,7 @@
 #pragma once
 
-#include "client_context.h"
-#include "operations/client_operation_sequence.h"
+#include "client/client_context.h"
+#include "client/operations/client_operation_sequence.h"
 
 #include <QObject>
 

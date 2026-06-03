@@ -1,4 +1,4 @@
-#include "hash_algorithm.h"
+#include "configuration/cryptography/hash_algorithm.h"
 
 #include <QCryptographicHash>
 

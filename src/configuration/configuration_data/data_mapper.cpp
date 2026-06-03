@@ -1,7 +1,7 @@
-#include "data_mapper.h"
+#include "configuration/configuration_data/data_mapper.h"
 
-#include "keys.h"
-#include "../../seb_settings.h"
+#include "configuration/configuration_data/keys.h"
+#include "seb_settings.h"
 
 namespace seb::configuration::configuration_data {
 

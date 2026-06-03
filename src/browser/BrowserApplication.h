@@ -1,7 +1,7 @@
 #pragma once
 
-#include "BrowserApplicationContext.h"
-#include "contracts/IBrowserApplication.h"
+#include "browser/BrowserApplicationContext.h"
+#include "browser/contracts/IBrowserApplication.h"
 
 #include <QObject>
 

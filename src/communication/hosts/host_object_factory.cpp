@@ -1,4 +1,4 @@
-#include "host_object_factory.h"
+#include "communication/hosts/host_object_factory.h"
 
 namespace seb::communication::hosts {
 namespace {

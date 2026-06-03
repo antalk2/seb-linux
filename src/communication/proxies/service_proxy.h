@@ -1,7 +1,7 @@
 #pragma once
 
-#include "base_proxy.h"
-#include "../contracts/proxies/i_service_proxy.h"
+#include "communication/proxies/base_proxy.h"
+#include "communication/contracts/proxies/i_service_proxy.h"
 
 namespace seb::communication::proxies {
 

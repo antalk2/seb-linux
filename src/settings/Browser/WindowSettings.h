@@ -1,6 +1,6 @@
 #pragma once
 
-#include "WindowPosition.h"
+#include "settings/Browser/WindowPosition.h"
 
 namespace seb::settings::browser {
 

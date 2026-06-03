@@ -1,6 +1,6 @@
-#include "network_controller.h"
+#include "shell/taskbar/platform/network_controller.h"
 
-#include "command_helper.h"
+#include "shell/taskbar/platform/command_helper.h"
 
 #include <QTimer>
 

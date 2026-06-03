@@ -1,7 +1,7 @@
 #pragma once
 
-#include "../interlocutor.h"
-#include "message.h"
+#include "communication/contracts/interlocutor.h"
+#include "communication/contracts/data/message.h"
 
 namespace seb::communication::contracts::data {
 

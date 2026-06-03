@@ -1,4 +1,4 @@
-#include "taskbar_service.h"
+#include "shell/taskbar/taskbar_service.h"
 
 namespace seb::shell::taskbar {
 

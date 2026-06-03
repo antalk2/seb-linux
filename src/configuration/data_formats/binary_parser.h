@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../contracts/data_formats/i_data_parser.h"
+#include "configuration/contracts/data_formats/i_data_parser.h"
 
 namespace seb::configuration::data_formats {
 

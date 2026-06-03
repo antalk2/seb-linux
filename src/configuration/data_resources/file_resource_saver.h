@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../contracts/data_resources/i_resource_saver.h"
+#include "configuration/contracts/data_resources/i_resource_saver.h"
 
 namespace seb::configuration::data_resources {
 

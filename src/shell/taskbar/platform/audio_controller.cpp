@@ -1,6 +1,6 @@
-#include "audio_controller.h"
+#include "shell/taskbar/platform/audio_controller.h"
 
-#include "command_helper.h"
+#include "shell/taskbar/platform/command_helper.h"
 
 #include <QRegularExpression>
 #include <QTimer>

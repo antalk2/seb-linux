@@ -1,7 +1,7 @@
 #pragma once
 
-#include "../events/communication_event_handler.h"
-#include "../i_communication_host.h"
+#include "communication/contracts/events/communication_event_handler.h"
+#include "communication/contracts/i_communication_host.h"
 
 namespace seb::communication::contracts::hosts {
 

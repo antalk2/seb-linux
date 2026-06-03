@@ -1,8 +1,8 @@
-#include "BrowserApplication.h"
+#include "browser/BrowserApplication.h"
 
-#include "../browser_window.h"
-#include "../seb_session.h"
-#include "BrowserWindow.h"
+#include "browser_window.h"
+#include "seb_session.h"
+#include "browser/BrowserWindow.h"
 
 namespace seb::browser {
 

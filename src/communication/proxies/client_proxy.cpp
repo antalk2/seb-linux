@@ -1,7 +1,7 @@
-#include "client_proxy.h"
+#include "communication/proxies/client_proxy.h"
 
-#include "../contracts/data/authentication_response.h"
-#include "../contracts/data/reconfiguration_denied_message.h"
+#include "communication/contracts/data/authentication_response.h"
+#include "communication/contracts/data/reconfiguration_denied_message.h"
 
 namespace seb::communication::proxies {
 

@@ -1,4 +1,4 @@
-#include "network_resource_loader.h"
+#include "configuration/data_resources/network_resource_loader.h"
 
 #include <QEventLoop>
 #include <QNetworkAccessManager>

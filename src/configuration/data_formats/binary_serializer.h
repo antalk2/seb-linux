@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../contracts/data_formats/i_data_serializer.h"
+#include "configuration/contracts/data_formats/i_data_serializer.h"
 
 namespace seb::configuration::data_formats {
 

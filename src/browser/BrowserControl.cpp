@@ -1,5 +1,5 @@
-#include "BrowserControl.h"
-#include "contracts/i_webview.h"
+#include "browser/BrowserControl.h"
+#include "browser/contracts/i_webview.h"
 
 namespace seb::browser {
 

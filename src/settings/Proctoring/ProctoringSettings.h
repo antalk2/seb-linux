@@ -1,7 +1,7 @@
 #pragma once
 
-#include "MetaDataSettings.h"
-#include "ScreenProctoringSettings.h"
+#include "settings/Proctoring/MetaDataSettings.h"
+#include "settings/Proctoring/ScreenProctoringSettings.h"
 
 namespace seb::settings::proctoring {
 

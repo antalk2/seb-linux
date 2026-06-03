@@ -1,4 +1,4 @@
-#include "log_notification.h"
+#include "client/notifications/log_notification.h"
 
 #include <QLabel>
 #include <QPlainTextEdit>

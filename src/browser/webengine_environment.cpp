@@ -1,6 +1,6 @@
-#include "webengine_environment.h"
+#include "browser/webengine_environment.h"
 
-#include "webengine_compat.h"
+#include "browser/webengine_compat.h"
 
 #include <QStringList>
 

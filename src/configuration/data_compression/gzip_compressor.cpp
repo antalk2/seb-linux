@@ -1,4 +1,4 @@
-#include "gzip_compressor.h"
+#include "configuration/data_compression/gzip_compressor.h"
 
 #include <QByteArray>
 

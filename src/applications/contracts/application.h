@@ -1,7 +1,7 @@
 #pragma once
 
-#include "application_window.h"
-#include "events/windows_changed_event_handler.h"
+#include "applications/contracts/application_window.h"
+#include "applications/contracts/events/windows_changed_event_handler.h"
 
 #include <QList>
 #include <QString>

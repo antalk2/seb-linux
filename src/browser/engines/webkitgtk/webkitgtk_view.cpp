@@ -1,4 +1,4 @@
-#include "webkitgtk_view.h"
+#include "browser/engines/webkitgtk/webkitgtk_view.h"
 
 #if !SEB_HAS_QTWEBENGINE && SEB_HAS_WEBKITGTK
 

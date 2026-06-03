@@ -1,6 +1,6 @@
 #pragma once
 
-#include "i_proxy_object.h"
+#include "communication/contracts/proxies/i_proxy_object.h"
 
 #include <memory>
 

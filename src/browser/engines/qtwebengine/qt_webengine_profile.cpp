@@ -1,5 +1,5 @@
-#include "../../webengine_compat.h"
-#include "qt_webengine_profile.h"
+#include "browser/webengine_compat.h"
+#include "browser/engines/qtwebengine/qt_webengine_profile.h"
 
 
 #if SEB_HAS_QTWEBENGINE

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "communication_event_args.h"
+#include "communication/contracts/events/communication_event_args.h"
 
 #include <QString>
 

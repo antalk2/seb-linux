@@ -1,6 +1,6 @@
 #pragma once
 
-#include "response.h"
+#include "communication/contracts/data/response.h"
 
 #include <QUuid>
 

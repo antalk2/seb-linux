@@ -1,4 +1,4 @@
-#include "password_encryption.h"
+#include "configuration/cryptography/password_encryption.h"
 
 #include <openssl/evp.h>
 #include <openssl/hmac.h>

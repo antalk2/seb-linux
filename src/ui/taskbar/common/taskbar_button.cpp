@@ -1,6 +1,6 @@
-#include "taskbar_button.h"
+#include "ui/taskbar/common/taskbar_button.h"
 
-#include "taskbar_style.h"
+#include "ui/taskbar/common/taskbar_style.h"
 
 #include <QPainter>
 

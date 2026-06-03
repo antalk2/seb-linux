@@ -1,10 +1,10 @@
-#include "engine_factory.h"
-#include "../webengine_compat.h"
+#include "browser/engines/engine_factory.h"
+#include "browser/webengine_compat.h"
 
 #if SEB_HAS_QTWEBENGINE
-#include "qtwebengine/qt_webengine_provider.h"
+#include "browser/engines/qtwebengine/qt_webengine_provider.h"
 #elif SEB_HAS_WEBKITGTK
-#include "webkitgtk/webkitgtk_provider.h"
+#include "browser/engines/webkitgtk/webkitgtk_provider.h"
 #endif
 
 namespace seb::browser {

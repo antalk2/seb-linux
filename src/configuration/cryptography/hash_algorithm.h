@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../contracts/cryptography/i_hash_algorithm.h"
+#include "configuration/contracts/cryptography/i_hash_algorithm.h"
 
 namespace seb::configuration::cryptography {
 

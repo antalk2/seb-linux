@@ -1,7 +1,7 @@
-#include "client_controller.h"
+#include "client/client_controller.h"
 
-#include "responsibilities/client_responsibility.h"
-#include "responsibilities/client_task.h"
+#include "client/responsibilities/client_responsibility.h"
+#include "client/responsibilities/client_task.h"
 
 namespace seb::client {
 

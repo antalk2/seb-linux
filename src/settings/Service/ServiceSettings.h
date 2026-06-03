@@ -1,6 +1,6 @@
 #pragma once
 
-#include "ServicePolicy.h"
+#include "settings/Service/ServicePolicy.h"
 
 namespace seb::settings::service {
 

@@ -1,11 +1,11 @@
-#include "application_control.h"
+#include "ui/taskbar/controls/application_control.h"
 
-#include "window_list_popup.h"
-#include "../common/taskbar_button.h"
-#include "../common/taskbar_style.h"
+#include "ui/taskbar/controls/window_list_popup.h"
+#include "ui/taskbar/controls/../common/taskbar_button.h"
+#include "ui/taskbar/controls/../common/taskbar_style.h"
 
-#include "../../../seb_session.h"
-#include "../../../browser_window.h"
+#include "seb_session.h"
+#include "browser_window.h"
 
 #include <QEvent>
 #include <QHBoxLayout>

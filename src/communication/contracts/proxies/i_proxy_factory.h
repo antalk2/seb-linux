@@ -1,7 +1,7 @@
 #pragma once
 
-#include "../interlocutor.h"
-#include "i_client_proxy.h"
+#include "communication/contracts/interlocutor.h"
+#include "communication/contracts/proxies/i_client_proxy.h"
 
 #include <memory>
 

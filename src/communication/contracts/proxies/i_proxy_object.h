@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../i_communication.h"
+#include "communication/contracts/i_communication.h"
 
 namespace seb::communication::contracts::proxies {
 

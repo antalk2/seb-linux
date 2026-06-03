@@ -1,9 +1,9 @@
-#include "qt_webengine_provider.h"
+#include "browser/engines/qtwebengine/qt_webengine_provider.h"
 
 #if SEB_HAS_QTWEBENGINE
-#include "../../webengine_compat.h"
-#include "qt_webengine_profile.h"
-#include "qt_webengine_view.h"
+#include "browser/webengine_compat.h"
+#include "browser/engines/qtwebengine/qt_webengine_profile.h"
+#include "browser/engines/qtwebengine/qt_webengine_view.h"
 
 namespace seb::browser {
 

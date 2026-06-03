@@ -1,6 +1,6 @@
 #pragma once
 
-#include "message.h"
+#include "communication/contracts/data/message.h"
 
 #include <QUuid>
 

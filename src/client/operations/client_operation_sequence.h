@@ -1,6 +1,6 @@
 #pragma once
 
-#include "client_operation.h"
+#include "client/operations/client_operation.h"
 
 #include <QList>
 

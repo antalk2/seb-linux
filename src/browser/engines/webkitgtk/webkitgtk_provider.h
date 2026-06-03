@@ -6,7 +6,7 @@
 #include <QObject>
 #include <QWidget>
 
-#include "../../contracts/i_engine_provider.h"
+#include "browser/contracts/i_engine_provider.h"
 
 namespace seb::browser {
 

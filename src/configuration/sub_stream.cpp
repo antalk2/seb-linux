@@ -1,4 +1,4 @@
-#include "sub_stream.h"
+#include "configuration/sub_stream.h"
 
 namespace seb::configuration {
 

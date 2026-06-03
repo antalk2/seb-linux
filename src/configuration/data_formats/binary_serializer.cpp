@@ -1,6 +1,6 @@
-#include "binary_serializer.h"
+#include "configuration/data_formats/binary_serializer.h"
 
-#include "../configuration_data/keys.h"
+#include "configuration/configuration_data/keys.h"
 
 namespace seb::configuration::data_formats {
 

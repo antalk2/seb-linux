@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Filter/FilterRuleSettings.h"
+#include "settings/Browser/Filter/FilterRuleSettings.h"
 
 #include <QList>
 

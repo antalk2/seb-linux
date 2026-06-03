@@ -1,6 +1,6 @@
-#include "shell_responsibility.h"
+#include "client/responsibilities/shell_responsibility.h"
 
-#include "../../seb_session.h"
+#include "seb_session.h"
 
 namespace seb::client::responsibilities {
 

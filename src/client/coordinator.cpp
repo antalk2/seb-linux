@@ -1,4 +1,4 @@
-#include "coordinator.h"
+#include "client/coordinator.h"
 
 #include <QMutexLocker>
 

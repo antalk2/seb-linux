@@ -1,6 +1,6 @@
-#include "seb_taskbar.h"
+#include "ui/seb_taskbar.h"
 
-#include "taskbar/taskbar_widget.h"
+#include "ui/taskbar/taskbar_widget.h"
 
 #include <QHBoxLayout>
 

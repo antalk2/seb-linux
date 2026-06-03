@@ -1,7 +1,7 @@
-#include "external_application_instance.h"
+#include "applications/external_application_instance.h"
 
-#include "application_window.h"
-#include "../shell/taskbar/platform/command_helper.h"
+#include "applications/application_window.h"
+#include "shell/taskbar/platform/command_helper.h"
 
 #include <QFileInfo>
 #include <algorithm>

@@ -1,4 +1,4 @@
-#include "settings_mapping.h"
+#include "settings/settings_mapping.h"
 
 #include <QMetaType>
 #include <QRegularExpression>

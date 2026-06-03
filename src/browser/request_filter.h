@@ -1,10 +1,10 @@
 #pragma once
-#include "../seb_settings.h"
+#include "seb_settings.h"
 
 #include <QRegularExpression>
 #include <QVector>
 
-#include "contracts/i_request_interceptor.h"
+#include "browser/contracts/i_request_interceptor.h"
 
 #include <QtGlobal>
 #include <QUrl>

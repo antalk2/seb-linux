@@ -1,10 +1,10 @@
-#include "webkitgtk_provider.h"
+#include "browser/engines/webkitgtk/webkitgtk_provider.h"
 
 #if !SEB_HAS_QTWEBENGINE && SEB_HAS_WEBKITGTK
-#include "webkitgtk_profile.h"
-#include "webkitgtk_view.h"
-#include "../../contracts/i_webprofile.h"
-#include "../../contracts/i_webview.h"
+#include "browser/engines/webkitgtk/webkitgtk_profile.h"
+#include "browser/engines/webkitgtk/webkitgtk_view.h"
+#include "browser/contracts/i_webprofile.h"
+#include "browser/contracts/i_webview.h"
 #include <memory>
 #include <QObject>
 #include <QWidget>

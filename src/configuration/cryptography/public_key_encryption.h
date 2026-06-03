@@ -1,7 +1,7 @@
 #pragma once
 
-#include "../contracts/cryptography/i_certificate_store.h"
-#include "../contracts/cryptography/i_public_key_encryption.h"
+#include "configuration/contracts/cryptography/i_certificate_store.h"
+#include "configuration/contracts/cryptography/i_public_key_encryption.h"
 
 namespace seb::configuration::cryptography {
 

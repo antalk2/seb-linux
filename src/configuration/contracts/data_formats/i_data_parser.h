@@ -1,7 +1,7 @@
 #pragma once
 
-#include "../cryptography/password_parameters.h"
-#include "parse_result.h"
+#include "configuration/contracts/cryptography/password_parameters.h"
+#include "configuration/contracts/data_formats/parse_result.h"
 
 #include <QByteArray>
 

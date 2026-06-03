@@ -1,10 +1,10 @@
 #pragma once
 
-#include "../contracts/data/disconnection_message.h"
-#include "../contracts/data/simple_message.h"
-#include "../contracts/data/simple_response.h"
-#include "../contracts/i_communication_proxy.h"
-#include "../contracts/proxies/i_proxy_object_factory.h"
+#include "communication/contracts/data/disconnection_message.h"
+#include "communication/contracts/data/simple_message.h"
+#include "communication/contracts/data/simple_response.h"
+#include "communication/contracts/i_communication_proxy.h"
+#include "communication/contracts/proxies/i_proxy_object_factory.h"
 
 #include <QObject>
 #include <QTimer>

@@ -1,6 +1,6 @@
-#include "resource_loader.h"
+#include "settings/resource_loader.h"
 
-#include "password_container.h"
+#include "settings/password_container.h"
 
 #include <QEventLoop>
 #include <QNetworkAccessManager>

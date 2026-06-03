@@ -1,7 +1,7 @@
 #pragma once
 
-#include "FilterResult.h"
-#include "FilterRuleType.h"
+#include "settings/Browser/Filter/FilterResult.h"
+#include "settings/Browser/Filter/FilterRuleType.h"
 
 #include <QString>
 

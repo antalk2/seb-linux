@@ -1,4 +1,4 @@
-#include "browser_responsibility.h"
+#include "client/responsibilities/browser_responsibility.h"
 
 namespace seb::client::responsibilities {
 

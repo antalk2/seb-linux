@@ -1,4 +1,4 @@
-#include "data_processor.h"
+#include "configuration/configuration_data/data_processor.h"
 
 namespace seb::configuration::configuration_data {
 

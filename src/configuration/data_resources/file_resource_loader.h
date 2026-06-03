@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../contracts/data_resources/i_resource_loader.h"
+#include "configuration/contracts/data_resources/i_resource_loader.h"
 
 namespace seb::configuration::data_resources {
 

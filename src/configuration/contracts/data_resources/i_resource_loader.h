@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../load_status.h"
+#include "configuration/contracts/load_status.h"
 
 #include <QByteArray>
 #include <QUrl>

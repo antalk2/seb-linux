@@ -1,6 +1,6 @@
 #pragma once
 
-#include "contracts/coordinator.h"
+#include "client/contracts/coordinator.h"
 
 #include <QMutex>
 

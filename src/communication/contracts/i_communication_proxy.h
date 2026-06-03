@@ -1,6 +1,6 @@
 #pragma once
 
-#include "events/communication_event_handler.h"
+#include "communication/contracts/events/communication_event_handler.h"
 
 #include <QUuid>
 

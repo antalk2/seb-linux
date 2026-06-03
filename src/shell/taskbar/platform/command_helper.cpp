@@ -1,4 +1,4 @@
-#include "command_helper.h"
+#include "shell/taskbar/platform/command_helper.h"
 
 #include <QProcess>
 

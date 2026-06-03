@@ -1,10 +1,10 @@
 #pragma once
 
-#include "data/connection_response.h"
-#include "data/disconnection_message.h"
-#include "data/disconnection_response.h"
-#include "data/message.h"
-#include "data/response.h"
+#include "communication/contracts/data/connection_response.h"
+#include "communication/contracts/data/disconnection_message.h"
+#include "communication/contracts/data/disconnection_response.h"
+#include "communication/contracts/data/message.h"
+#include "communication/contracts/data/response.h"
 
 #include <memory>
 

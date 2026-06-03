@@ -1,4 +1,4 @@
-#include "file_resource_loader.h"
+#include "configuration/data_resources/file_resource_loader.h"
 
 #include <QFile>
 

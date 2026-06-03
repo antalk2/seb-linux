@@ -1,6 +1,6 @@
-#include "battery_controller.h"
+#include "shell/taskbar/platform/battery_controller.h"
 
-#include "command_helper.h"
+#include "shell/taskbar/platform/command_helper.h"
 
 #include <QRegularExpression>
 #include <QTimer>

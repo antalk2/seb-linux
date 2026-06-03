@@ -1,4 +1,4 @@
-#include "about_notification.h"
+#include "client/notifications/about_notification.h"
 
 #include <QLabel>
 #include <QVBoxLayout>

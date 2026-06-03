@@ -1,4 +1,4 @@
-#include "verificator_notification.h"
+#include "client/notifications/verificator_notification.h"
 
 namespace seb::client::notifications {
 

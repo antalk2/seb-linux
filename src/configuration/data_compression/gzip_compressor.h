@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../contracts/data_compression/i_data_compressor.h"
+#include "configuration/contracts/data_compression/i_data_compressor.h"
 
 namespace seb::configuration::data_compression {
 

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "encryption_parameters.h"
+#include "configuration/contracts/cryptography/encryption_parameters.h"
 
 #include <QString>
 

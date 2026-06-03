@@ -1,6 +1,6 @@
 #pragma once
 
-#include "InvigilationSettings.h"
+#include "settings/Server/InvigilationSettings.h"
 
 #include <QString>
 

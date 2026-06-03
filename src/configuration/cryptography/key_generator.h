@@ -1,7 +1,7 @@
 #pragma once
 
-#include "../contracts/app_config.h"
-#include "../contracts/cryptography/i_key_generator.h"
+#include "configuration/contracts/app_config.h"
+#include "configuration/contracts/cryptography/i_key_generator.h"
 
 namespace seb::configuration::cryptography {
 

@@ -1,7 +1,7 @@
-#include "application_manager.h"
+#include "applications/application_manager.h"
 
-#include "application_factory.h"
-#include "external_application.h"
+#include "applications/application_factory.h"
+#include "applications/external_application.h"
 
 #include <QtAlgorithms>
 

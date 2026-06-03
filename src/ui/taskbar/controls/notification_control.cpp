@@ -1,6 +1,6 @@
-#include "notification_control.h"
+#include "ui/taskbar/controls/notification_control.h"
 
-#include "../common/taskbar_button.h"
+#include "ui/taskbar/common/taskbar_button.h"
 
 #include <QHBoxLayout>
 

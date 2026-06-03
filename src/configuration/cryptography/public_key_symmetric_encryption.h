@@ -1,8 +1,8 @@
 #pragma once
 
-#include "../contracts/cryptography/i_public_key_encryption.h"
-#include "../contracts/cryptography/i_password_encryption.h"
-#include "../contracts/cryptography/i_certificate_store.h"
+#include "configuration/contracts/cryptography/i_public_key_encryption.h"
+#include "configuration/contracts/cryptography/i_password_encryption.h"
+#include "configuration/contracts/cryptography/i_certificate_store.h"
 
 namespace seb::configuration::cryptography {
 

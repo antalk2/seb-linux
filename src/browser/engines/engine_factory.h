@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../contracts/i_engine_provider.h"
+#include "browser/contracts/i_engine_provider.h"
 #include <memory>
 
 namespace seb::browser {

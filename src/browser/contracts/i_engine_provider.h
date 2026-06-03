@@ -1,7 +1,7 @@
 #pragma once
 
-#include "i_webprofile.h"
-#include "i_webview.h"
+#include "browser/contracts/i_webprofile.h"
+#include "browser/contracts/i_webview.h"
 
 #include <memory>
 

@@ -1,8 +1,8 @@
 #pragma once
 
-#include "../data/configuration_response.h"
-#include "../i_communication_proxy.h"
-#include "communication_result.h"
+#include "communication/contracts/data/configuration_response.h"
+#include "communication/contracts/i_communication_proxy.h"
+#include "communication/contracts/proxies/communication_result.h"
 
 namespace seb::communication::contracts::proxies {
 

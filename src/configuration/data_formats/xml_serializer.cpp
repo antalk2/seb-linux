@@ -1,7 +1,7 @@
-#include "xml_serializer.h"
+#include "configuration/data_formats/xml_serializer.h"
 
-#include "../configuration_data/json.h"
-#include "../configuration_data/keys.h"
+#include "configuration/configuration_data/json.h"
+#include "configuration/configuration_data/keys.h"
 
 #include <QJsonDocument>
 

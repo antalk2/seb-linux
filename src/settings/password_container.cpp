@@ -1,8 +1,8 @@
-#include "password_container.h"
-#include "../configuration/cryptography/certificate_store.h"
-#include "../configuration/cryptography/password_encryption.h"
-#include "../configuration/cryptography/public_key_encryption.h"
-#include "../configuration/cryptography/public_key_symmetric_encryption.h"
+#include "settings/password_container.h"
+#include "configuration/cryptography/certificate_store.h"
+#include "configuration/cryptography/password_encryption.h"
+#include "configuration/cryptography/public_key_encryption.h"
+#include "configuration/cryptography/public_key_symmetric_encryption.h"
 
 #include <QByteArray>
 #include <QCryptographicHash>

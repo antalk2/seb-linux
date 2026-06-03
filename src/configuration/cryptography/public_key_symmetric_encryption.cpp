@@ -1,4 +1,4 @@
-#include "public_key_symmetric_encryption.h"
+#include "configuration/cryptography/public_key_symmetric_encryption.h"
 
 #include <QDataStream>
 

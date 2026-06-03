@@ -1,6 +1,6 @@
 #pragma once
 
-#include "contracts/application_window.h"
+#include "applications/contracts/application_window.h"
 
 #include <QObject>
 #include <QString>

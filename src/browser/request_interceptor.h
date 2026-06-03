@@ -1,10 +1,10 @@
 #pragma once
 
-#include "../seb_settings.h"
-#include "key_generator.h"
-#include "request_filter.h"
+#include "seb_settings.h"
+#include "browser/key_generator.h"
+#include "browser/request_filter.h"
 
-#include "contracts/i_request_interceptor.h"
+#include "browser/contracts/i_request_interceptor.h"
 
 namespace seb::browser {
 

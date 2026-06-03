@@ -1,6 +1,6 @@
 #pragma once
 
-#include "taskbar_model.h"
+#include "shell/taskbar/taskbar_model.h"
 
 namespace seb::shell::taskbar {
 

@@ -1,8 +1,8 @@
 #pragma once
 
-#include "../contracts/app_config.h"
-#include "../contracts/session_configuration.h"
-#include "../../seb_settings.h"
+#include "configuration/contracts/app_config.h"
+#include "configuration/contracts/session_configuration.h"
+#include "seb_settings.h"
 
 namespace seb::configuration::configuration_data {
 

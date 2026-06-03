@@ -1,7 +1,7 @@
 #pragma once
 
-#include "BlacklistApplication.h"
-#include "WhitelistApplication.h"
+#include "settings/Applications/BlacklistApplication.h"
+#include "settings/Applications/WhitelistApplication.h"
 
 #include <QList>
 

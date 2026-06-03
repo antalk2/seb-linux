@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../i_communication_host.h"
+#include "communication/contracts/i_communication_host.h"
 
 namespace seb::communication::contracts::hosts {
 

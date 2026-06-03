@@ -1,6 +1,6 @@
 #pragma once
 
-#include "contracts/i_webview.h"
+#include "browser/contracts/i_webview.h"
 #include <QObject>
 #include <QString>
 

@@ -1,8 +1,8 @@
-#include "window_list_popup.h"
+#include "ui/taskbar/controls/window_list_popup.h"
 
-#include "../common/taskbar_button.h"
+#include "ui/taskbar/common/taskbar_button.h"
 
-#include "../../../browser_window.h"
+#include "browser_window.h"
 
 #include <QLabel>
 #include <QScrollArea>

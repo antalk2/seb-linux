@@ -1,6 +1,6 @@
-#include "application_window.h"
+#include "applications/application_window.h"
 
-#include "../shell/taskbar/platform/command_helper.h"
+#include "shell/taskbar/platform/command_helper.h"
 
 namespace seb::applications {
 

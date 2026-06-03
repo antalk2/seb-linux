@@ -1,7 +1,7 @@
 #pragma once
 
-#include "contracts/application.h"
-#include "../seb_settings.h"
+#include "applications/contracts/application.h"
+#include "seb_settings.h"
 
 #include <QObject>
 #include <QStringList>

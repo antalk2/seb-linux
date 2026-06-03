@@ -1,7 +1,7 @@
 #pragma once
 
-#include "../client_context.h"
-#include "client_task.h"
+#include "client/client_context.h"
+#include "client/responsibilities/client_task.h"
 
 namespace seb::client::responsibilities {
 

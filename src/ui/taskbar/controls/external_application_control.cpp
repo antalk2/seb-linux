@@ -1,9 +1,9 @@
-#include "external_application_control.h"
+#include "ui/taskbar/controls/external_application_control.h"
 
-#include "../common/taskbar_button.h"
-#include "../common/taskbar_popup.h"
-#include "../../../applications/application_window.h"
-#include "../../../applications/external_application.h"
+#include "ui/taskbar/common/taskbar_button.h"
+#include "ui/taskbar/common/taskbar_popup.h"
+#include "applications/application_window.h"
+#include "applications/external_application.h"
 
 #include <QEvent>
 #include <QScrollArea>

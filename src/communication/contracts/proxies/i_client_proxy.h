@@ -1,9 +1,9 @@
 #pragma once
 
-#include "../data/authentication_response.h"
-#include "../data/password_request_purpose.h"
-#include "../i_communication_proxy.h"
-#include "communication_result.h"
+#include "communication/contracts/data/authentication_response.h"
+#include "communication/contracts/data/password_request_purpose.h"
+#include "communication/contracts/i_communication_proxy.h"
+#include "communication/contracts/proxies/communication_result.h"
 
 namespace seb::communication::contracts::proxies {
 

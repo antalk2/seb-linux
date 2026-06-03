@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../common/taskbar_popup.h"
+#include "ui/taskbar/common/taskbar_popup.h"
 
 QT_BEGIN_NAMESPACE
 class QVBoxLayout;

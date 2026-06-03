@@ -1,4 +1,4 @@
-#include "certificate_store.h"
+#include "configuration/cryptography/certificate_store.h"
 
 #include <QSslKey>
 #include <QDebug>

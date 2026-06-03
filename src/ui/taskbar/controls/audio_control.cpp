@@ -1,8 +1,8 @@
-#include "audio_control.h"
+#include "ui/taskbar/controls/audio_control.h"
 
-#include "../common/taskbar_button.h"
-#include "../common/taskbar_popup.h"
-#include "../../../shell/taskbar/platform/audio_controller.h"
+#include "ui/taskbar/common/taskbar_button.h"
+#include "ui/taskbar/common/taskbar_popup.h"
+#include "shell/taskbar/platform/audio_controller.h"
 
 #include <QHBoxLayout>
 #include <QLabel>

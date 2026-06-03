@@ -1,7 +1,7 @@
 #pragma once
 
-#include "Proxy/ProxyConfiguration.h"
-#include "Proxy/ProxyPolicy.h"
+#include "settings/Browser/Proxy/ProxyConfiguration.h"
+#include "settings/Browser/Proxy/ProxyPolicy.h"
 
 #include <QList>
 #include <QString>

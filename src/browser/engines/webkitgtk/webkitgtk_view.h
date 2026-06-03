@@ -2,7 +2,7 @@
 
 #if !SEB_HAS_QTWEBENGINE && SEB_HAS_WEBKITGTK
 
-#include "../../contracts/i_webview.h"
+#include "browser/contracts/i_webview.h"
 
 namespace seb::browser {
 

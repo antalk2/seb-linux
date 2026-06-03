@@ -1,7 +1,7 @@
-#include "service_proxy.h"
+#include "communication/proxies/service_proxy.h"
 
-#include "../contracts/data/session_start_message.h"
-#include "../contracts/data/session_stop_message.h"
+#include "communication/contracts/data/session_start_message.h"
+#include "communication/contracts/data/session_stop_message.h"
 
 namespace seb::communication::proxies {
 

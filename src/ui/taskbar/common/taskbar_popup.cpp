@@ -1,6 +1,6 @@
-#include "taskbar_popup.h"
+#include "ui/taskbar/common/taskbar_popup.h"
 
-#include "taskbar_style.h"
+#include "ui/taskbar/common/taskbar_style.h"
 
 #include <QHideEvent>
 #include <QPoint>

@@ -1,7 +1,7 @@
 #pragma once
 
-#include "encryption_parameters.h"
-#include "password_parameters.h"
+#include "configuration/contracts/cryptography/encryption_parameters.h"
+#include "configuration/contracts/cryptography/password_parameters.h"
 
 #include <QSslCertificate>
 

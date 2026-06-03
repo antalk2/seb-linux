@@ -1,4 +1,4 @@
-#include "settings_parsing.h"
+#include "settings/settings_parsing.h"
 
 #include <QCryptographicHash>
 #include <QDomDocument>

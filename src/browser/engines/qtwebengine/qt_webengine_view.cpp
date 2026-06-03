@@ -1,7 +1,7 @@
-#include "qt_webengine_view.h"
+#include "browser/engines/qtwebengine/qt_webengine_view.h"
 
 #if SEB_HAS_QTWEBENGINE
-#include "qt_webengine_profile.h"
+#include "browser/engines/qtwebengine/qt_webengine_profile.h"
 #include <QWebEngineView>
 #include <QWebEngineHistory>
 #include <QWebEngineNewWindowRequest>

@@ -1,4 +1,4 @@
-#include "settings_defaults.h"
+#include "settings/settings_defaults.h"
 
 namespace seb::settingsinternal {
 namespace {

@@ -1,7 +1,7 @@
 #pragma once
 
-#include "message.h"
-#include "simple_message_purport.h"
+#include "communication/contracts/data/message.h"
+#include "communication/contracts/data/simple_message_purport.h"
 
 namespace seb::communication::contracts::data {
 

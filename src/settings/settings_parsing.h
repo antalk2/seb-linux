@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../seb_settings.h"
+#include "seb_settings.h"
 #include <QVariant>
 
 namespace seb::settingsinternal {

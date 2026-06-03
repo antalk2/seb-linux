@@ -1,8 +1,8 @@
-#include "keyboard_control.h"
+#include "ui/taskbar/controls/keyboard_control.h"
 
-#include "../common/taskbar_button.h"
-#include "../common/taskbar_popup.h"
-#include "../../../shell/taskbar/platform/keyboard_controller.h"
+#include "ui/taskbar/common/taskbar_button.h"
+#include "ui/taskbar/common/taskbar_popup.h"
+#include "shell/taskbar/platform/keyboard_controller.h"
 
 #include <QHBoxLayout>
 #include <QLabel>

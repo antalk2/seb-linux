@@ -1,8 +1,8 @@
 #pragma once
 
-#include "../cryptography/encryption_parameters.h"
-#include "format_type.h"
-#include "serialize_result.h"
+#include "configuration/contracts/cryptography/encryption_parameters.h"
+#include "configuration/contracts/data_formats/format_type.h"
+#include "configuration/contracts/data_formats/serialize_result.h"
 
 #include <QVariantMap>
 

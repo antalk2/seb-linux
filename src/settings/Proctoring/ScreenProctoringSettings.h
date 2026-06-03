@@ -1,7 +1,7 @@
 #pragma once
 
-#include "ImageFormat.h"
-#include "ImageQuantization.h"
+#include "settings/Proctoring/ImageFormat.h"
+#include "settings/Proctoring/ImageQuantization.h"
 
 namespace seb::settings::proctoring {
 

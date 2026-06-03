@@ -1,7 +1,7 @@
 #pragma once
 
-#include "contracts/i_configuration_repository.h"
-#include "contracts/data_formats/format_type.h"
+#include "configuration/contracts/i_configuration_repository.h"
+#include "configuration/contracts/data_formats/format_type.h"
 
 #include <QList>
 #include <QVariantMap>

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../save_status.h"
+#include "configuration/contracts/save_status.h"
 
 #include <QByteArray>
 

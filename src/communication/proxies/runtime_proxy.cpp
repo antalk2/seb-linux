@@ -1,7 +1,7 @@
-#include "runtime_proxy.h"
+#include "communication/proxies/runtime_proxy.h"
 
-#include "../contracts/data/configuration_response.h"
-#include "../contracts/data/reconfiguration_message.h"
+#include "communication/contracts/data/configuration_response.h"
+#include "communication/contracts/data/reconfiguration_message.h"
 
 namespace seb::communication::proxies {
 

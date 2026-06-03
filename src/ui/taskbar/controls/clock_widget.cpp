@@ -1,6 +1,6 @@
-#include "clock_widget.h"
+#include "ui/taskbar/controls/clock_widget.h"
 
-#include "../common/taskbar_style.h"
+#include "ui/taskbar/common/taskbar_style.h"
 
 #include <QDateTime>
 #include <QLabel>

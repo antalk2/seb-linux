@@ -1,4 +1,4 @@
-#include "browser_operation.h"
+#include "client/operations/browser_operation.h"
 
 namespace seb::client::operations {
 

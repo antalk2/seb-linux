@@ -1,7 +1,7 @@
 #pragma once
 
-#include "../contracts/app_config.h"
-#include "../contracts/data_resources/i_resource_loader.h"
+#include "configuration/contracts/app_config.h"
+#include "configuration/contracts/data_resources/i_resource_loader.h"
 
 namespace seb::configuration::data_resources {
 

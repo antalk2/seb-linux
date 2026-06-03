@@ -1,4 +1,4 @@
-#include "client_responsibility.h"
+#include "client/responsibilities/client_responsibility.h"
 
 namespace seb::client::responsibilities {
 

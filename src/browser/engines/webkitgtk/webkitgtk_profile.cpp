@@ -1,4 +1,4 @@
-#include "webkitgtk_profile.h"
+#include "browser/engines/webkitgtk/webkitgtk_profile.h"
 
 #if !SEB_HAS_QTWEBENGINE && SEB_HAS_WEBKITGTK
 

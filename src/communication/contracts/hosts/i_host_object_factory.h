@@ -1,7 +1,7 @@
 #pragma once
 
-#include "../i_communication.h"
-#include "i_host_object.h"
+#include "communication/contracts/i_communication.h"
+#include "communication/contracts/hosts/i_host_object.h"
 
 #include <memory>
 

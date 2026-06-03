@@ -1,12 +1,12 @@
 #pragma once
 
-#include "cryptography/password_parameters.h"
-#include "client_configuration.h"
-#include "load_status.h"
-#include "save_status.h"
-#include "session_configuration.h"
+#include "configuration/contracts/cryptography/password_parameters.h"
+#include "configuration/contracts/client_configuration.h"
+#include "configuration/contracts/load_status.h"
+#include "configuration/contracts/save_status.h"
+#include "configuration/contracts/session_configuration.h"
 
-#include "../../seb_settings.h"
+#include "seb_settings.h"
 
 #include <QUrl>
 

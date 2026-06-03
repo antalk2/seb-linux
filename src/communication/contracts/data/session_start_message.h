@@ -1,8 +1,8 @@
 #pragma once
 
-#include "message.h"
+#include "communication/contracts/data/message.h"
 
-#include "../../../seb_settings.h"
+#include "seb_settings.h"
 
 namespace seb::communication::contracts::data {
 

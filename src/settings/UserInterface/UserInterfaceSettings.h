@@ -1,9 +1,9 @@
 #pragma once
 
-#include "ActionCenterSettings.h"
-#include "LockScreenSettings.h"
-#include "TaskbarSettings.h"
-#include "UserInterfaceMode.h"
+#include "settings/UserInterface/ActionCenterSettings.h"
+#include "settings/UserInterface/LockScreenSettings.h"
+#include "settings/UserInterface/TaskbarSettings.h"
+#include "settings/UserInterface/UserInterfaceMode.h"
 
 namespace seb::settings::userinterface {
 

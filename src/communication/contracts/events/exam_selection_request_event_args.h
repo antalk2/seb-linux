@@ -1,7 +1,7 @@
 #pragma once
 
-#include "../data/exam_selection_request_message.h"
-#include "communication_event_args.h"
+#include "communication/contracts/data/exam_selection_request_message.h"
+#include "communication/contracts/events/communication_event_args.h"
 
 namespace seb::communication::contracts::events {
 

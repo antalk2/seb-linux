@@ -1,7 +1,7 @@
 #pragma once
 
-#include "message.h"
-#include "password_request_purpose.h"
+#include "communication/contracts/data/message.h"
+#include "communication/contracts/data/password_request_purpose.h"
 
 #include <QUuid>
 

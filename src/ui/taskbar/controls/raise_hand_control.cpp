@@ -1,7 +1,7 @@
-#include "raise_hand_control.h"
+#include "ui/taskbar/controls/raise_hand_control.h"
 
-#include "../common/taskbar_button.h"
-#include "../common/taskbar_popup.h"
+#include "ui/taskbar/common/taskbar_button.h"
+#include "ui/taskbar/common/taskbar_popup.h"
 
 #include <QGridLayout>
 #include <QLineEdit>

@@ -1,4 +1,4 @@
-#include "json.h"
+#include "configuration/configuration_data/json.h"
 
 #include <QJsonArray>
 #include <QJsonValue>

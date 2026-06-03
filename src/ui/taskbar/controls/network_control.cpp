@@ -1,8 +1,8 @@
-#include "network_control.h"
+#include "ui/taskbar/controls/network_control.h"
 
-#include "../common/taskbar_button.h"
-#include "../common/taskbar_popup.h"
-#include "../../../shell/taskbar/platform/network_controller.h"
+#include "ui/taskbar/common/taskbar_button.h"
+#include "ui/taskbar/common/taskbar_popup.h"
+#include "shell/taskbar/platform/network_controller.h"
 
 #include <QLabel>
 #include <QPushButton>

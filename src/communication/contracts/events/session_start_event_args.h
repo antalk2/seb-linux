@@ -1,8 +1,8 @@
 #pragma once
 
-#include "communication_event_args.h"
+#include "communication/contracts/events/communication_event_args.h"
 
-#include "../../../seb_settings.h"
+#include "seb_settings.h"
 
 namespace seb::communication::contracts::events {
 

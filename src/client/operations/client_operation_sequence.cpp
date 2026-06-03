@@ -1,4 +1,4 @@
-#include "client_operation_sequence.h"
+#include "client/operations/client_operation_sequence.h"
 
 namespace seb::client::operations {
 

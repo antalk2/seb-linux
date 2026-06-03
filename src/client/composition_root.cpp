@@ -1,14 +1,14 @@
-#include "composition_root.h"
+#include "client/composition_root.h"
 
-#include "../applications/external_application.h"
-#include "../browser/BrowserApplication.h"
-#include "../seb_session.h"
-#include "client_controller.h"
-#include "operations/application_operation.h"
-#include "operations/browser_operation.h"
-#include "operations/shell_operation.h"
-#include "responsibilities/browser_responsibility.h"
-#include "responsibilities/shell_responsibility.h"
+#include "applications/external_application.h"
+#include "browser/BrowserApplication.h"
+#include "seb_session.h"
+#include "client/client_controller.h"
+#include "client/operations/application_operation.h"
+#include "client/operations/browser_operation.h"
+#include "client/operations/shell_operation.h"
+#include "client/responsibilities/browser_responsibility.h"
+#include "client/responsibilities/shell_responsibility.h"
 
 namespace seb::client {
 

@@ -1,9 +1,9 @@
 #pragma once
 
-#include "ClipboardPolicy.h"
-#include "KioskMode.h"
-#include "VersionRestriction.h"
-#include "VirtualMachinePolicy.h"
+#include "settings/Security/ClipboardPolicy.h"
+#include "settings/Security/KioskMode.h"
+#include "settings/Security/VersionRestriction.h"
+#include "settings/Security/VirtualMachinePolicy.h"
 
 #include <QList>
 #include <QString>

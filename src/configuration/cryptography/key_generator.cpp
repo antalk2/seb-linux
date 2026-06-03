@@ -1,4 +1,4 @@
-#include "key_generator.h"
+#include "configuration/cryptography/key_generator.h"
 
 #include <QCryptographicHash>
 #include <QMessageAuthenticationCode>

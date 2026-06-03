@@ -1,6 +1,6 @@
 #pragma once
 
-#include "ProxyProtocol.h"
+#include "settings/Browser/Proxy/ProxyProtocol.h"
 
 #include <QString>
 

@@ -1,6 +1,6 @@
-#include "proxy_factory.h"
+#include "communication/proxies/proxy_factory.h"
 
-#include "client_proxy.h"
+#include "communication/proxies/client_proxy.h"
 
 namespace seb::communication::proxies {
 

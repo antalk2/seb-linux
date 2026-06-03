@@ -1,7 +1,7 @@
-#include "external_application.h"
+#include "applications/external_application.h"
 
-#include "application_window.h"
-#include "external_application_instance.h"
+#include "applications/application_window.h"
+#include "applications/external_application_instance.h"
 
 #include <QFileInfo>
 #include <QProcess>

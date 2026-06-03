@@ -1,7 +1,7 @@
 #pragma once
 
-#include "../../seb_settings.h"
-#include "factory_result.h"
+#include "seb_settings.h"
+#include "applications/contracts/factory_result.h"
 
 namespace seb::applications::contracts {
 
