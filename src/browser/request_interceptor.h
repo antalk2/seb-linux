@@ -1,7 +1,7 @@
 #pragma once
 
 #include "seb_settings.h"
-#include "browser/key_generator.h"
+#include "browser/browser_key_generator.h"
 #include "browser/request_filter.h"
 
 #include "browser/contracts/i_request_interceptor.h"

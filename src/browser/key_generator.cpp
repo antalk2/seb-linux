@@ -1,4 +1,4 @@
-#include "browser/key_generator.h"
+#include "browser/browser_key_generator.h"
 
 #include <QCoreApplication>
 #include <QCryptographicHash>

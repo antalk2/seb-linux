@@ -365,7 +365,7 @@ HEADERS += \
     src/browser/engines/webkitgtk/webkitgtk_profile.h \
     src/browser/engines/webkitgtk/webkitgtk_provider.h \
     src/browser/engines/webkitgtk/webkitgtk_view.h \
-    src/browser/key_generator.h \
+    src/browser/browser_key_generator.h \
     src/browser/request_filter.h \
     src/browser/request_interceptor.h \
     src/browser/engines/engine_factory.h \
