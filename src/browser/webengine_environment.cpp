@@ -38,8 +38,15 @@ QString buildProxyServerValue(const seb::ProxySettings &proxySettings)
 
 }  // namespace
 
-void applyWebEngineEnvironment(const seb::SebSettings &settings)
-{
+/*
+ *  Apply web engine settings to the environment variables.
+ *
+ *  Adds proxy configurations flags to env var "QTWEBENGINE_CHROMIUM_FLAGS".
+ *  Does nothing #if !defined(SEB_HAS_QTWEBENGINE)
+ *
+ *  @param settings We take proxy settings from `settings.browser.proxy`
+ */
+void applyWebEngineEnvironment(const seb::SebSettings &settings) {
 #if !SEB_HAS_QTWEBENGINE
     Q_UNUSED(settings);
     return;
