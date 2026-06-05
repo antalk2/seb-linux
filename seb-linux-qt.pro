@@ -212,7 +212,7 @@ HEADERS += \
     src/client/client_context.h \
     src/client/client_controller.h \
     src/client/composition_root.h \
-    src/client/contracts/coordinator.h \
+    src/client/contracts/i_coordinator.h \
     src/client/coordinator.h \
     src/client/notifications/about_notification.h \
     src/client/notifications/log_notification.h \
