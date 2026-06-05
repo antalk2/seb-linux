@@ -26,4 +26,4 @@ printf '%s\n' "${QMAKE_ARGS_FINGERPRINT}" > "${BUILD_CONFIG_STAMP}"
 # make -j"$(nproc)"
 popd >/dev/null
 
-echo "Build output: ${BUILD_DIR}/bin/safe-exam-browser"
+echo "Configured: ${BUILD_DIR}"
