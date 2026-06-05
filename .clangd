@@ -1,19 +1,49 @@
+# ccache g++ -c -pipe -Wall -Wextra -Wpedantic -g -std=gnu++2a -Wall
+#  -Wextra -fPIC -D_REENTRANT -DSEB_DEV_BYPASS_OPTION
+#  -DSEB_HAS_QTWEBENGINE=1 -DSEB_HAS_WEBKITGTK=0 -DSEB_HAS_ANY_ENGINE=1
+#  -DQT_WEBENGINEWIDGETS_LIB -DQT_PRINTSUPPORT_LIB -DQT_WIDGETS_LIB
+#  -DQT_WEBENGINECORE_LIB -DQT_QUICK_LIB -DQT_OPENGL_LIB -DQT_GUI_LIB
+#  -DQT_QMLMODELS_LIB -DQT_WEBCHANNEL_LIB -DQT_QML_LIB -DQT_NETWORK_LIB
+#  -DQT_XML_LIB -DQT_QMLINTEGRATION_LIB -DQT_POSITIONING_LIB
+#  -DQT_CORE_LIB -I../../seb-linux -I. -I../src
+#  -I/usr/include/x86_64-linux-gnu/qt6
+#  -I/usr/include/x86_64-linux-gnu/qt6/QtWebEngineWidgets
+#  -I/usr/include/x86_64-linux-gnu/qt6/QtPrintSupport
+#  -I/usr/include/x86_64-linux-gnu/qt6/QtWidgets
+#  -I/usr/include/x86_64-linux-gnu/qt6/QtWebEngineCore
+#  -I/usr/include/x86_64-linux-gnu/qt6/QtQuick
+#  -I/usr/include/x86_64-linux-gnu/qt6/QtOpenGL
+#  -I/usr/include/x86_64-linux-gnu/qt6/QtGui
+#  -I/usr/include/x86_64-linux-gnu/qt6/QtQmlModels
+#  -I/usr/include/x86_64-linux-gnu/qt6/QtWebChannel
+#  -I/usr/include/x86_64-linux-gnu/qt6/QtQml
+#  -I/usr/include/x86_64-linux-gnu/qt6/QtNetwork
+#  -I/usr/include/x86_64-linux-gnu/qt6/QtXml
+#  -I/usr/include/x86_64-linux-gnu/qt6/QtQmlIntegration
+#  -I/usr/include/x86_64-linux-gnu/qt6/QtPositioning
+#  -I/usr/include/x86_64-linux-gnu/qt6/QtCore
+#  -I.moc
+#  -I/usr/lib/x86_64-linux-gnu/qt6/mkspecs/linux-g++
+#  -o   .obj/src/applications/application_factory.o
+#  ../src/applications/application_factory.cpp
+
 CompileFlags:
   Add:
-    - -I/usr/include/qt6
-    - -I/usr/include/qt6/QtCore
-    - -I/usr/include/qt6/QtGui
-    - -I/usr/include/qt6/QtWidgets
-    - -I/usr/include/qt6/QtWebEngineCore
-    - -I/usr/include/qt6/QtWebEngineWidgets
-    - -I/usr/include/qt6/QtNetwork
-    - -I/usr/include/qt6/QtXml
-    - -I/usr/include/qt6/QtPrintSupport
-    - -I/usr/include/qt6/QtWebChannel
-    - -I/usr/include/qt6/QtQml
-    - -I/usr/include/qt6/QtQmlIntegration
-    - -I/usr/include/qt6/QtPositioning
-    - -Isrc
+    - -I/usr/include/x86_64-linux-gnu/qt6
+    - -I/usr/include/x86_64-linux-gnu/qt6/QtCore
+    - -I/usr/include/x86_64-linux-gnu/qt6/QtGui
+    - -I/usr/include/x86_64-linux-gnu/qt6/QtWidgets
+    - -I/usr/include/x86_64-linux-gnu/qt6/QtWebEngineCore
+    - -I/usr/include/x86_64-linux-gnu/qt6/QtWebEngineWidgets
+    - -I/usr/include/x86_64-linux-gnu/qt6/QtNetwork
+    - -I/usr/include/x86_64-linux-gnu/qt6/QtXml
+    - -I/usr/include/x86_64-linux-gnu/qt6/QtPrintSupport
+    - -I/usr/include/x86_64-linux-gnu/qt6/QtWebChannel
+    - -I/usr/include/x86_64-linux-gnu/qt6/QtQml
+    - -I/usr/include/x86_64-linux-gnu/qt6/QtQmlIntegration
+    - -I/usr/include/x86_64-linux-gnu/qt6/QtPositioning
+    - -I/home/antalk/d/safe-exam-browser/seb-linux/src
     - -x
     - c++
-    - -std=c++20
+#    - -std=c++20
+    - -std=gnu++2a
