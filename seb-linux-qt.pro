@@ -160,7 +160,7 @@ SOURCES += \
     src/browser/engines/webkitgtk/webkitgtk_profile.cpp \
     src/browser/engines/webkitgtk/webkitgtk_provider.cpp \
     src/browser/engines/webkitgtk/webkitgtk_view.cpp \
-    src/browser/key_generator.cpp \
+    src/browser/browser_key_generator.cpp \
     src/browser/request_filter.cpp \
     src/browser/request_interceptor.cpp \
     src/browser/engines/engine_factory.cpp \
