@@ -6,20 +6,22 @@
 
 namespace seb::client {
 
-class Coordinator : public contracts::ICoordinator
-{
-public:
-    bool isReconfigurationLocked() const override;
-    bool isSessionLocked() const override;
-    void releaseReconfigurationLock() override;
-    void releaseSessionLock() override;
-    bool requestReconfigurationLock() override;
-    bool requestSessionLock() override;
+class Coordinator : public contracts::ICoordinator {
+ public:
+  // reconfiguration lock
+  bool isReconfigurationLocked() const override;
+  void releaseReconfigurationLock() override;
+  bool requestReconfigurationLock() override;
 
-private:
-    mutable QMutex mutex_;
-    bool reconfigurationLocked_ = false;
-    bool sessionLocked_ = false;
+  // session lock
+  bool isSessionLocked() const override;
+  void releaseSessionLock() override;
+  bool requestSessionLock() override;
+
+ private:
+  mutable QMutex mutex_;
+  bool reconfigurationLocked_ = false;
+  bool sessionLocked_ = false;
 };
 
 }  // namespace seb::client
