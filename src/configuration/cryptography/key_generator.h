@@ -5,9 +5,10 @@
 
 namespace seb::configuration::cryptography {
 
-class KeyGenerator : public contracts::cryptography::IKeyGenerator {
+// was: KeyGenerator
+class CryptoKeyGenerator : public contracts::cryptography::ICryptoKeyGenerator {
  public:
-  explicit KeyGenerator(const contracts::AppConfig& appConfig);
+  explicit CryptoKeyGenerator(const contracts::AppConfig& appConfig);
 
   QString calculateAppSignatureKey(const QString& connectionToken,
                                    const QString& salt) override;

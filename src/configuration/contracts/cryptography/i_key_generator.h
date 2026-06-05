@@ -5,10 +5,11 @@
 
 namespace seb::configuration::contracts::cryptography {
 
-class IKeyGenerator
+// was: IKeyGenerator
+class ICryptoKeyGenerator
 {
 public:
-    virtual ~IKeyGenerator() = default;
+    virtual ~ICryptoKeyGenerator() = default;
     virtual QString calculateAppSignatureKey(const QString &connectionToken, const QString &salt) = 0;
     virtual QString calculateBrowserExamKeyHash(const QString &configurationKey, const QByteArray &salt, const QString &url) = 0;
     virtual QString calculateConfigurationKeyHash(const QString &configurationKey, const QString &url) = 0;

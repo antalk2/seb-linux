@@ -11,24 +11,24 @@
 
 namespace seb::browser {
 
-KeyGenerator::KeyGenerator(const seb::SebSettings& settings)
+BrowserKeyGenerator::BrowserKeyGenerator(const seb::SebSettings& settings)
     : settings_(settings) {}
 
-QByteArray KeyGenerator::configurationKeyHash(const QUrl& url) const {
+QByteArray BrowserKeyGenerator::configurationKeyHash(const QUrl& url) const {
   return QCryptographicHash::hash(
              (normalizeUrl(url) + settings_.browser.configurationKey).toUtf8(),
              QCryptographicHash::Sha256)
       .toHex();
 }
 
-QByteArray KeyGenerator::requestHash(const QUrl& url) const {
+QByteArray BrowserKeyGenerator::requestHash(const QUrl& url) const {
   return QCryptographicHash::hash(
              (normalizeUrl(url) + browserExamKey()).toUtf8(),
              QCryptographicHash::Sha256)
       .toHex();
 }
 
-QString KeyGenerator::browserExamKey() const {
+QString BrowserKeyGenerator::browserExamKey() const {
   if (!settings_.browser.customBrowserExamKey.isEmpty()) {
     return settings_.browser.customBrowserExamKey;
   }
@@ -47,7 +47,7 @@ QString KeyGenerator::browserExamKey() const {
   return browserExamKey_;
 }
 
-QString KeyGenerator::executableHash() const {
+QString BrowserKeyGenerator::executableHash() const {
   if (!executableHash_.isEmpty()) {
     return executableHash_;
   }
@@ -64,13 +64,13 @@ QString KeyGenerator::executableHash() const {
   return executableHash_;
 }
 
-QString KeyGenerator::buildVersion() const {
+QString BrowserKeyGenerator::buildVersion() const {
   const QByteArray fromEnv = qgetenv("SEB_PROGRAM_BUILD_VERSION");
   return fromEnv.isEmpty() ? QCoreApplication::applicationVersion()
                             : QString::fromLocal8Bit(fromEnv);
 }
 
-QString KeyGenerator::codeSignatureHash() const {
+QString BrowserKeyGenerator::codeSignatureHash() const {
   const QByteArray override = qgetenv("SEB_CODE_SIGNATURE_HASH");
   if (!override.isEmpty()) {
     return QString::fromLatin1(override).trimmed();
@@ -79,7 +79,7 @@ QString KeyGenerator::codeSignatureHash() const {
   return executableHash();
 }
 
-QString KeyGenerator::normalizeUrl(const QUrl& url) const {
+QString BrowserKeyGenerator::normalizeUrl(const QUrl& url) const {
   return url.adjusted(QUrl::RemoveFragment).toString();
 }
 

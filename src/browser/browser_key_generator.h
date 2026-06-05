@@ -10,9 +10,10 @@ QT_END_NAMESPACE
 
 namespace seb::browser {
 
-class KeyGenerator {
+// was: KeyGenerator
+class BrowserKeyGenerator {
  public:
-  explicit KeyGenerator(const seb::SebSettings& settings);
+  explicit BrowserKeyGenerator(const seb::SebSettings& settings);
 
   QByteArray configurationKeyHash(const QUrl& url) const;
   QByteArray requestHash(const QUrl& url) const;

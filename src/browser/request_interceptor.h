@@ -22,7 +22,7 @@ private:
 
     seb::SebSettings settings_;
     RequestFilter filter_;
-    KeyGenerator keyGenerator_;
+    BrowserKeyGenerator keyGenerator_;
 };
 
 }  // namespace seb::browser

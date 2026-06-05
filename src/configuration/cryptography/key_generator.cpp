@@ -5,37 +5,37 @@
 
 namespace seb::configuration::cryptography {
 
-KeyGenerator::KeyGenerator(const contracts::AppConfig &appConfig)
+CryptoKeyGenerator::CryptoKeyGenerator(const contracts::AppConfig &appConfig)
     : appConfig_(appConfig)
 {
 }
 
-QString KeyGenerator::calculateAppSignatureKey(const QString &connectionToken, const QString &salt)
+QString CryptoKeyGenerator::calculateAppSignatureKey(const QString &connectionToken, const QString &salt)
 {
     return hashBytes((connectionToken + salt).toUtf8());
 }
 
-QString KeyGenerator::calculateBrowserExamKeyHash(const QString &configurationKey, const QByteArray &salt, const QString &url)
+QString CryptoKeyGenerator::calculateBrowserExamKeyHash(const QString &configurationKey, const QByteArray &salt, const QString &url)
 {
     const QString urlWithoutFragment = url.section('#', 0, 0);
     const QString key = browserExamKey_.isEmpty() ? computeBrowserExamKey(configurationKey, salt) : browserExamKey_;
     return hashBytes((urlWithoutFragment + key).toUtf8());
 }
 
-QString KeyGenerator::calculateConfigurationKeyHash(const QString &configurationKey, const QString &url)
+QString CryptoKeyGenerator::calculateConfigurationKeyHash(const QString &configurationKey, const QString &url)
 {
     const QString urlWithoutFragment = url.section('#', 0, 0);
     return hashBytes((urlWithoutFragment + configurationKey).toUtf8());
 }
 
-void KeyGenerator::useCustomBrowserExamKey(const QString &browserExamKey)
+void CryptoKeyGenerator::useCustomBrowserExamKey(const QString &browserExamKey)
 {
     if (!browserExamKey.isEmpty()) {
         browserExamKey_ = browserExamKey;
     }
 }
 
-QString KeyGenerator::computeBrowserExamKey(const QString &configurationKey, const QByteArray &salt)
+QString CryptoKeyGenerator::computeBrowserExamKey(const QString &configurationKey, const QByteArray &salt)
 {
     if (browserExamKey_.isEmpty()) {
         const QByteArray input = (appConfig_.codeSignatureHash + appConfig_.programBuildVersion + configurationKey).toUtf8();
@@ -44,7 +44,7 @@ QString KeyGenerator::computeBrowserExamKey(const QString &configurationKey, con
     return browserExamKey_;
 }
 
-QString KeyGenerator::hashBytes(const QByteArray &data)
+QString CryptoKeyGenerator::hashBytes(const QByteArray &data)
 {
     return QString::fromLatin1(QCryptographicHash::hash(data, QCryptographicHash::Sha256).toHex());
 }
