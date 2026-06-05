@@ -288,7 +288,6 @@ HEADERS += \
     src/communication/proxies/proxy_object_factory.h \
     src/communication/proxies/runtime_proxy.h \
     src/communication/proxies/service_proxy.h \
-    src/configuration/Properties/AssemblyInfo.h \
     src/configuration/configuration_data/data_mapper.h \
     src/configuration/configuration_data/data_processor.h \
     src/configuration/configuration_data/data_values.h \
@@ -309,7 +308,6 @@ HEADERS += \
     src/configuration/configuration_data/json.h \
     src/configuration/configuration_data/keys.h \
     src/configuration/configuration_repository.h \
-    src/configuration/contracts/Properties/AssemblyInfo.h \
     src/configuration/contracts/app_config.h \
     src/configuration/contracts/client_configuration.h \
     src/configuration/contracts/cryptography/encryption_parameters.h \
