@@ -1,6 +1,6 @@
 #pragma once
 
-#include "applications/contracts/application_window.h"
+#include "applications/contracts/i_application_window.h"
 #include "applications/contracts/events/windows_changed_event_handler.h"
 
 #include <QList>

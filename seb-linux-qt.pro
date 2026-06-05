@@ -203,8 +203,8 @@ HEADERS += \
     src/applications/application_manager.h \
     src/applications/application_window.h \
     src/applications/contracts/application.h \
-    src/applications/contracts/application_factory.h \
-    src/applications/contracts/application_window.h \
+    src/applications/contracts/i_application_factory.h \
+    src/applications/contracts/i_application_window.h \
     src/applications/contracts/events/icon_changed_event_handler.h \
     src/applications/contracts/events/title_changed_event_handler.h \
     src/applications/contracts/events/windows_changed_event_handler.h \
