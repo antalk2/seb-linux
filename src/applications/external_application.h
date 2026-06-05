@@ -1,6 +1,6 @@
 #pragma once
 
-#include "applications/contracts/application.h"
+#include "applications/contracts/i_application.h"
 #include "seb_settings.h"
 
 #include <QObject>

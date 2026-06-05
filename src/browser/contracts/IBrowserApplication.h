@@ -1,6 +1,6 @@
 #pragma once
 
-#include "applications/contracts/application.h"
+#include "applications/contracts/i_application.h"
 #include "browser/contracts/IBrowserWindow.h"
 
 namespace seb::browser::contracts {
