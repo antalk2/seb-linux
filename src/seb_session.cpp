@@ -78,7 +78,7 @@ QString getCachedSebVersion()
 
 }  // namespace
 
-SebSession::SebSession(const seb::SebSettings &settings, ResourceOpener opener, QObject *parent)
+SebSession::SebSession(const seb::SebSettings &settings, SebSessionResourceOpener opener, QObject *parent)
     : QObject(parent)
     , settings_(settings)
     , opener_(std::move(opener))
