@@ -232,13 +232,21 @@ struct ResourceLoadResult
 
 SebSettings defaultSettings();
 LoadResult loadSettingsFromFile(const QString &path);
+
+typedef const std::function<QString (bool)> & PasswordProvider ;
+
 LoadResult loadSettingsFromData(
     const QByteArray &raw,
-    const QString &sourceName = {},
-    const std::function<QString (bool)> &passwordProvider = {});
+    const QString    &sourceName = {},
+    // const std::function<QString (bool)> &passwordProvider = {}
+    PasswordProvider passwordProvider = {}
+);
+
 ResourceLoadResult loadSettingsFromResource(
     const QString &resource,
-    const std::function<QString (bool)> &passwordProvider = {});
+    // const std::function<QString (bool)> &passwordProvider = {}
+    PasswordProvider passwordProvider = {}
+);
 
 void applyDevBypassOverrides(SebSettings &settings);
 

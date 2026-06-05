@@ -26,7 +26,8 @@ SebSettings browserFallbackSettings(const QUrl &url)
 
 ResourceLoadResult loadSettingsFromNetworkResource(
     const QUrl &url,
-    const std::function<QString (bool)> &passwordProvider)
+    const std::function<QString (bool)> &passwordProvider
+)
 {
     ResourceLoadResult result;
 

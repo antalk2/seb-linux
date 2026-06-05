@@ -14,6 +14,7 @@
 namespace seb::browser {
 class RequestInterceptor;
 }
+
 namespace seb::applications {
 class ApplicationManager;
 class ExternalApplication;
@@ -32,15 +33,22 @@ class IWebProfile;
 class IEngineProvider;
 }
 
+
+typedef std::function<bool(const QString &, QWidget *)> SebSessionResourceOpener;
+
+
 class SebSession : public QObject
 {
     Q_OBJECT
 
 public:
-    using ResourceOpener = std::function<bool(const QString &, QWidget *)>;
 
-    explicit SebSession(const seb::SebSettings &settings, ResourceOpener opener, QObject *parent = nullptr);
-    ~SebSession() override;
+  explicit SebSession( const seb::SebSettings&    settings
+                       , SebSessionResourceOpener opener
+                       , QObject*                 parent = nullptr
+                       );
+
+  ~SebSession() override;
 
     BrowserWindow *createWindow(const QUrl &url, bool isMainWindow);
     bool applyProxyAuthentication(const QString &proxyHost, QAuthenticator *authenticator) const;
@@ -50,7 +58,9 @@ public:
     bool isQuitUrl(const QUrl &url) const;
     bool promptForHomeNavigation(QWidget *parent) const;
     bool requestApplicationQuit(QWidget *parent, const QString &reason) const;
-    const seb::SebSettings &settings() const;
+  
+    const seb::SebSettings& settings() const;
+  
     seb::browser::contracts::IWebProfile *profile() const;
     seb::browser::contracts::IEngineProvider *engineProvider() const;
     QUrl homeUrl() const;
@@ -70,7 +80,12 @@ public slots:
     void activateWindow(BrowserWindow *window);
 
 private:
-    void handleDownloadRequested(const QUrl &url, const QString &suggestedFilename, bool &accepted, QString &downloadDirectory);
+    void handleDownloadRequested(  const QUrl &url
+                                 , const QString &suggestedFilename
+                                 , bool &accepted
+                                 , QString &downloadDirectory
+                                 );
+  
     QString buildUserAgent() const;
     QString defaultDownloadDirectory() const;
     QString normalizeUrl(const QUrl &url) const;
@@ -83,6 +98,6 @@ private:
     std::unique_ptr<QTemporaryDir> profileDirectory_;
     std::unique_ptr<QTemporaryDir> downloadDirectory_;
     std::unique_ptr<seb::applications::ApplicationManager> applicationManager_;
-    ResourceOpener opener_;
+    SebSessionResourceOpener opener_;
     QList<BrowserWindow *> browserWindows_;
 };

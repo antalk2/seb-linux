@@ -111,6 +111,6 @@ void RuntimeWindow::setStatusText(const QString &text)
 
 void RuntimeWindow::setVersionText(const QString &version, const QString &build)
 {
-    infoLabel_->setText(QStringLiteral("Version %1").arg(version));
+    infoLabel_->setText( QStringLiteral("Version %1").arg(version) );
     Q_UNUSED(build);
 }

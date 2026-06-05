@@ -1,2 +1,12 @@
 ---
 BasedOnStyle: Chromium
+AlignAfterOpenBracket: AlwaysBreak
+AlignConsecutiveDeclarations:
+  Enabled: true
+  AlignCompound: true
+AllowAllParametersOfDeclarationOnNextLine: true
+BinPackParameters: AlwaysOnePerLine
+AlignOperands: AlignAfterOperator
+BreakBeforeBinaryOperators: All
+BreakBeforeTernaryOperators: true
+LambdaBodyIndentation: Signature

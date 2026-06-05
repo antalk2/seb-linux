@@ -111,8 +111,10 @@ LoadResult loadSettingsFromFile(const QString &path)
 }
 
 ResourceLoadResult loadSettingsFromResource(
-    const QString &resource,
-    const std::function<QString (bool)> &passwordProvider)
+        const QString &resource,
+        // const std::function<QString (bool)> &passwordProvider
+        PasswordProvider passwordProvider
+)
 {
     ResourceLoadResult result;
     const QString trimmed = resource.trimmed();
