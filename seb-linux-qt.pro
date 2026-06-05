@@ -135,7 +135,7 @@ SOURCES += \
     src/configuration/configuration_repository.cpp \
     src/configuration/cryptography/certificate_store.cpp \
     src/configuration/cryptography/hash_algorithm.cpp \
-    src/configuration/cryptography/key_generator.cpp \
+    src/configuration/cryptography/crypto_key_generator.cpp \
     src/configuration/cryptography/password_encryption.cpp \
     src/configuration/cryptography/public_key_encryption.cpp \
     src/configuration/cryptography/public_key_symmetric_encryption.cpp \
@@ -313,7 +313,7 @@ HEADERS += \
     src/configuration/contracts/cryptography/encryption_parameters.h \
     src/configuration/contracts/cryptography/i_certificate_store.h \
     src/configuration/contracts/cryptography/i_hash_algorithm.h \
-    src/configuration/contracts/cryptography/i_key_generator.h \
+    src/configuration/contracts/cryptography/i_crypto_key_generator.h \
     src/configuration/contracts/cryptography/i_password_encryption.h \
     src/configuration/contracts/cryptography/i_public_key_encryption.h \
     src/configuration/contracts/cryptography/password_parameters.h \
@@ -333,7 +333,7 @@ HEADERS += \
     src/configuration/contracts/session_configuration.h \
     src/configuration/cryptography/certificate_store.h \
     src/configuration/cryptography/hash_algorithm.h \
-    src/configuration/cryptography/key_generator.h \
+    src/configuration/cryptography/crypto_key_generator.h \
     src/configuration/cryptography/password_encryption.h \
     src/configuration/cryptography/public_key_encryption.h \
     src/configuration/cryptography/public_key_symmetric_encryption.h \
