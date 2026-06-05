@@ -23,7 +23,7 @@ fi
 echo "Configuring build with: qmake6 ../seb-linux-qt.pro ${QMAKE_ARGS[*]}"
 qmake6 ../seb-linux-qt.pro "${QMAKE_ARGS[@]}"
 printf '%s\n' "${QMAKE_ARGS_FINGERPRINT}" > "${BUILD_CONFIG_STAMP}"
-make -j"$(nproc)"
+# make -j"$(nproc)"
 popd >/dev/null
 
 echo "Build output: ${BUILD_DIR}/bin/safe-exam-browser"
