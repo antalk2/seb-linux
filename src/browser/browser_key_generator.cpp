@@ -65,9 +65,9 @@ QString KeyGenerator::executableHash() const {
 }
 
 QString KeyGenerator::buildVersion() const {
-  const QByteArray override = qgetenv("SEB_PROGRAM_BUILD_VERSION");
-  return override.isEmpty() ? QCoreApplication::applicationVersion()
-                            : QString::fromLocal8Bit(override);
+  const QByteArray fromEnv = qgetenv("SEB_PROGRAM_BUILD_VERSION");
+  return fromEnv.isEmpty() ? QCoreApplication::applicationVersion()
+                            : QString::fromLocal8Bit(fromEnv);
 }
 
 QString KeyGenerator::codeSignatureHash() const {
