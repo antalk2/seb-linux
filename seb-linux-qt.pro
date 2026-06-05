@@ -208,7 +208,6 @@ HEADERS += \
     src/applications/contracts/events/icon_changed_event_handler.h \
     src/applications/contracts/events/title_changed_event_handler.h \
     src/applications/contracts/events/windows_changed_event_handler.h \
-    src/applications/contracts/factory_result.h \
     src/applications/external_application.h \
     src/applications/external_application_instance.h \
     src/client/client_context.h \
