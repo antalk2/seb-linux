@@ -31,8 +31,8 @@ SebSettings defaultSettings()
 }
 
 LoadResult loadSettingsFromData(
-    const QByteArray &sourceData,
-    const QString &sourceName,
+    const QByteArray& sourceData,
+    const QString&    sourceName,
     const std::function<QString (bool)> &passwordProvider)
 {
     LoadResult result;
@@ -95,8 +95,10 @@ LoadResult loadSettingsFromData(
     return result;
 }
 
-LoadResult loadSettingsFromFile(const QString &path)
-{
+/*
+ *
+ */
+LoadResult loadSettingsFromFile(const QString &path) {
     QFile file(path);
     LoadResult result;
     result.settings = defaultSettings();
