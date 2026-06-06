@@ -571,6 +571,7 @@ int main( int argc, char *argv[] ) {
                              ? QString()
                              : parser.positionalArguments().constFirst()
                              );
+    qWarning() << "main resource is: " << resource ; // xxx
 
     /*
      * Get password from env SEB_PASSWORD or from GUI.
