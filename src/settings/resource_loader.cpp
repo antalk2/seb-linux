@@ -54,12 +54,14 @@ ResourceLoadResult loadSettingsFromNetworkResource(
         return result;
     }
 
-    if (!isSebExtension && (httpStatus == 401 || contentType.startsWith("text/html") || looksLikeHtml(body))) {
+    if ( !isSebExtension && (httpStatus == 401 || contentType.startsWith("text/html") || looksLikeHtml(body)) ) {
         result.settings = browserFallbackSettings(url);
         result.browserUrl = url;
         result.ok = true;
         result.openInBrowser = true;
-        result.warnings << QStringLiteral("The remote resource returned an authenticated or HTML response and was opened in the browser.");
+        result.warnings << QStringLiteral("The remote resource returned"
+                                          " an authenticated or HTML response"
+                                          " and was opened in the browser.");
         reply->deleteLater();
         return result;
     }
