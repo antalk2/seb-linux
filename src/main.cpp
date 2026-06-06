@@ -477,17 +477,25 @@ int main( int argc, char *argv[] ) {
     parser.addHelpOption();
     parser.addVersionOption();
 
-    parser.addOption( QCommandLineOption(
-               QStringList{ QStringLiteral("c")
-                          , QStringLiteral("config") }
-             , QStringLiteral( "Load settings from a JSON file"
-                               " or an unencrypted XML plist .seb file." )
-             , QStringLiteral("file")   ) );
+    // OPT211( name1, name2, desc, valueName ) defines a command line
+    //            option that has two names, a description and a name
+    //            for the corresponding value.
+#define OPT211( name1, name2, desc, valueName  )       \
+    parser.addOption( QCommandLineOption(              \
+               QStringList{ QStringLiteral(name1)      \
+                          , QStringLiteral(name2) }    \
+             , QStringLiteral( desc )                  \
+             , QStringLiteral( valueName )   ) )
 
-    parser.addOption( QCommandLineOption(
-          QStringList{ QStringLiteral("u"), QStringLiteral("url") }
-        , QStringLiteral("Override the configured start URL.")
-        , QStringLiteral("url") ) );
+    OPT211( "c", "config"
+          , "Load settings from a JSON file or an unencrypted XML plist .seb file."
+          , "file" );
+
+    OPT211( "u", "url"
+          , "Override the configured start URL."
+          , "url" );
+
+#undef OPT211
 
     parser.addPositionalArgument(
           QStringLiteral("resource")
