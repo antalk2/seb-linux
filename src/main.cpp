@@ -325,16 +325,19 @@ void applyProtectedSessionSettings( seb::SebSettings &seb_settings,
     seb_settings.browser.allowPrint                       = false;
     seb_settings.browser.allowSpellChecking               = false;
     seb_settings.browser.allowUploads                     = false;
+    //
     seb_settings.taskbar.showApplicationInfo = false;
     seb_settings.taskbar.showApplicationLog  = false;
     seb_settings.taskbar.showAudio           = false;
     seb_settings.taskbar.showKeyboardLayout  = false;
     seb_settings.taskbar.showNetwork         = false;
+    //
     seb_settings.security.allowTermination   = allowTermination;
     //
     if ( !allowConfiguredApps ) {
         seb_settings.applications.whitelist.clear();
         seb_settings.applications.blacklist.clear();
+        //
         seb_settings.taskbar.showProctoringNotification = false;
     }
 }
