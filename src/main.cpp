@@ -543,6 +543,7 @@ int main( int argc, char *argv[] ) {
 
     /*
      * Unlike in findConfigPath_firstHit(), here "--config <file>" is stronger then earlier <resource>
+     * For multiple --config arguments, it returns the last value.
      *
      * findConfigPath_preferConfig() is more similar to this one.
      */
