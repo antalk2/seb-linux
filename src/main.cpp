@@ -375,6 +375,15 @@ void applyEarlyEnvironment( int argc, char *argv[] ) {
         const seb::LoadResult loaded = seb::loadSettingsFromFile(configPath);
         if (loaded.ok) {
             seb_settings = loaded.settings;
+        } else {
+            // Hey, we could not load from configPath!
+            // Is it sane to ignore it silently?
+            // Is it sane to use defaultSettings() instead?
+          qWarning() << "applyEarlyEnvironment could not load config file:" << configPath << "\n"
+                     << "   " << loaded.error << "\n";
+          for ( QString w : loaded.warnings ){
+            qWarning() << "   " << w << "\n";
+          }
         }
     }
     //
