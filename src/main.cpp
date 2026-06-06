@@ -418,10 +418,8 @@ void applyCommandLineOverrides( const QCommandLineParser &parser, seb::SebSettin
     MW_bool2( "allow-navigation" , allowBackwardNavigation, true
                                  , allowForwardNavigation , true  );
 
-    if ( parser.isSet("allow-reload") ) {
-        seb_settings.browser.mainWindow.allowReloading   = true;
-        seb_settings.browser.mainWindow.showReloadButton = true;
-    }
+    MW_bool2( "allow-reload"     , allowReloading         , true
+                                 , showReloadButton       , true  );
 
     if ( parser.isSet("allow-devtools") ) {
         seb_settings.browser.mainWindow.allowDeveloperConsole = true;
