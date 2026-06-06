@@ -502,59 +502,28 @@ int main( int argc, char *argv[] ) {
         , QStringLiteral("Open a local .seb file, remote .seb URL, or seb:// / sebs:// resource.")
         );
 
-    parser.addOption( QCommandLineOption(
-          QStringLiteral("show-toolbar")
-        , QStringLiteral("Show the browser toolbar.") ) );
+    // OPT11( name, desc ) defines a command line option with a single
+    //                     name and description.
+#define OPT11( name, desc ) parser.addPositionalArgument( QStringLiteral(name), QStringLiteral(desc) )
 
-    parser.addOption( QCommandLineOption(
-          QStringLiteral("allow-address-bar")
-        , QStringLiteral("Enable the address bar.") ) );
-
-    parser.addOption( QCommandLineOption(
-          QStringLiteral("allow-navigation")
-        , QStringLiteral("Enable back and forward navigation in the main window.") ) );
-
-    parser.addOption( QCommandLineOption(
-          QStringLiteral("allow-reload")
-        , QStringLiteral("Enable reload in the main window.") ) );
-
-    parser.addOption( QCommandLineOption(
-          QStringLiteral("allow-devtools")
-        , QStringLiteral("Enable the developer tools shortcut (F12).") ) );
-
-    parser.addOption( QCommandLineOption(
-          QStringLiteral("windowed")
-        , QStringLiteral("Force the main window to stay windowed.") ) );
-
-    parser.addOption( QCommandLineOption(
-          QStringLiteral("fullscreen")
-        , QStringLiteral("Force the main window to be fullscreen.") ) );
-
-    parser.addOption( QCommandLineOption(
-          QStringLiteral("always-on-top")
-        , QStringLiteral("Keep the main window above other windows.") ) );
-
-    parser.addOption( QCommandLineOption(
-          QStringLiteral("disable-minimize")
-        , QStringLiteral("Prevent minimizing the main exam window.") ) );
-
-    parser.addOption( QCommandLineOption(
-          QStringLiteral("disable-quit")
-        , QStringLiteral("Disable manual termination even if the configuration allows it.") ) );
-
-    parser.addOption( QCommandLineOption(
-          QStringList { QStringLiteral("anti-cheat") }
-        , QStringLiteral("Enable anticheat mode.") ) );
-
-    parser.addOption( QCommandLineOption(
-          QStringList { QStringLiteral("menu-lockdown") }
-        , QStringLiteral("Enable the protected start-menu lockdown mode.") ) );
+    OPT11( "show-toolbar"      , "Show the browser toolbar.");
+    OPT11( "allow-address-bar" , "Enable the address bar."  );
+    OPT11( "allow-navigation"  , "Enable back and forward navigation in the main window.");
+    OPT11( "allow-reload"      , "Enable reload in the main window."          );
+    OPT11( "allow-devtools"    , "Enable the developer tools shortcut (F12)." );
+    OPT11( "windowed"          , "Force the main window to stay windowed."    );
+    OPT11( "fullscreen"        , "Force the main window to be fullscreen."    );
+    OPT11( "always-on-top"     , "Keep the main window above other windows."  );
+    OPT11( "disable-minimize"  , "Prevent minimizing the main exam window."   );
+    OPT11( "disable-quit"      , "Disable manual termination even if the configuration allows it." );
+    OPT11( "anti-cheat"        , "(*) Enable anticheat mode."    );
+    OPT11( "menu-lockdown"     , "(*) Enable the protected start-menu lockdown mode." );
 
 #if defined(QT_DEBUG) || defined(SEB_DEV_BYPASS_OPTION)
-    parser.addOption( QCommandLineOption(
-        QStringList { QStringLiteral("dev-bypass") }
-      , QStringLiteral("Skip strict lockdowns for development purposes.") ) );
+    OPT11( "dev-bypass"        , "(*) Skip strict lockdowns for development purposes." );
 #endif
+
+#undef OPT11
 
     parser.process( app );
 
