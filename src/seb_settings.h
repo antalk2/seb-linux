@@ -212,22 +212,20 @@ struct SebSettings
     bool devBypass = false;
 };
 
-struct LoadResult
-{
-    SebSettings settings;
-    QString error;
-    QStringList warnings;
-    bool ok = false;
+struct LoadResult {
+  SebSettings settings;
+  QString     error;
+  QStringList warnings;
+  bool        ok = false;
 };
 
-struct ResourceLoadResult
-{
+struct ResourceLoadResult {
     SebSettings settings;
-    QUrl browserUrl;
-    QString error;
+    QUrl        browserUrl;
+    QString     error;
     QStringList warnings;
-    bool ok = false;
-    bool openInBrowser = false;
+    bool        ok            = false;
+    bool        openInBrowser = false;
 };
 
 SebSettings defaultSettings();
