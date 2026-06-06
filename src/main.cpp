@@ -497,7 +497,8 @@ int main( int argc, char *argv[] ) {
 
     // OPT11( name, desc ) defines a command line option with a single
     //                     name and description.
-#define OPT11( name, desc ) parser.addPositionalArgument( QStringLiteral(name), QStringLiteral(desc) )
+#define OPT11( name1, desc1 ) \
+    parser.addOption( QCommandLineOption( QStringLiteral(name1), QStringLiteral(desc1) ))
 
     OPT11( "show-toolbar"      , "Show the browser toolbar.");
     OPT11( "allow-address-bar" , "Enable the address bar."  );
