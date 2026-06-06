@@ -561,7 +561,9 @@ int main( int argc, char *argv[] ) {
 #endif
 
     /*
-     * Unlike in findConfigPath(), here "--config <file>" is stronger then earlier <file>
+     * Unlike in findConfigPath_firstHit(), here "--config <file>" is stronger then earlier <resource>
+     *
+     * findConfigPath_preferConfig() is more similar to this one.
      */
     const QString resource = parser.isSet("config")
                            ? parser.value("config")
