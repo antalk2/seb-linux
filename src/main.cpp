@@ -168,7 +168,9 @@ QString findConfigPath_firstHit( int argc, char *argv[] ) {
  * Scan argv for (("-c" or "--config") followed by <file>)
  * or <resource> : an argument not starting with "-".
  *
- * At the *first hit*, return <file> or <resource>.
+ * If --config or -c found, return <file> from the last one.
+ * Otherwise return <resource> (the first one if there are more)
+ * Otherwise return ""
  *
  * Note: For `--config ""` returns `""` even if `resource` is available.
  *
