@@ -132,30 +132,84 @@ bool setup_barebones_vt() {
     return true;
 }
 
+#if 0
 /*
- * Find and return --config <arg> or <file>
+ * Find and return --config <file> or <resource>
  *
  * Scan argv for (("-c" or "--config") followed by another argument)
  * or an argument not starting with "-".
  *
- * At the first hit, return "another argument" or the (argument not starting with "-").
+ * At the *first hit*, return "another argument" or the (argument not starting with "-").
  *
  */
-QString findConfigPath( int argc, char *argv[] ) {
+QString findConfigPath_firstHit( int argc, char *argv[] ) {
     const QString c1 = QStringLiteral("--config");
     const QString c2 = QStringLiteral("-c");
     //
+    QString res = {};
     for (int index = 1; index < argc; ++index) {
         const QString argument = QString::fromLocal8Bit( argv[index] );
         if ( (argument == c1 || argument == c2) && index + 1 < argc) {
-            return QString::fromLocal8Bit( argv[index+1] );
+            res = QString::fromLocal8Bit( argv[index+1] );
+            break;
         }
         if ( !argument.startsWith('-') ) {
-            return argument;
+            res = argument;
+            break;
         }
     }
-    return {};
+    qWarning() << "findConfigPath_firstHit result: " << res ; // xxx
+    return res;
 }
+#endif
+
+/*
+ * Find and return --config <file> or <resource>
+ *
+ * Scan argv for (("-c" or "--config") followed by <file>)
+ * or <resource> : an argument not starting with "-".
+ *
+ * At the *first hit*, return <file> or <resource>.
+ *
+ * Note: For `--config ""` returns `""` even if `resource` is available.
+ *
+ */
+QString findConfigPath_preferConfig( int argc, char *argv[] ) {
+    const QString c1 = QStringLiteral("--config");
+    const QString c2 = QStringLiteral("-c");
+    //
+    bool haveConfig   = false;
+    bool haveResource = false;
+    QString config   = {};
+    QString resource = {};
+    //
+    for (int index = 1; index < argc; ++index) {
+        const QString argument = QString::fromLocal8Bit( argv[index] );
+        if ( (argument == c1 || argument == c2) && index + 1 < argc ) {
+            if ( haveConfig ) {
+              qWarning() << "Multiple { --config | -c } flags on the command line. Keeping the first.";
+            } else {
+              config     = QString::fromLocal8Bit( argv[index+1] );
+              haveConfig = true;
+            }
+            index++;
+        } else if ( !argument.startsWith('-') ) {
+          if ( haveResource ) {
+            qWarning() << "Multiple 'resource' arguments on the command line. Keeping the first.";
+          } else {
+            resource     = argument;
+            haveResource = true;
+          }
+        }
+    }
+    QString result = ( haveConfig
+                     ? config
+                     : resource
+                       );
+    qWarning() << "findConfigPath_preferConfig result: " << result ; // xxx
+    return result;
+}
+
 
 bool hasArgument( int argc, char *argv[], const QString& value ) {
     for (int index = 1; index < argc; ++index) {
@@ -288,6 +342,9 @@ void applyProtectedSessionSettings( seb::SebSettings &seb_settings,
 }
 
 /*
+ * Purpose: Decide if we need an anti-cheat VT according to the
+ * command line.
+ *
  * This function fails if (not running as root, but "--menu-lockdown"
  * or "--anti-cheat" is in argv).
  *
@@ -300,27 +357,27 @@ void applyProtectedSessionSettings( seb::SebSettings &seb_settings,
  *  Finally: seb::browser::applyWebEngineEnvironment( seb_settings )
  */
 void applyEarlyEnvironment( int argc, char *argv[] ) {
+    const QString configPath    = findConfigPath_preferConfig(argc, argv);
+    const bool hasConfig        = !configPath.isEmpty();
+    //
     seb::SebSettings seb_settings = seb::defaultSettings();
-    const QString configPath      = findConfigPath(argc, argv);
-    const bool hasResource        = !configPath.isEmpty();
-    //
-    const bool isExamAntiCheat = hasArgument(argc, argv, QStringLiteral("--anti-cheat"));
-    const bool isMenuLockdown  = hasArgument(argc, argv, QStringLiteral("--menu-lockdown"));
-    //
-    if ( !configPath.isEmpty() ) {
+    if ( hasConfig ) {
         const seb::LoadResult loaded = seb::loadSettingsFromFile(configPath);
         if (loaded.ok) {
             seb_settings = loaded.settings;
         }
     }
     //
+    const bool isExamAntiCheat = hasArgument(argc, argv, QStringLiteral("--anti-cheat"));
+    const bool isMenuLockdown  = hasArgument(argc, argv, QStringLiteral("--menu-lockdown"));
+    //
     if ( isExamAntiCheat || isMenuLockdown ) {
-        if ( isMenuLockdown || (isExamAntiCheat && hasResource) ) {
+        if ( isMenuLockdown || (isExamAntiCheat && hasConfig) ) {
             if ( !setup_barebones_vt() ) {
                 qCritical() << "Anti-cheat VT setup failed; aborting.";
                 _exit(1);
             }
-            qputenv("QT_QPA_PLATFORM", "linuxfb");
+            qputenv("QT_QPA_PLATFORM" , "linuxfb");
             qputenv("QT_QUICK_BACKEND", "software");
         }
 #if SEB_HAS_QTWEBENGINE
