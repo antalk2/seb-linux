@@ -396,6 +396,7 @@ void applyEarlyEnvironment( int argc, char *argv[] ) {
  * @parser seb_settings Settings to be modified.
  */
 void applyCommandLineOverrides( const QCommandLineParser &parser, seb::SebSettings &seb_settings ) {
+
     if ( parser.isSet("url") ) {
         seb_settings.browser.startUrl = parser.value("url").trimmed();
     }
