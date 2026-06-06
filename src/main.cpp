@@ -412,10 +412,8 @@ void applyCommandLineOverrides( const QCommandLineParser &parser, seb::SebSettin
 
     MW_bool1( "show-toolbar"     , showToolbar    , true );
 
-    if ( parser.isSet("allow-address-bar") ) {
-        seb_settings.browser.mainWindow.allowAddressBar = true;
-        seb_settings.browser.mainWindow.showToolbar     = true;
-    }
+    MW_bool2( "allow-address-bar", allowAddressBar, true
+                                 , showToolbar    , true );
 
     if ( parser.isSet("allow-navigation") ) {
         seb_settings.browser.mainWindow.allowBackwardNavigation = true;
