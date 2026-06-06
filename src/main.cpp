@@ -406,7 +406,7 @@ void applyCommandLineOverrides( const QCommandLineParser &parser, seb::SebSettin
 
     if ( parser.isSet("allow-address-bar") ) {
         seb_settings.browser.mainWindow.allowAddressBar = true;
-        seb_settings.browser.mainWindow.showToolbar = true;
+        seb_settings.browser.mainWindow.showToolbar     = true;
     }
 
     if ( parser.isSet("allow-navigation") ) {
@@ -481,7 +481,7 @@ int main( int argc, char *argv[] ) {
                QStringList{ QStringLiteral("c")
                           , QStringLiteral("config") }
              , QStringLiteral( "Load settings from a JSON file"
-                               " or an unencrypted XML plist .seb file.")
+                               " or an unencrypted XML plist .seb file." )
              , QStringLiteral("file")   ) );
 
     parser.addOption( QCommandLineOption(
