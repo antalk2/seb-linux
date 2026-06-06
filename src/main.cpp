@@ -397,6 +397,15 @@ void applyEarlyEnvironment( int argc, char *argv[] ) {
  */
 void applyCommandLineOverrides( const QCommandLineParser &parser, seb::SebSettings &seb_settings ) {
 
+#define MW_bool1( name, mainwindow_field, value ) \
+    if ( parser.isSet(name) ) { seb_settings.browser.mainWindow.mainwindow_field = value; }
+
+#define MW_bool2( name, mainwindow_field1, value1, mainwindow_field2, value2 )  \
+    if ( parser.isSet(name) ) {                                                 \
+        seb_settings.browser.mainWindow.mainwindow_field1 = value1;             \
+        seb_settings.browser.mainWindow.mainwindow_field2 = value2;             \
+    }
+
     if ( parser.isSet("url") ) {
         seb_settings.browser.startUrl = parser.value("url").trimmed();
     }
@@ -447,6 +456,9 @@ void applyCommandLineOverrides( const QCommandLineParser &parser, seb::SebSettin
         seb_settings.devBypass = true;
     }
 #endif
+
+#undef MW_bool1
+#undef MW_bool2
 }
 
 }  // namespace
