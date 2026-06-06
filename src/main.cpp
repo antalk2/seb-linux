@@ -421,23 +421,11 @@ void applyCommandLineOverrides( const QCommandLineParser &parser, seb::SebSettin
     MW_bool2( "allow-reload"     , allowReloading         , true
                                  , showReloadButton       , true  );
 
-    if ( parser.isSet("allow-devtools") ) {
-        seb_settings.browser.mainWindow.allowDeveloperConsole = true;
-    }
-
-    if ( parser.isSet("windowed") ) {
-        seb_settings.browser.mainWindow.fullScreenMode = false;
-    }
-    if ( parser.isSet("fullscreen") ) {
-        seb_settings.browser.mainWindow.fullScreenMode = true;
-    }
-    if ( parser.isSet("always-on-top") ) {
-        seb_settings.browser.mainWindow.alwaysOnTop = true;
-    }
-
-    if ( parser.isSet("disable-minimize") ) {
-        seb_settings.browser.mainWindow.allowMinimize = false;
-    }
+    MW_bool1( "allow-devtools"   , allowDeveloperConsole  , true  );
+    MW_bool1( "windowed"         , fullScreenMode         , false );
+    MW_bool1( "fullscreen"       , fullScreenMode         , true  );
+    MW_bool1( "always-on-top"    , alwaysOnTop            , true  );
+    MW_bool1( "disable-minimize" , allowMinimize          , false );
 
     if ( parser.isSet("disable-quit") ) {
         seb_settings.security.allowTermination = false;
