@@ -158,7 +158,6 @@ QString findConfigPath_firstHit( int argc, char *argv[] ) {
             break;
         }
     }
-    qWarning() << "findConfigPath_firstHit result: " << res ; // xxx
     return res;
 }
 #endif
@@ -206,7 +205,6 @@ QString findConfigPath_preferConfig( int argc, char *argv[] ) {
                      ? config
                      : resource
                        );
-    qWarning() << "findConfigPath_preferConfig result: " << result ; // xxx
     return result;
 }
 
@@ -358,7 +356,9 @@ void applyProtectedSessionSettings( seb::SebSettings &seb_settings,
  */
 void applyEarlyEnvironment( int argc, char *argv[] ) {
     const QString configPath    = findConfigPath_preferConfig(argc, argv);
-    const bool hasConfig        = !configPath.isEmpty();
+    qWarning() << "applyEarlyEnvironment configPath: " << configPath ; // xxx
+    //
+    const bool    hasConfig     = !configPath.isEmpty();
     //
     seb::SebSettings seb_settings = seb::defaultSettings();
     if ( hasConfig ) {
