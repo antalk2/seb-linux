@@ -188,15 +188,20 @@ QString findConfigPath_preferConfig( int argc, char *argv[] ) {
         const QString argument = QString::fromLocal8Bit( argv[index] );
         if ( (argument == c1 || argument == c2) && index + 1 < argc ) {
             if ( haveConfig ) {
-              qWarning() << "Multiple { --config | -c } flags on the command line. Keeping the first.";
-            } else {
-              config     = QString::fromLocal8Bit( argv[index+1] );
-              haveConfig = true;
+              qWarning() << "Multiple { --config | -c } flags on the command line.\n"
+                "    Replacing the old value: " << config << "\n"
+                "    With the new value:      " << QString::fromLocal8Bit( argv[index+1] )
+                ;
             }
+            config     = QString::fromLocal8Bit( argv[index+1] );
+            haveConfig = true;
             index++;
         } else if ( !argument.startsWith('-') ) {
           if ( haveResource ) {
-            qWarning() << "Multiple 'resource' arguments on the command line. Keeping the first.";
+            qWarning() << "Multiple 'resource' arguments on the command line.\n"
+              "     Keeping the first: " << resource << "\n"
+              "     Ignoring the new:  " << argument
+              ;
           } else {
             resource     = argument;
             haveResource = true;
