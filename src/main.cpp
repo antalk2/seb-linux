@@ -410,9 +410,7 @@ void applyCommandLineOverrides( const QCommandLineParser &parser, seb::SebSettin
         seb_settings.browser.startUrl = parser.value("url").trimmed();
     }
 
-    if ( parser.isSet("show-toolbar") ) {
-        seb_settings.browser.mainWindow.showToolbar = true;
-    }
+    MW_bool1( "show-toolbar"     , showToolbar    , true );
 
     if ( parser.isSet("allow-address-bar") ) {
         seb_settings.browser.mainWindow.allowAddressBar = true;
