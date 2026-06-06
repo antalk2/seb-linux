@@ -100,16 +100,17 @@ LoadResult loadSettingsFromData(
  */
 LoadResult loadSettingsFromFile(const QString &path) {
     QFile file(path);
-    LoadResult result;
-    result.settings = defaultSettings();
-    result.settings.sourceFile = path;
 
-    if (!file.open(QIODevice::ReadOnly)) {
-        result.error = QStringLiteral("Failed to open '%1': %2").arg(path, file.errorString());
+    if ( !file.open(QIODevice::ReadOnly) ) {
+        LoadResult result;
+        result.settings = defaultSettings();
+        result.settings.sourceFile = path;
+        result.error = QStringLiteral( "Failed to open '%1': %2" )
+                       .arg( path, file.errorString() );
         return result;
+    } else {
+      return loadSettingsFromData( file.readAll(), path );
     }
-
-    return loadSettingsFromData(file.readAll(), path);
 }
 
 ResourceLoadResult loadSettingsFromResource(
