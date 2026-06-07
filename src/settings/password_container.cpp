@@ -4,6 +4,8 @@
 #include "configuration/cryptography/public_key_encryption.h"
 #include "configuration/cryptography/public_key_symmetric_encryption.h"
 
+#include "seb_settings.h" // for typedef PasswordProvider
+
 #include <QByteArray>
 #include <QCryptographicHash>
 #include <QDataStream>
@@ -234,9 +236,14 @@ QByteArray readPrefix(const QByteArray& data) {
 }
 
 QByteArray
-unwrapSebContainer(QByteArray raw, QString *error, QStringList *warnings,
-                   const std::function<QString(bool)> &passwordProvider) {
-  while (raw.size() >= kSebPrefixLength) {
+unwrapSebContainer( QByteArray   raw
+                  , QString*     error       // out
+                  , QStringList* warnings    // out
+                  , seb::PasswordProvider passwordProvider
+                  )
+{
+  while ( raw.size() >= kSebPrefixLength ) {
+    
     const QByteArray prefix = readPrefix(raw);
 
     if (prefix == kPrefixMultipart) {
