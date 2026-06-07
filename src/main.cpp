@@ -373,6 +373,15 @@ void applyEarlyEnvironment( int argc, char *argv[] ) {
     seb::SebSettings seb_settings = seb::defaultSettings();
     if ( hasConfig ) {
         const seb::LoadResult loaded = seb::loadSettingsFromFile(configPath);
+        // Could we use loadSettingsFromResource() instead?
+        //   - Needs: PasswordProvider passwordProvider
+        //     - But we have no GUI at this point.
+        //
+        //     - Could use userPassword =
+        //       QString::fromUtf8(qgetenv("SEB_PASSWORD")); if
+        //       running from a child.
+        // 
+        //
         if (loaded.ok) {
             seb_settings = loaded.settings;
         } else {
@@ -465,33 +474,33 @@ void applyCommandLineOverrides( const QCommandLineParser &parser, seb::SebSettin
 
 int main( int argc, char *argv[] ) {
 
-    /*  For --menu-lockdown or --anti-cheat, we need to run as
-     *  root. (Maybe group tty is enough?)
-     */
-    applyEarlyEnvironment(argc, argv);
+  /*  For --menu-lockdown or --anti-cheat, we need to run as
+   *  root. (Maybe group tty is enough?)
+   */
+  applyEarlyEnvironment(argc, argv);
 
-    QApplication app(argc, argv);
+  QApplication app(argc, argv);
 
-    {
-        const QIcon appIcon( QStringLiteral(":/assets/icons/safe-exam-browser.png") );
-        app.setWindowIcon(appIcon);
-    }
+  {
+    const QIcon appIcon( QStringLiteral(":/assets/icons/safe-exam-browser.png") );
+    app.setWindowIcon(appIcon);
+  }
 
-    app.setDesktopFileName(                  QStringLiteral("safe-exam-browser") );
-    QCoreApplication::setApplicationName(    QStringLiteral("Safe Exam Browser") );
-    QCoreApplication::setApplicationVersion( QStringLiteral("0.1.0") );
+  app.setDesktopFileName(                  QStringLiteral("safe-exam-browser") );
+  QCoreApplication::setApplicationName(    QStringLiteral("Safe Exam Browser") );
+  QCoreApplication::setApplicationVersion( QStringLiteral("0.1.0") );
 
-    QCommandLineParser parser;
-    parser.setApplicationDescription( QStringLiteral(
+  QCommandLineParser parser;
+  parser.setApplicationDescription( QStringLiteral(
          "Safe Exam Browser for Linux"
          " with .seb file support, exam link handling,"
          " and Qt WebEngine or WebKitGTK browser backends." ));
-    parser.addHelpOption();
-    parser.addVersionOption();
+  parser.addHelpOption();
+  parser.addVersionOption();
 
-    // OPT211( name1, name2, desc, valueName ) defines a command line
-    //            option that has two names, a description and a name
-    //            for the corresponding value.
+  // OPT211( name1, name2, desc, valueName ) defines a command line
+  //            option that has two names, a description and a name
+  //            for the corresponding value.
 #define OPT211( name1, name2, desc, valueName  )       \
     parser.addOption( QCommandLineOption(              \
                QStringList{ QStringLiteral(name1)      \
@@ -499,301 +508,302 @@ int main( int argc, char *argv[] ) {
              , QStringLiteral( desc )                  \
              , QStringLiteral( valueName )   ) )
 
-    OPT211( "c", "config"
-          , "Load settings from a JSON file or an unencrypted XML plist .seb file."
-          , "file" );
+  OPT211( "c", "config"
+        , "Load settings from a JSON file or an unencrypted XML plist .seb file."
+        , "file" );
 
-    OPT211( "u", "url"
-          , "Override the configured start URL."
-          , "url" );
+  OPT211( "u", "url"
+        , "Override the configured start URL."
+        , "url" );
 
 #undef OPT211
 
-    parser.addPositionalArgument(
-          QStringLiteral("resource")
-        , QStringLiteral("Open a local .seb file, remote .seb URL, or seb:// / sebs:// resource.")
-        );
+  parser.addPositionalArgument(
+        QStringLiteral("resource")
+      , QStringLiteral("Open a local .seb file, remote .seb URL, or seb:// / sebs:// resource.")
+      );
 
-    // OPT11( name, desc ) defines a command line option with a single
-    //                     name and description.
+  // OPT11( name, desc ) defines a command line option with a single
+  //                     name and description.
 #define OPT11( name1, desc1 ) \
-    parser.addOption( QCommandLineOption( QStringLiteral(name1), QStringLiteral(desc1) ))
+  parser.addOption( QCommandLineOption( QStringLiteral(name1), QStringLiteral(desc1) ))
 
-    OPT11( "show-toolbar"      , "Show the browser toolbar.");
-    OPT11( "allow-address-bar" , "Enable the address bar."  );
-    OPT11( "allow-navigation"  , "Enable back and forward navigation in the main window.");
-    OPT11( "allow-reload"      , "Enable reload in the main window."          );
-    OPT11( "allow-devtools"    , "Enable the developer tools shortcut (F12)." );
-    OPT11( "windowed"          , "Force the main window to stay windowed."    );
-    OPT11( "fullscreen"        , "Force the main window to be fullscreen."    );
-    OPT11( "always-on-top"     , "Keep the main window above other windows."  );
-    OPT11( "disable-minimize"  , "Prevent minimizing the main exam window."   );
-    OPT11( "disable-quit"      , "Disable manual termination even if the configuration allows it." );
-    OPT11( "anti-cheat"        , "(*) Enable anticheat mode."    );
-    OPT11( "menu-lockdown"     , "(*) Enable the protected start-menu lockdown mode." );
+  OPT11( "show-toolbar"      , "Show the browser toolbar.");
+  OPT11( "allow-address-bar" , "Enable the address bar."  );
+  OPT11( "allow-navigation"  , "Enable back and forward navigation in the main window.");
+  OPT11( "allow-reload"      , "Enable reload in the main window."          );
+  OPT11( "allow-devtools"    , "Enable the developer tools shortcut (F12)." );
+  OPT11( "windowed"          , "Force the main window to stay windowed."    );
+  OPT11( "fullscreen"        , "Force the main window to be fullscreen."    );
+  OPT11( "always-on-top"     , "Keep the main window above other windows."  );
+  OPT11( "disable-minimize"  , "Prevent minimizing the main exam window."   );
+  OPT11( "disable-quit"      , "Disable manual termination even if the configuration allows it." );
+  OPT11( "anti-cheat"        , "(*) Enable anticheat mode."    );
+  OPT11( "menu-lockdown"     , "(*) Enable the protected start-menu lockdown mode." );
 
 #if defined(QT_DEBUG) || defined(SEB_DEV_BYPASS_OPTION)
-    OPT11( "dev-bypass"        , "(*) Skip strict lockdowns for development purposes." );
+  OPT11( "dev-bypass"        , "(*) Skip strict lockdowns for development purposes." );
 #endif
 
 #undef OPT11
 
-    parser.process( app );
+  parser.process( app );
 
-    seb::SebSettings settings = seb::defaultSettings();
-    QTextStream err(stderr);
+  seb::SebSettings settings = seb::defaultSettings();
+  QTextStream err(stderr);
 
 #if !SEB_HAS_QTWEBENGINE
-    err << "warning: This build was compiled without QtWebEngine support."
-           " Safe Exam Browser will start in compatibility mode"
-           " and cannot render exam pages."
-        << Qt::endl;
+  err << "warning: This build was compiled without QtWebEngine support."
+         " Safe Exam Browser will start in compatibility mode"
+         " and cannot render exam pages."
+      << Qt::endl;
 #endif
 
-    /*
-     * Unlike in findConfigPath_firstHit(), here "--config <file>" is stronger then earlier <resource>
-     * For multiple --config arguments, it returns the last value.
-     *
-     * findConfigPath_preferConfig() is more similar to this one.
-     */
-    const QString resource = parser.isSet("config")
-                           ? parser.value("config")
-                           : ( parser.positionalArguments().isEmpty()
-                             ? QString()
-                             : parser.positionalArguments().constFirst()
-                             );
-    qWarning() << "main resource is: " << resource ; // xxx
+  /*
+   * Unlike in findConfigPath_firstHit(), here "--config <file>" is stronger then earlier <resource>
+   * For multiple --config arguments, it returns the last value.
+   *
+   * findConfigPath_preferConfig() is more similar to this one.
+   */
+  const QString resource = parser.isSet("config")
+                         ? parser.value("config")
+                         : ( parser.positionalArguments().isEmpty()
+                           ? QString()
+                           : parser.positionalArguments().constFirst()
+                           );
+  qWarning() << "main resource is: " << resource ; // xxx
 
-    /*
-     * Get password from env SEB_PASSWORD or from GUI.
-     */
-    QString userPassword;
-    bool    usedPassword = false;
+  /*
+   * Get password from env SEB_PASSWORD or from GUI.
+   */
+  QString userPassword;
+  bool    usedPassword = false;
 
-    QStringList warnings;
-    if ( !resource.isEmpty() ) {
-        seb::PasswordProvider passwordProvider =  [&userPassword, &usedPassword](bool hashed) {
-            if ( qEnvironmentVariableIsSet("SEB_PASSWORD") ) {
-                userPassword = QString::fromUtf8(qgetenv("SEB_PASSWORD"));
-                usedPassword = true;
-                return userPassword;
-            }
-            //
-            bool accepted = false;
-            const QString password = QInputDialog::getText(
-                nullptr
-                , QStringLiteral("SEB Password Required")
-                , ( hashed
-                  ? QStringLiteral("Enter the administrator password for this client-configuration SEB file.")
-                  : QStringLiteral("Enter the password for this SEB configuration file.")
-                  )
-                , QLineEdit::Password
-                , QString()
-                , &accepted
-                );
-            if (accepted) {
-                userPassword = password;
-                usedPassword = true;
-            }
-            return accepted ? password : QString();
-        };
+  QStringList warnings;
+  if ( !resource.isEmpty() ) {
+      seb::PasswordProvider passwordProvider =  [&userPassword, &usedPassword](bool hashed) {
+          if ( qEnvironmentVariableIsSet("SEB_PASSWORD") ) {
+              userPassword = QString::fromUtf8(qgetenv("SEB_PASSWORD"));
+              usedPassword = true;
+              return userPassword;
+          }
+          //
+          bool accepted = false;
+          const QString password = QInputDialog::getText(
+              nullptr
+              , QStringLiteral("SEB Password Required")
+              , ( hashed
+                ? QStringLiteral("Enter the administrator password for this client-configuration SEB file.")
+                : QStringLiteral("Enter the password for this SEB configuration file.")
+                )
+              , QLineEdit::Password
+              , QString()
+              , &accepted
+              );
+          if (accepted) {
+              userPassword = password;
+              usedPassword = true;
+          }
+          return accepted ? password : QString();
+      };
 
-        const seb::ResourceLoadResult loaded =
-            seb::loadSettingsFromResource( resource
-                                         , passwordProvider  );
+      const seb::ResourceLoadResult loaded =
+          seb::loadSettingsFromResource( resource
+                                       , passwordProvider  );
 
-        if (!loaded.ok) {
-            err << loaded.error << Qt::endl;
-            return 1;
-        }
+      if (!loaded.ok) {
+          err << loaded.error << Qt::endl;
+          return 1;
+      }
 
-        settings = loaded.settings;
-        warnings = loaded.warnings;
-    }
+      settings = loaded.settings;
+      warnings = loaded.warnings;
+  }
 
-    applyCommandLineOverrides(parser, settings);
+  applyCommandLineOverrides(parser, settings);
 
 
-    const bool launchedWithoutExam = resource.isEmpty();
-    const bool menuLockdown        = parser.isSet("menu-lockdown");
-    const bool examAntiCheat       = parser.isSet("anti-cheat");
+  const bool launchedWithoutExam = resource.isEmpty();
+  const bool menuLockdown        = parser.isSet("menu-lockdown");
+  const bool examAntiCheat       = parser.isSet("anti-cheat");
 #if defined(QT_DEBUG) || defined(SEB_DEV_BYPASS_OPTION)
-    bool devBypass = settings.devBypass || parser.isSet("dev-bypass");
+  bool devBypass = settings.devBypass || parser.isSet("dev-bypass");
 #else
-    bool devBypass = settings.devBypass;
+  bool devBypass = settings.devBypass;
 #endif
 #ifdef SEB_DEV_BYPASS_DEFAULT
-    devBypass = true;
+  devBypass = true;
 #endif
 
-    if ( !devBypass && !examAntiCheat && !menuLockdown ) {
-        if ( launchedWithoutExam ) {
-            {
-                // Get permission or exit
-                const auto answer = QMessageBox::question(
-                    nullptr,
-                    QStringLiteral("Administrator Privileges Required"),
-                    QStringLiteral(
-                        "Safe Exam Browser needs administrator privileges "
-                        "to apply lockdown protections.\n\nDo you want to continue?"),
-                    QMessageBox::Yes | QMessageBox::Cancel,
-                    QMessageBox::Yes);
-                if (answer != QMessageBox::Yes) {
-                    return 0;
-                }
-            }
+  if ( !devBypass && !examAntiCheat && !menuLockdown ) {
+      if ( launchedWithoutExam ) {
+          {
+              // Get permission or exit
+              const auto answer = QMessageBox::question(
+                  nullptr,
+                  QStringLiteral("Administrator Privileges Required"),
+                  QStringLiteral(
+                      "Safe Exam Browser needs administrator privileges "
+                      "to apply lockdown protections.\n\nDo you want to continue?"),
+                  QMessageBox::Yes | QMessageBox::Cancel,
+                  QMessageBox::Yes);
+              if (answer != QMessageBox::Yes) {
+                  return 0;
+              }
+          }
 
-            {
-                // Run with privileges and exit
-                QStringList args = QCoreApplication::arguments();
-                args.removeFirst();
+          {
+              // Run with privileges and exit
+              QStringList args = QCoreApplication::arguments();
+              args.removeFirst();
 
-                // Possibly running from menu, do lockdown
-                args.prepend(QStringLiteral("--menu-lockdown"));
+              // Possibly running from menu, do lockdown
+              args.prepend(QStringLiteral("--menu-lockdown"));
 
-                QProcess child;
-                child.setProgram(QStringLiteral("pkexec"));
+              QProcess child;
+              child.setProgram(QStringLiteral("pkexec"));
 
-                QStringList pkexecArgs;
-                pkexecArgs << QStringLiteral("--keep-cwd");
-                pkexecArgs << QStringLiteral("env");
-                appendPkexecEnvironmentVariable(pkexecArgs, "DISPLAY");
-                appendPkexecEnvironmentVariable(pkexecArgs, "WAYLAND_DISPLAY");
-                appendPkexecEnvironmentVariable(pkexecArgs, "XAUTHORITY");
-                appendPkexecEnvironmentVariable(pkexecArgs, "XDG_RUNTIME_DIR");
-                appendPkexecEnvironmentVariable(pkexecArgs, "XDG_SESSION_TYPE");
-                appendPkexecEnvironmentVariable(pkexecArgs, "DBUS_SESSION_BUS_ADDRESS");
-                appendPkexecEnvironmentVariable(pkexecArgs, "QT_QPA_PLATFORM");
-                //
-                // No password here
-                //
-                pkexecArgs << QCoreApplication::applicationFilePath();
-                pkexecArgs << args;
+              QStringList pkexecArgs;
+              pkexecArgs << QStringLiteral("--keep-cwd");
+              pkexecArgs << QStringLiteral("env");
+              appendPkexecEnvironmentVariable(pkexecArgs, "DISPLAY");
+              appendPkexecEnvironmentVariable(pkexecArgs, "WAYLAND_DISPLAY");
+              appendPkexecEnvironmentVariable(pkexecArgs, "XAUTHORITY");
+              appendPkexecEnvironmentVariable(pkexecArgs, "XDG_RUNTIME_DIR");
+              appendPkexecEnvironmentVariable(pkexecArgs, "XDG_SESSION_TYPE");
+              appendPkexecEnvironmentVariable(pkexecArgs, "DBUS_SESSION_BUS_ADDRESS");
+              appendPkexecEnvironmentVariable(pkexecArgs, "QT_QPA_PLATFORM");
+              //
+              // No password here
+              //
+              pkexecArgs << QCoreApplication::applicationFilePath();
+              pkexecArgs << args;
 
-                child.setArguments(pkexecArgs);
-                return runNonDetachedPkexecChild(child);
-            }
-        }
+              child.setArguments(pkexecArgs);
+              return runNonDetachedPkexecChild(child);
+          }
+      }
 
-        const bool requiresLockedExamShell = settings.browser.mainWindow.fullScreenMode
-                                          && settings.browser.mainWindow.alwaysOnTop;
+      const bool requiresLockedExamShell = settings.browser.mainWindow.fullScreenMode
+                                        && settings.browser.mainWindow.alwaysOnTop;
 
-        if ( requiresLockedExamShell ) {
-            {
-                // Get permission or exit
-                const auto answer = QMessageBox::question(
-                    nullptr,
-                    QStringLiteral("Administrator Permission Required"),
-                    QStringLiteral(
-                        "Safe Exam Browser needs administrator privileges"
-                        "to apply exam locking and anti-cheat protections.\n\nDo you want to continue?"),
-                    QMessageBox::Yes | QMessageBox::Cancel,
-                    QMessageBox::Yes);
-                if (answer != QMessageBox::Yes) {
-                    return 0;
-                }
-            }
+      if ( requiresLockedExamShell ) {
+          {
+              // Get permission or exit
+              const auto answer = QMessageBox::question(
+                  nullptr,
+                  QStringLiteral("Administrator Permission Required"),
+                  QStringLiteral(
+                      "Safe Exam Browser needs administrator privileges"
+                      "to apply exam locking and anti-cheat protections.\n\nDo you want to continue?"),
+                  QMessageBox::Yes | QMessageBox::Cancel,
+                  QMessageBox::Yes);
+              if (answer != QMessageBox::Yes) {
+                  return 0;
+              }
+          }
 
-            {
-                // Run with privileges and exit
-                QStringList args = QCoreApplication::arguments();
-                args.removeFirst(); // Remove executable path
-                if (!args.contains(QStringLiteral("--anti-cheat"))) {
-                    args.prepend(QStringLiteral("--anti-cheat"));
-                }
+          {
+              // Run with privileges and exit
+              QStringList args = QCoreApplication::arguments();
+              args.removeFirst(); // Remove executable path
+              if (!args.contains(QStringLiteral("--anti-cheat"))) {
+                  args.prepend(QStringLiteral("--anti-cheat"));
+              }
 
-                QProcess child;
-                child.setProgram(QStringLiteral("pkexec"));
+              QProcess child;
+              child.setProgram(QStringLiteral("pkexec"));
 
-                QStringList pkexecArgs;
-                pkexecArgs << QStringLiteral("--keep-cwd");
-                pkexecArgs << QStringLiteral("env");
-                appendPkexecEnvironmentVariable(pkexecArgs, "DISPLAY");
-                appendPkexecEnvironmentVariable(pkexecArgs, "WAYLAND_DISPLAY");
-                appendPkexecEnvironmentVariable(pkexecArgs, "XAUTHORITY");
-                appendPkexecEnvironmentVariable(pkexecArgs, "XDG_RUNTIME_DIR");
-                appendPkexecEnvironmentVariable(pkexecArgs, "XDG_SESSION_TYPE");
-                appendPkexecEnvironmentVariable(pkexecArgs, "DBUS_SESSION_BUS_ADDRESS");
-                appendPkexecEnvironmentVariable(pkexecArgs, "QT_QPA_PLATFORM");
-                if (usedPassword) {
-                    pkexecArgs << (QStringLiteral("SEB_PASSWORD=") + userPassword);
-                }
-                pkexecArgs << QCoreApplication::applicationFilePath();
-                pkexecArgs << args;
+              QStringList pkexecArgs;
+              pkexecArgs << QStringLiteral("--keep-cwd");
+              pkexecArgs << QStringLiteral("env");
+              appendPkexecEnvironmentVariable(pkexecArgs, "DISPLAY");
+              appendPkexecEnvironmentVariable(pkexecArgs, "WAYLAND_DISPLAY");
+              appendPkexecEnvironmentVariable(pkexecArgs, "XAUTHORITY");
+              appendPkexecEnvironmentVariable(pkexecArgs, "XDG_RUNTIME_DIR");
+              appendPkexecEnvironmentVariable(pkexecArgs, "XDG_SESSION_TYPE");
+              appendPkexecEnvironmentVariable(pkexecArgs, "DBUS_SESSION_BUS_ADDRESS");
+              appendPkexecEnvironmentVariable(pkexecArgs, "QT_QPA_PLATFORM");
+              if (usedPassword) {
+                  pkexecArgs << (QStringLiteral("SEB_PASSWORD=") + userPassword);
+              }
+              pkexecArgs << QCoreApplication::applicationFilePath();
+              pkexecArgs << args;
 
-                child.setArguments(pkexecArgs);
-                return runNonDetachedPkexecChild(child);
-            }
-        } // if (requiresLockedExamShell)
-    } // if ( !devBypass  && !examAntiCheat && !menuLockdown )
+              child.setArguments(pkexecArgs);
+              return runNonDetachedPkexecChild(child);
+          }
+      } // if (requiresLockedExamShell)
+  } // if ( !devBypass  && !examAntiCheat && !menuLockdown )
 
-    //
-    // If we get here, at least one of devBypass, examAntiCheat or menuLockdown
-    // is set. We make no more attempt to get root privileges.
-    //
-    if ( devBypass ){
-        seb::applyDevBypassOverrides(settings);
-    } else {
-        // !devBypass
-        {
-            const bool haveExamWithStrictSettings = (
-                !launchedWithoutExam
-                && settings.browser.mainWindow.fullScreenMode
-                && settings.browser.mainWindow.alwaysOnTop
-                );
-            if ( menuLockdown && launchedWithoutExam ) {
-                applyProtectedSessionSettings(settings
-                                              , false // fullScreen
-                                              , false // allowConfiguredApps
-                                              , true  // allowTermination
-                    );
-            } else if ( examAntiCheat || haveExamWithStrictSettings ) {
-                applyProtectedSessionSettings(settings
-                                              , true  // fullScreen
-                                              , true  // allowConfiguredApps
-                                              , false // allowTermination
-                    );
-            } else {
-                // We can get here if (!devBypass)
-                //   and ( (menuLockdown && !launchedWithoutExam)
-                //         or
-                //         (...) )
-                // Anyway, we go on without modifying `settings`.
-            }
-        }
-    }
+  //
+  // If we get here, at least one of devBypass, examAntiCheat or menuLockdown
+  // is set. We make no more attempt to get root privileges.
+  //
+  if ( devBypass ){
+      seb::applyDevBypassOverrides(settings);
+  } else {
+      // !devBypass
+      {
+          const bool haveExamWithStrictSettings = (
+              !launchedWithoutExam
+              && settings.browser.mainWindow.fullScreenMode
+              && settings.browser.mainWindow.alwaysOnTop
+              );
+          if ( menuLockdown && launchedWithoutExam ) {
+              applyProtectedSessionSettings(settings
+                                            , false // fullScreen
+                                            , false // allowConfiguredApps
+                                            , true  // allowTermination
+                  );
+          } else if ( examAntiCheat || haveExamWithStrictSettings ) {
+              applyProtectedSessionSettings(settings
+                                            , true  // fullScreen
+                                            , true  // allowConfiguredApps
+                                            , false // allowTermination
+                  );
+          } else {
+              // We can get here if (!devBypass)
+              //   and ( (menuLockdown && !launchedWithoutExam)
+              //         or
+              //         (...) )
+              // Anyway, we go on without modifying `settings`.
+          }
+      }
+  }
 
-    // Open BrowserWindow with settings
-    AppController controller;
-    QString       launchError;
-    if ( !controller.launchResolved( settings, warnings, &launchError ) ) {
-        err << launchError << Qt::endl;
-        return 1;
-    }
+  // Open BrowserWindow with settings
+  AppController controller;
+  QString       launchError;
+  if ( !controller.launchResolved( settings, warnings, &launchError ) ) {
+      err << launchError << Qt::endl;
+      return 1;
+  }
 
-    // Check security, start monitoring.
-    seb::security::SecurityService security;
-    if ( !devBypass ) {
-        if ( security.isVirtualMachine() ) {
-            err << "Error: Running in a virtual machine is not allowed." << Qt::endl;
-            return 1;
-        }
-        if ( security.isDebuggerAttached() ) {
-            err << "Error: A debugger is attached." << Qt::endl;
-            return 1;
-        }
+  // Check security, start monitoring.
+  seb::security::SecurityService security;
+  if ( !devBypass ) {
+      if ( security.isVirtualMachine() ) {
+          err << "Error: Running in a virtual machine is not allowed." << Qt::endl;
+          return 1;
+      }
+      if ( security.isDebuggerAttached() ) {
+          err << "Error: A debugger is attached." << Qt::endl;
+          return 1;
+      }
 
-        QObject::connect(  &security
-                           , &seb::security::SecurityService::secureViolationDetected
-                           , [&app](const QString &reason) {
-                                 qCritical() << "Security Violation:" << reason;
-                                 app.quit();
-                           }
-            );
-        security.startMonitoring();
-    } else {
-        qDebug() << "Developer bypass active; security monitoring disabled.";
-    }
+      QObject::connect(  &security
+                       , &seb::security::SecurityService::secureViolationDetected
+                       , [&app](const QString &reason) {
+                           // No gui warning. Will the student ever know what happened?
+                           qCritical() << "Security Violation:" << reason;
+                           app.quit();
+                         }
+      );
+      security.startMonitoring();
+  } else {
+      qDebug() << "Developer bypass active; security monitoring disabled.";
+  }
 
-    return app.exec();
+  return app.exec();
 }
