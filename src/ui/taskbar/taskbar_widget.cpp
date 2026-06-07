@@ -64,12 +64,15 @@ TaskbarWidget::TaskbarWidget(SebSession &session, const seb::SebSettings &settin
     applicationLayout->addStretch(1);
     scrollArea->setWidget(applicationContainer);
 
-    audioController_ = new seb::shell::taskbar::platform::AudioController(this);
-    networkController_ = new seb::shell::taskbar::platform::NetworkController(this);
-    batteryController_ = new seb::shell::taskbar::platform::BatteryController(this);
+    audioController_    = new seb::shell::taskbar::platform::AudioController(this);
+    networkController_  = new seb::shell::taskbar::platform::NetworkController(this);
+    batteryController_  = new seb::shell::taskbar::platform::BatteryController(this);
     keyboardController_ = new seb::shell::taskbar::platform::KeyboardController(this);
 
-    const auto model = seb::shell::taskbar::TaskbarService::buildModel(settings, batteryController_->state().available);
+    const auto model = seb::shell::taskbar::TaskbarService::buildModel(
+        settings
+      , batteryController_ -> state().available
+    );
 
     auto *notificationContainer = new QWidget(this);
     auto *notificationLayout = new QHBoxLayout(notificationContainer);
