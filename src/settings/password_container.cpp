@@ -86,9 +86,6 @@ const QByteArray kPrefixPlain                   = "plnd";
 const QByteArray kPrefixMultipart               = "mphd";
 const QByteArray kPrefixCustomHeader            = "cmhd";
 
-QByteArray readPrefix(const QByteArray &data) {
-  return data.left(kSebPrefixLength);
-}
 
 std::vector<QByteArray> rncryptorPasswordByteCandidates(
     const QString &password, unsigned char version) {
@@ -232,6 +229,8 @@ bool looksLikeHtml(const QByteArray &raw) {
 bool startsWithXml(const QByteArray &data) {
   const QByteArray trimmed = data.trimmed();
   return trimmed.startsWith("<?xml") || trimmed.startsWith("<plist");
+QByteArray readPrefix(const QByteArray& data) {
+  return data.left( kSebPrefixLength );
 }
 
 QByteArray
