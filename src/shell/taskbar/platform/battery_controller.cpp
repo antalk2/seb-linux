@@ -38,7 +38,8 @@ void BatteryController::refresh()
                     next.percentage = match.captured(1).toInt();
                 }
             } else if (trimmed.startsWith(QStringLiteral("state:"))) {
-                next.charging = trimmed.contains(QStringLiteral("charging"));
+              // https://github.com/Jvr2022/seb-linux/pull/21/changes/0267fa0a5b54c824fa4f7adbb13b7ad6c06298af
+                next.charging = !trimmed.contains(QStringLiteral("discharging"));
             } else if (trimmed.startsWith(QStringLiteral("time to empty:")) || trimmed.startsWith(QStringLiteral("time to full:"))) {
                 next.timeRemaining = trimmed.section(':', 1).trimmed();
             }
