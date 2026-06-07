@@ -792,6 +792,7 @@ int main( int argc, char *argv[] ) {
 
   // Check security, start monitoring.
   seb::security::SecurityService security;
+  security.update_blacklist( settings.applications.blacklist );
   if ( !devBypass ) {
       if ( security.isVirtualMachine() ) {
           err << "Error: Running in a virtual machine is not allowed." << Qt::endl;

@@ -1,5 +1,7 @@
 #pragma once
 
+#include "seb_settings.h"
+
 #include <QObject>
 #include <QStringList>
 #include <QTimerEvent>
@@ -21,6 +23,8 @@ public:
     void startMonitoring();
     void stopMonitoring();
 
+  void update_blacklist( const QList<BlacklistApplicationSettings>& blacklist );
+
 protected:
     void timerEvent(QTimerEvent *event) override;
 
@@ -30,6 +34,8 @@ signals:
 private:
     void performCheck();
     int timerId_ = -1;
+
+  QList<BlacklistApplicationSettings> blacklist_ ;
 };
 
 } // namespace seb::security

@@ -78,6 +78,11 @@ bool SecurityService::isDebuggerAttached() const {
   return false;
 }
 
+void SecurityService::update_blacklist( const QList<BlacklistApplicationSettings>& blacklist ) {
+  blacklist_ = blacklist;
+}
+
+  
 QStringList SecurityService::detectProhibitedProcesses() const {
   //
   // We also have a builtin blacklist
@@ -125,16 +130,31 @@ QStringList SecurityService::detectProhibitedProcesses() const {
                                                     , 0               // end
                                                     );
 
-            const QString baseName =
+            const QString baseName1 =
               QFileInfo(name)
               .fileName()
-              .toLower() // Why toLower()? Presumably some of the
-                         // prohibited executables can be installed to
-                         // contain some uppercase letters.
               ;
 
+            const QString baseName2 = baseName1.toLower();
+            // Why toLower()? Presumably some of the
+            // prohibited executables can be installed to
+            // contain some uppercase letters.
+            
             for ( const QString& p : prohibited ) {
-                if ( baseName.contains(p) ) {
+                if ( baseName2.contains(p) ) {
+                    detected << name;
+                    break; // Move to next process immediately
+                }
+            }
+            /*
+             *  Note: autoTerminate is ignored.
+             *  We do not terminate the offending process, just quit SEB.
+             *
+             *  Using case-sensitive equality instead of "contains", to reduce
+             *  the chance for unexpected matches. For example: 
+             */
+            for ( const BlacklistApplicationSettings& p : blacklist_ ) {
+                if ( baseName1 == p.executableName ) {
                     detected << name;
                     break; // Move to next process immediately
                 }
