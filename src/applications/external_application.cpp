@@ -33,7 +33,11 @@ QString ExternalApplication::executablePath() const
 
 QString ExternalApplication::iconPath() const
 {
-    return resolvedExecutablePath_.isEmpty() ? settings_.executableName : resolvedExecutablePath_;
+  return QStringLiteral( ":/assets/taskbar/external_app.svg" );
+  //  return ( resolvedExecutablePath_.isEmpty()
+  //         ? settings_.executableName
+  //         : resolvedExecutablePath_
+  //         );
 }
 
 QString ExternalApplication::id() const
@@ -43,7 +47,10 @@ QString ExternalApplication::id() const
 
 QString ExternalApplication::name() const
 {
-    return settings_.displayName.isEmpty() ? QFileInfo(settings_.executableName).completeBaseName() : settings_.displayName;
+  return ( settings_.displayName.isEmpty()
+         ? QFileInfo(settings_.executableName).completeBaseName()
+         : settings_.displayName
+         );
 }
 
 QString ExternalApplication::tooltip() const

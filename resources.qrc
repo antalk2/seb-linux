@@ -7,6 +7,7 @@
         <file alias="browser/content/PageZoom.js">src/browser/content/PageZoom.js</file>
         <file>assets/icons/safe-exam-browser.png</file>
         <file>assets/taskbar/about.svg</file>
+        <file>assets/taskbar/external_app.svg</file>
         <file>assets/taskbar/audio_100.svg</file>
         <file>assets/taskbar/audio_33.svg</file>
         <file>assets/taskbar/audio_66.svg</file>
