@@ -89,6 +89,14 @@ const QByteArray kPrefixMultipart               = "mphd";
 const QByteArray kPrefixCustomHeader            = "cmhd";
 
 
+
+/*
+ * Return a vector with one or two elements.
+ *
+ * - Always:     password.toUtf8()
+ * - Optionally: a truncated verision of password.toUtf8()
+ *  
+ */
 std::vector<QByteArray> rncryptorPasswordByteCandidates(
     const QString &password, unsigned char version) {
   const QByteArray passwordBytes = password.toUtf8();
