@@ -45,18 +45,18 @@ NetworkControl::NetworkControl(seb::shell::taskbar::platform::NetworkController 
     button_->setFixedWidth(40);
     layout->addWidget(button_);
 
-    popup_ = new TaskbarPopup(this);
-    popupLayout_ = new QVBoxLayout(popup_);
+    nc_popup_ = new TaskbarPopup(this);
+    popupLayout_ = new QVBoxLayout(nc_popup_);
     popupLayout_->setContentsMargins(0, 0, 0, 0);
     popupLayout_->setSpacing(0);
 
     connect(button_, &QPushButton::clicked, this, [this] {
         button_->setHasPopupOpen(true);
         rebuildPopup();
-        popup_->showAbove(button_);
+        nc_popup_->showAbove(button_);
     });
     connect(&controller_, &seb::shell::taskbar::platform::NetworkController::stateChanged, this, &NetworkControl::updateState);
-    connect(popup_, &TaskbarPopup::popupHidden, this, [this] {
+    connect(nc_popup_, &TaskbarPopup::popupHidden, this, [this] {
         button_->setHasPopupOpen(false);
     });
 
@@ -73,14 +73,14 @@ void NetworkControl::rebuildPopup()
 
     const auto &state = controller_.state();
     if (!state.available) {
-        auto *label = new QLabel(QStringLiteral("No network interface available."), popup_);
+        auto *label = new QLabel(QStringLiteral("No network interface available."), nc_popup_);
         label->setContentsMargins(10, 10, 10, 10);
         popupLayout_->addWidget(label);
         return;
     }
     if (state.type == seb::shell::taskbar::platform::NetworkState::Type::Wireless) {
         for (const auto &network : state.networks) {
-            auto *row = new QPushButton(popup_);
+            auto *row = new QPushButton(nc_popup_);
             row->setFlat(true);
             row->setCursor(Qt::PointingHandCursor);
             row->setMinimumHeight(40);
@@ -89,7 +89,7 @@ void NetworkControl::rebuildPopup()
                              .arg(network.active ? QStringLiteral("•") : QStringLiteral(" "))
                              .arg(network.ssid)
                              .arg(network.signalPercent));
-            connect(row, &QPushButton::clicked, popup_, &QWidget::hide);
+            connect(row, &QPushButton::clicked, nc_popup_, &QWidget::hide);
             popupLayout_->addWidget(row);
         }
     }

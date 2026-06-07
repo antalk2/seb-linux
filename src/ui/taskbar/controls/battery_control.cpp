@@ -23,31 +23,31 @@ BatteryControl::BatteryControl(seb::shell::taskbar::platform::BatteryController 
     button_->setFixedWidth(40);
     layout->addWidget(button_);
 
-    popup_ = new TaskbarPopup(this);
-    auto *popupLayout = new QVBoxLayout(popup_);
+    bc_popup_ = new TaskbarPopup(this);
+    auto *popupLayout = new QVBoxLayout(bc_popup_);
     popupLayout->setContentsMargins(20, 10, 20, 20);
     popupLayout->setSpacing(10);
 
     auto *topRow = new QHBoxLayout();
     topRow->addStretch(1);
-    auto *closeButton = new QPushButton(QStringLiteral("X"), popup_);
+    auto *closeButton = new QPushButton(QStringLiteral("X"), bc_popup_);
     closeButton->setFixedWidth(20);
     closeButton->setFlat(true);
     closeButton->setCursor(Qt::PointingHandCursor);
     topRow->addWidget(closeButton);
     popupLayout->addLayout(topRow);
 
-    auto *textLabel = new QLabel(popup_);
+    auto *textLabel = new QLabel(bc_popup_);
     textLabel->setWordWrap(true);
     popupLayout->addWidget(textLabel);
-    connect(closeButton, &QPushButton::clicked, popup_, &QWidget::hide);
+    connect(closeButton, &QPushButton::clicked, bc_popup_, &QWidget::hide);
 
     connect(button_, &QPushButton::clicked, this, [this] {
         button_->setHasPopupOpen(true);
-        popup_->showAbove(button_);
+        bc_popup_->showAbove(button_);
     });
     connect(&controller_, &seb::shell::taskbar::platform::BatteryController::stateChanged, this, &BatteryControl::updateState);
-    connect(popup_, &TaskbarPopup::popupHidden, this, [this] {
+    connect(bc_popup_, &TaskbarPopup::popupHidden, this, [this] {
         button_->setHasPopupOpen(false);
     });
 
@@ -70,7 +70,7 @@ void BatteryControl::updateState()
     button_->setEnabled(state.available);
     button_->setToolTip(tooltip);
     button_->setIconPath(QStringLiteral(":/assets/taskbar/battery.svg"));
-    if (auto *label = popup_->findChild<QLabel *>()) {
+    if (auto *label = bc_popup_->findChild<QLabel *>()) {
         label->setText(tooltip);
     }
 }

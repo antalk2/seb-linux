@@ -29,7 +29,7 @@ private:
 
     seb::shell::taskbar::platform::KeyboardController &controller_;
     TaskbarButton *button_ = nullptr;
-    TaskbarPopup *popup_ = nullptr;
+    TaskbarPopup *kbc_popup_ = nullptr;
     QVBoxLayout *popupLayout_ = nullptr;
 };
 

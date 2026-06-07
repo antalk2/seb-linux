@@ -28,7 +28,7 @@ private:
 
     seb::shell::taskbar::platform::NetworkController &controller_;
     TaskbarButton *button_ = nullptr;
-    TaskbarPopup *popup_ = nullptr;
+    TaskbarPopup *nc_popup_ = nullptr;
     QVBoxLayout *popupLayout_ = nullptr;
 };
 

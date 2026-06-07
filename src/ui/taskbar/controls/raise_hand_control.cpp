@@ -20,12 +20,12 @@ RaiseHandControl::RaiseHandControl(QWidget *parent)
     button_->setFixedWidth(40);
     layout->addWidget(button_);
 
-    popup_ = new TaskbarPopup(this);
-    auto *popupLayout = new QVBoxLayout(popup_);
+    rhc_popup_ = new TaskbarPopup(this);
+    auto *popupLayout = new QVBoxLayout(rhc_popup_);
     popupLayout->setContentsMargins(0, 0, 0, 0);
     popupLayout->setSpacing(0);
 
-    auto *container = new QWidget(popup_);
+    auto *container = new QWidget(rhc_popup_);
     auto *containerLayout = new QVBoxLayout(container);
     containerLayout->setContentsMargins(5, 5, 5, 5);
     containerLayout->setSpacing(5);
@@ -46,15 +46,15 @@ RaiseHandControl::RaiseHandControl(QWidget *parent)
     popupLayout->addWidget(container);
 
     connect(button_, &QPushButton::clicked, this, [this] {
-        if (popup_->isVisible()) {
-            popup_->hide();
+        if (rhc_popup_->isVisible()) {
+            rhc_popup_->hide();
         } else {
             button_->setHasPopupOpen(true);
-            popup_->showAbove(button_);
+            rhc_popup_->showAbove(button_);
         }
     });
     connect(actionButton_, &QPushButton::clicked, this, &RaiseHandControl::toggleRaisedState);
-    connect(popup_, &TaskbarPopup::popupHidden, this, [this] {
+    connect(rhc_popup_, &TaskbarPopup::popupHidden, this, [this] {
         button_->setHasPopupOpen(false);
     });
 
@@ -70,7 +70,7 @@ void RaiseHandControl::updateState()
     actionButton_->setText(handRaised_ ? QStringLiteral("Lower Hand") : QStringLiteral("Raise Hand"));
     messageEdit_->setEnabled(!handRaised_);
     if (handRaised_) {
-        popup_->hide();
+        rhc_popup_->hide();
     }
 }
 

@@ -36,7 +36,7 @@ private:
 
     seb::applications::ExternalApplication &application_;
     TaskbarButton *button_ = nullptr;
-    TaskbarPopup *popup_ = nullptr;
+    TaskbarPopup *eac_popup_ = nullptr;
     QVBoxLayout *popupLayout_ = nullptr;
     QTimer *hideTimer_ = nullptr;
 };

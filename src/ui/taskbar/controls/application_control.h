@@ -33,7 +33,7 @@ private:
 
     SebSession &session_;
     TaskbarButton   *button_ = nullptr;
-    WindowListPopup *popup_ = nullptr;
+    WindowListPopup *windowListpopup_ = nullptr;
     QTimer *hideTimer_ = nullptr;
 };
 

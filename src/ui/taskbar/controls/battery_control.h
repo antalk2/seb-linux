@@ -23,7 +23,7 @@ private:
 
     seb::shell::taskbar::platform::BatteryController &controller_;
     TaskbarButton *button_ = nullptr;
-    TaskbarPopup *popup_ = nullptr;
+    TaskbarPopup *bc_popup_ = nullptr;
 };
 
 }  // namespace seb::ui::taskbar

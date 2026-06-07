@@ -24,18 +24,18 @@ KeyboardControl::KeyboardControl(seb::shell::taskbar::platform::KeyboardControll
     button_->setTextMode(true);
     layout->addWidget(button_);
 
-    popup_ = new TaskbarPopup(this);
-    popupLayout_ = new QVBoxLayout(popup_);
+    kbc_popup_ = new TaskbarPopup(this);
+    popupLayout_ = new QVBoxLayout(kbc_popup_);
     popupLayout_->setContentsMargins(0, 0, 0, 0);
     popupLayout_->setSpacing(0);
 
     connect(button_, &QPushButton::clicked, this, [this] {
         button_->setHasPopupOpen(true);
         rebuildPopup();
-        popup_->showAbove(button_);
+        kbc_popup_->showAbove(button_);
     });
     connect(&controller_, &seb::shell::taskbar::platform::KeyboardController::stateChanged, this, &KeyboardControl::updateState);
-    connect(popup_, &TaskbarPopup::popupHidden, this, [this] {
+    connect(kbc_popup_, &TaskbarPopup::popupHidden, this, [this] {
         button_->setHasPopupOpen(false);
     });
 
@@ -52,14 +52,14 @@ void KeyboardControl::rebuildPopup()
 
     const auto &state = controller_.state();
     if (state.availableLayouts.isEmpty()) {
-        auto *label = new QLabel(QStringLiteral("No layout information available."), popup_);
+        auto *label = new QLabel(QStringLiteral("No layout information available."), kbc_popup_);
         label->setContentsMargins(10, 10, 10, 10);
         popupLayout_->addWidget(label);
         return;
     }
 
     for (const QString &layout : state.availableLayouts) {
-        auto *button = new QPushButton(popup_);
+        auto *button = new QPushButton(kbc_popup_);
         button->setFlat(true);
         button->setCursor(Qt::PointingHandCursor);
         button->setMinimumHeight(40);
@@ -71,7 +71,7 @@ void KeyboardControl::rebuildPopup()
                                            : QStringLiteral(" "))
                                   .arg(layout.toUpper());
         button->setText(label);
-        connect(button, &QPushButton::clicked, popup_, &QWidget::hide);
+        connect(button, &QPushButton::clicked, kbc_popup_, &QWidget::hide);
         popupLayout_->addWidget(button);
     }
 }

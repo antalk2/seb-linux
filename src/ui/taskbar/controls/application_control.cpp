@@ -27,7 +27,7 @@ ApplicationControl::ApplicationControl(SebSession &session, QWidget *parent)
   button_ ->setIconPath( QStringLiteral( ":/assets/icons/safe-exam-browser.png" ));
   layout->addWidget(button_);
 
-  popup_     = new WindowListPopup(this);
+  windowListpopup_     = new WindowListPopup(this);
   hideTimer_ = new QTimer(this);
   hideTimer_ ->setSingleShot(true);
   hideTimer_ ->setInterval(250);
@@ -48,11 +48,11 @@ ApplicationControl::ApplicationControl(SebSession &session, QWidget *parent)
           , &ApplicationControl::updateState
           );
 
- connect( popup_    , &WindowListPopup::windowSelected   , &session_
+ connect( windowListpopup_    , &WindowListPopup::windowSelected   , &session_
           , &SebSession::activateWindow
           );
  
- connect( popup_    , &TaskbarPopup::popupHidden         , this
+ connect( windowListpopup_    , &TaskbarPopup::popupHidden         , this
           , [this] {
             button_ ->setHasPopupOpen(false);
           }
@@ -63,7 +63,7 @@ ApplicationControl::ApplicationControl(SebSession &session, QWidget *parent)
           );
 
     button_ ->installEventFilter(this);
-    popup_  ->installEventFilter(this);
+    windowListpopup_  ->installEventFilter(this);
 
     updateState();
 }
@@ -77,7 +77,7 @@ bool ApplicationControl::eventFilter( QObject *watched, QEvent *event ) {
     } else if ( event->type() == QEvent::Leave ) {
       hideTimer_ ->start();
     }
-  } else if ( watched == popup_ ) {
+  } else if ( watched == windowListpopup_ ) {
     if (event->type() == QEvent::Enter) {
       hideTimer_ ->stop();
     } else if (event->type() == QEvent::Leave) {
@@ -99,9 +99,9 @@ void ApplicationControl::handleClicked()
         return;
     }
 
-    popup_  ->setWindows(windows);
+    windowListpopup_  ->setWindows(windows);
     button_ ->setHasPopupOpen(true);
-    popup_  ->showAbove(button_);
+    windowListpopup_  ->showAbove(button_);
 }
 
 void ApplicationControl::showPopupIfNeeded()
@@ -110,15 +110,15 @@ void ApplicationControl::showPopupIfNeeded()
     if (windows.size() <= 1) {
         return;
     }
-    popup_ ->setWindows(windows);
+    windowListpopup_ ->setWindows(windows);
     button_ ->setHasPopupOpen(true);
-    popup_ ->showAbove(button_);
+    windowListpopup_ ->showAbove(button_);
 }
 
 void ApplicationControl::hidePopupIfInactive()
 {
-    if (!button_ ->underMouse() && !popup_ ->underMouse()) {
-        popup_ ->hide();
+    if (!button_ ->underMouse() && !windowListpopup_ ->underMouse()) {
+        windowListpopup_ ->hide();
     }
 }
 
@@ -126,7 +126,7 @@ void ApplicationControl::updateState()
 {
     const QList<BrowserWindow *> windows = session_.browserWindows();
     button_ ->setActiveLineVisible(!windows.isEmpty());
-    popup_ ->setWindows(windows);
+    windowListpopup_ ->setWindows(windows);
 }
 
 }  // namespace seb::ui::taskbar

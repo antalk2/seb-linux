@@ -23,7 +23,7 @@ private:
     void toggleRaisedState();
 
     TaskbarButton *button_ = nullptr;
-    TaskbarPopup *popup_ = nullptr;
+    TaskbarPopup *rhc_popup_ = nullptr;
     QLineEdit *messageEdit_ = nullptr;
     TaskbarButton *actionButton_ = nullptr;
     bool handRaised_ = false;

@@ -36,32 +36,32 @@ AudioControl::AudioControl(seb::shell::taskbar::platform::AudioController &contr
     button_->setFixedWidth(40);
     layout->addWidget(button_);
 
-    popup_ = new TaskbarPopup(this);
-    auto *popupLayout = new QVBoxLayout(popup_);
+    ac_popup_ = new TaskbarPopup(this);
+    auto *popupLayout = new QVBoxLayout(ac_popup_);
     popupLayout->setContentsMargins(10, 10, 10, 10);
 
-    deviceLabel_ = new QLabel(QStringLiteral("Audio Device"), popup_);
+    deviceLabel_ = new QLabel(QStringLiteral("Audio Device"), ac_popup_);
     deviceLabel_->setAlignment(Qt::AlignCenter);
     popupLayout->addWidget(deviceLabel_);
 
     auto *row = new QHBoxLayout();
-    muteButton_ = new TaskbarButton(popup_);
+    muteButton_ = new TaskbarButton(ac_popup_);
     muteButton_->setFixedWidth(40);
     row->addWidget(muteButton_);
 
-    slider_ = new QSlider(Qt::Horizontal, popup_);
+    slider_ = new QSlider(Qt::Horizontal, ac_popup_);
     slider_->setRange(0, 100);
     slider_->setFixedWidth(250);
     row->addWidget(slider_);
 
-    valueLabel_ = new QLabel(popup_);
+    valueLabel_ = new QLabel(ac_popup_);
     valueLabel_->setFixedWidth(40);
     row->addWidget(valueLabel_);
     popupLayout->addLayout(row);
 
     connect(button_, &QPushButton::clicked, this, [this] {
         button_->setHasPopupOpen(true);
-        popup_->showAbove(button_);
+        ac_popup_->showAbove(button_);
     });
     connect(muteButton_, &QPushButton::clicked, this, [this] {
         controller_.setMuted(!controller_.state().muted);
@@ -70,7 +70,7 @@ AudioControl::AudioControl(seb::shell::taskbar::platform::AudioController &contr
         controller_.setVolume(value);
     });
     connect(&controller_, &seb::shell::taskbar::platform::AudioController::stateChanged, this, &AudioControl::updateState);
-    connect(popup_, &TaskbarPopup::popupHidden, this, [this] {
+    connect(ac_popup_, &TaskbarPopup::popupHidden, this, [this] {
         button_->setHasPopupOpen(false);
     });
 

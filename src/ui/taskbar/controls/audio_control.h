@@ -29,7 +29,7 @@ private:
     seb::shell::taskbar::platform::AudioController &controller_;
     TaskbarButton *button_ = nullptr;
     TaskbarButton *muteButton_ = nullptr;
-    TaskbarPopup *popup_ = nullptr;
+    TaskbarPopup *ac_popup_ = nullptr;
     QLabel *deviceLabel_ = nullptr;
     QSlider *slider_ = nullptr;
     QLabel *valueLabel_ = nullptr;
