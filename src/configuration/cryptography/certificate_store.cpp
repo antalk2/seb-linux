@@ -5,10 +5,16 @@
 
 namespace seb::configuration::cryptography {
 
-bool CertificateStore::tryGetCertificateWith(const QByteArray &keyHash, QSslCertificate &certificate) const
+/*
+ * @return true on success
+ */
+bool
+CertificateStore::tryGetCertificateWith( const QByteArray      &keyHash
+                                       ,       QSslCertificate &certificate /* out */
+                                       ) const
 {
-    const auto it = certificates_.find(keyHash);
-    if (it == certificates_.end()) {
+    const auto it = certificates_.find( keyHash );
+    if ( it == certificates_.end() ) {
         return false;
     }
     certificate = it.value();
@@ -26,33 +32,39 @@ bool CertificateStore::tryGetPrivateKeyFor(const QSslCertificate &certificate, Q
     return false;
 }
 
-void CertificateStore::extractAndImportIdentities(const QVariantMap &data)
+/*
+ *  Fill this->certificates_ and this->identities_ from
+ *
+ *       data["identities"][i]["certificates"]
+ *       data["identities"][i]["privateKey"  ]
+ */
+void CertificateStore::extractAndImportIdentities( const QVariantMap &data )
 {
     // SEB usually stores identities in a list of dictionaries
-    const QVariantList identities = data.value(QStringLiteral("identities")).toList();
-    for (const QVariant &v : identities) {
+    const QVariantList identities = data.value( QStringLiteral("identities") ).toList();
+    for ( const QVariant &v : identities ) {
         const QVariantMap m = v.toMap();
         const QByteArray certData = m.value(QStringLiteral("certificate")).toByteArray();
-        const QByteArray keyData = m.value(QStringLiteral("privateKey")).toByteArray();
+        const QByteArray keyData  = m.value(QStringLiteral("privateKey" )).toByteArray();
 
         if (certData.isEmpty()) continue;
 
         QSslCertificate cert(certData);
-        if (cert.isNull()) {
+        if ( cert.isNull() ) {
             // Try base64
-            cert = QSslCertificate(QByteArray::fromBase64(certData));
+            cert = QSslCertificate( QByteArray::fromBase64(certData) );
         }
 
-        if (!cert.isNull()) {
-            certificates_.insert(cert.digest(), cert);
+        if ( !cert.isNull() ) {
+            certificates_.insert( cert.digest(), cert );
             
-            if (!keyData.isEmpty()) {
-                QSslKey key(keyData, QSsl::Rsa); // Assuming RSA for SEB
-                if (key.isNull()) {
-                    key = QSslKey(QByteArray::fromBase64(keyData), QSsl::Rsa);
+            if ( !keyData.isEmpty() ) {
+                QSslKey key( keyData, QSsl::Rsa ); // Assuming RSA for SEB
+                if ( key.isNull() ) {
+                    key = QSslKey( QByteArray::fromBase64(keyData), QSsl::Rsa );
                 }
-                if (!key.isNull()) {
-                    identities_.append({cert, key});
+                if ( !key.isNull() ) {
+                    identities_.append( {cert, key} );
                 }
             }
         }
