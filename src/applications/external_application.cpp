@@ -31,13 +31,8 @@ QString ExternalApplication::executablePath() const
     return resolvedExecutablePath_;
 }
 
-QString ExternalApplication::iconPath() const
-{
-  return QStringLiteral( ":/assets/taskbar/external_app.svg" );
-  //  return ( resolvedExecutablePath_.isEmpty()
-  //         ? settings_.executableName
-  //         : resolvedExecutablePath_
-  //         );
+QString ExternalApplication::iconPath() const {
+  return resolvedIconPath_ ;
 }
 
 QString ExternalApplication::id() const
@@ -87,7 +82,24 @@ void ExternalApplication::initialize()
     if (resolvedExecutablePath_.isEmpty()) {
         resolvedExecutablePath_ = QStandardPaths::findExecutable(settings_.executableName);
     } else if (QFileInfo(resolvedExecutablePath_).isDir()) {
-        resolvedExecutablePath_ = QFileInfo(resolvedExecutablePath_ + QLatin1Char('/') + settings_.executableName).absoluteFilePath();
+        resolvedExecutablePath_ = QFileInfo( resolvedExecutablePath_
+                                             + QLatin1Char('/')
+                                             + settings_.executableName
+                                             ).absoluteFilePath();
+    }
+    QString default_icon_path = QStringLiteral( ":/assets/taskbar/external_app.svg" );
+    //
+    // Try to find real icon
+    QString exename = settings_.executableName;
+    QString p1 =
+      QStringLiteral("/usr/share/icons/hicolor/scalable/apps")
+      + QLatin1Char('/')
+      + exename
+      + QStringLiteral(".svg")
+      ;
+    QFileInfo f1 = QFileInfo( p1 );
+    if ( f1.exists() ) {
+      resolvedIconPath_ = f1.absoluteFilePath();
     }
 }
 

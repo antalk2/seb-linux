@@ -43,6 +43,7 @@ private:
     seb::WhitelistApplicationSettings settings_;
     QString resolvedExecutablePath_;
     QList<ExternalApplicationInstance *> instances_;
+    QString resolvedIconPath_;
 };
 
 }  // namespace seb::applications
