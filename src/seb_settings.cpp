@@ -32,8 +32,7 @@ QUrl normalizeSebResourceUrl( const QString &resource ) {
 }
 
 
-SebSettings defaultSettings()
-{
+SebSettings defaultSettings() {
     return settingsinternal::createDefaultSettings();
 }
 
@@ -106,57 +105,64 @@ LoadResult loadSettingsFromData(
  *
  */
 LoadResult loadSettingsFromFile(const QString &path) {
-    QFile file(path);
+  QFile file(path);
 
-    if ( !file.open(QIODevice::ReadOnly) ) {
-        LoadResult result;
-        result.settings = defaultSettings();
-        result.settings.sourceFile = path;
-        result.error = QStringLiteral( "Failed to open '%1': %2" )
-                       .arg( path, file.errorString() );
-        return result;
-    } else {
-      return loadSettingsFromData( file.readAll(), path );
-    }
+  if ( !file.open(QIODevice::ReadOnly) ) {
+    LoadResult result;
+    result.settings            = defaultSettings();
+    result.settings.sourceFile = path;
+    result.error               = QStringLiteral( "Failed to open '%1': %2" )
+                                .arg( path, file.errorString() );
+    return result;
+  } else {
+    return loadSettingsFromData( file.readAll(), path );
+  }
 }
 
-ResourceLoadResult loadSettingsFromResource(
-        const QString &resource,
-        // const std::function<QString (bool)> &passwordProvider
-        PasswordProvider passwordProvider
-)
+ResourceLoadResult loadSettingsFromResource( const QString&   resource
+                                           , PasswordProvider passwordProvider
+                                           )
 {
+  const QString      trimmed = resource.trimmed();
+
+  if ( trimmed.isEmpty() ) {
     ResourceLoadResult result;
-    const QString trimmed = resource.trimmed();
+    result.error = QStringLiteral("No configuration resource was specified.");
+    return result;
+  }
 
-    if (trimmed.isEmpty()) {
-        result.error = QStringLiteral("No configuration resource was specified.");
+  const QUrl url = normalizeSebResourceUrl(trimmed);
+
+  if (    !url.isValid()
+       ||  url.isLocalFile()
+       ||  url.scheme().isEmpty()
+       || QFile::exists(trimmed)
+          )
+    {
+      const QString path = url.isLocalFile() ? url.toLocalFile() : trimmed;
+      QFile localFile(path);
+      if (!localFile.open(QIODevice::ReadOnly)) {
+        ResourceLoadResult result;
+        result.error = QStringLiteral("Failed to open '%1': %2").arg(path, localFile.errorString());
         return result;
     }
 
-    const QUrl url = normalizeSebResourceUrl(trimmed);
-    if (!url.isValid() || url.isLocalFile() || url.scheme().isEmpty() || QFile::exists(trimmed)) {
-        const QString path = url.isLocalFile() ? url.toLocalFile() : trimmed;
-        QFile localFile(path);
-        if (!localFile.open(QIODevice::ReadOnly)) {
-            result.error = QStringLiteral("Failed to open '%1': %2").arg(path, localFile.errorString());
-            return result;
-        }
+    const LoadResult loadedFile = loadSettingsFromData(localFile.readAll(), path, passwordProvider);
+    ResourceLoadResult result;
+    result.settings = loadedFile.settings;
+    result.error = loadedFile.error;
+    result.warnings = loadedFile.warnings;
+    result.ok = loadedFile.ok;
+    return result;
+  }
 
-        const LoadResult loadedFile = loadSettingsFromData(localFile.readAll(), path, passwordProvider);
-        result.settings = loadedFile.settings;
-        result.error = loadedFile.error;
-        result.warnings = loadedFile.warnings;
-        result.ok = loadedFile.ok;
-        return result;
-    }
+  if (url.scheme() != QStringLiteral("http") && url.scheme() != QStringLiteral("https")) {
+    ResourceLoadResult result;
+    result.error = QStringLiteral("Unsupported configuration resource scheme: %1").arg(url.scheme());
+    return result;
+  }
 
-    if (url.scheme() != QStringLiteral("http") && url.scheme() != QStringLiteral("https")) {
-        result.error = QStringLiteral("Unsupported configuration resource scheme: %1").arg(url.scheme());
-        return result;
-    }
-
-    return settingsinternal::loadSettingsFromNetworkResource(url, passwordProvider);
+  return settingsinternal::loadSettingsFromNetworkResource(url, passwordProvider);
 }
 
 void applyDevBypassOverrides(SebSettings &settings)
