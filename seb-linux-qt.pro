@@ -180,7 +180,7 @@ SOURCES += \
     src/shell/taskbar/platform/network_controller.cpp \
     src/ui/taskbar/common/taskbar_button.cpp \
     src/ui/taskbar/common/taskbar_popup.cpp \
-    src/ui/taskbar/controls/application_control.cpp \
+    src/ui/taskbar/controls/window_list_control.cpp \
     src/ui/taskbar/controls/audio_control.cpp \
     src/ui/taskbar/controls/battery_control.cpp \
     src/ui/taskbar/controls/clock_widget.cpp \
@@ -385,7 +385,7 @@ HEADERS += \
     src/ui/taskbar/common/taskbar_button.h \
     src/ui/taskbar/common/taskbar_popup.h \
     src/ui/taskbar/common/taskbar_style.h \
-    src/ui/taskbar/controls/application_control.h \
+    src/ui/taskbar/controls/window_list_control.h \
     src/ui/taskbar/controls/audio_control.h \
     src/ui/taskbar/controls/battery_control.h \
     src/ui/taskbar/controls/clock_widget.h \

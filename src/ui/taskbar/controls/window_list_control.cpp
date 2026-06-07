@@ -1,4 +1,4 @@
-#include "ui/taskbar/controls/application_control.h"
+#include "ui/taskbar/controls/window_list_control.h"
 
 #include "ui/taskbar/controls/window_list_popup.h"
 #include "ui/taskbar/common/taskbar_button.h"

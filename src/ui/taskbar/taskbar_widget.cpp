@@ -2,7 +2,7 @@
 
 #include "ui/taskbar/common/taskbar_button.h"
 #include "ui/taskbar/common/taskbar_style.h"
-#include "ui/taskbar/controls/application_control.h"
+#include "ui/taskbar/controls/window_list_control.h"
 #include "ui/taskbar/controls/audio_control.h"
 #include "ui/taskbar/controls/battery_control.h"
 #include "ui/taskbar/controls/clock_widget.h"
