@@ -350,8 +350,18 @@ void applyProtectedSessionSettings( seb::SebSettings &seb_settings,
 }
 
 /*
- * Purpose: Decide if we need an anti-cheat VT according to the
- * command line.
+ * Purpose:
+ *
+ *  (1) Load settings from configPath and use it to add proxy setup
+ *      flags to "QTWEBENGINE_CHROMIUM_FLAGS".
+ *
+ *      configPath may come from --config <file> or <resource>
+ *
+ *      In either case, we can only load it if it is a file (not an URL).
+ *      - Why? 
+ *
+ *  (2) If have "--anti-cheat" or "--menu-lockdown" on the command
+ *      line, switch to anti-cheat-VT-mode.
  *
  * This function fails if (not running as root, but "--menu-lockdown"
  * or "--anti-cheat" is in argv).
