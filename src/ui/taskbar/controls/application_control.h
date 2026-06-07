@@ -32,7 +32,7 @@ private:
     void updateState();
 
     SebSession &session_;
-    TaskbarButton *button_ = nullptr;
+    TaskbarButton   *button_ = nullptr;
     WindowListPopup *popup_ = nullptr;
     QTimer *hideTimer_ = nullptr;
 };
