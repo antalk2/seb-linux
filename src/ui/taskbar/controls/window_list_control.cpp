@@ -23,7 +23,7 @@ WindowListControl::WindowListControl(SebSession &session, QWidget *parent)
 
   button_ = new TaskbarButton(this);
   button_ ->setFixedWidth(50);
-  button_ ->setToolTip(  QStringLiteral( "Safe Exam Browser" ));
+  button_ ->setToolTip(  QStringLiteral( "Safe Exam Browser Window List" ));
   button_ ->setIconPath( QStringLiteral( ":/assets/icons/safe-exam-browser.png" ));
   layout->addWidget(button_);
 

@@ -13,21 +13,27 @@ namespace seb::ui::taskbar {
 WindowListPopup::WindowListPopup(QWidget *parent)
     : TaskbarPopup(parent)
 {
-    auto *outer = new QVBoxLayout(this);
-    outer->setContentsMargins(0, 0, 0, 0);
-    outer->setSpacing(0);
+  // outer
+  auto *outer = new QVBoxLayout(this);
+  outer->setContentsMargins(0, 0, 0, 0);
+  outer->setSpacing(0);
 
-    auto *scrollArea = new QScrollArea(this);
-    scrollArea->setWidgetResizable(true);
-    scrollArea->setMaximumHeight(400);
-    scrollArea->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-    outer->addWidget(scrollArea);
+  auto* label = new QLabel( QStringLiteral("Window List"), this );
+  outer->addWidget(label);
 
-    auto *container = new QWidget(scrollArea);
-    layout_ = new QVBoxLayout(container);
-    layout_->setContentsMargins(0, 0, 0, 0);
-    layout_->setSpacing(0);
-    scrollArea->setWidget(container);
+  // outer/scrollArea
+  auto *scrollArea = new QScrollArea(this);
+  scrollArea->setWidgetResizable(true);
+  scrollArea->setMaximumHeight(400);
+  scrollArea->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+  outer->addWidget(scrollArea);
+
+  // outer/scrollArea/container/layout_
+  auto *container = new QWidget(scrollArea);
+  layout_ = new QVBoxLayout(container);
+  layout_->setContentsMargins(0, 0, 0, 0);
+  layout_->setSpacing(0);
+  scrollArea->setWidget(container);
 }
 
 void WindowListPopup::setWindows(const QList<BrowserWindow *> &windows)
