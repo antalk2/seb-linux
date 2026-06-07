@@ -26,88 +26,96 @@
 
 namespace seb::ui::taskbar {
 
-TaskbarWidget::TaskbarWidget(SebSession &session, const seb::SebSettings &settings, QWidget *parent)
-    : QWidget(parent)
-    , session_(session)
+TaskbarWidget::TaskbarWidget( SebSession &session, const seb::SebSettings &settings, QWidget *parent )
+ : QWidget(parent)
+ , session_(session)
 {
-    setFixedHeight(kTaskbarHeight);
-    setAutoFillBackground(true);
-    setStyleSheet(QStringLiteral("background:%1; color:black;").arg(backgroundColor().name()));
+  setFixedHeight( kTaskbarHeight );
+  setAutoFillBackground( true );
+  setStyleSheet(
+    QStringLiteral("background:%1; color:black;")
+    .arg( backgroundColor().name() )
+  );
 
-    auto *layout = new QHBoxLayout(this);
-    layout->setContentsMargins(0, 0, 0, 0);
-    layout->setSpacing(0);
+  auto *layout = new QHBoxLayout(this);
+  layout->setContentsMargins(0, 0, 0, 0);
+  layout->setSpacing(0);
 
-    auto *scrollArea = new QScrollArea(this);
-    scrollArea->setFrameShape(QFrame::NoFrame);
-    scrollArea->setWidgetResizable(true);
-    scrollArea->setHorizontalScrollBarPolicy(Qt::ScrollBarAsNeeded);
-    scrollArea->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-    scrollArea->setFixedHeight(kTaskbarHeight);
-    scrollArea->setStyleSheet(
-        "QScrollArea { background: #f0f0f0; border: 0; }"
-        "QScrollBar:horizontal { background: #d8d8d8; height: 8px; margin: 0; }"
-        "QScrollBar::handle:horizontal { background: #b0b0b0; min-width: 20px; }"
-        "QScrollBar::add-line:horizontal, QScrollBar::sub-line:horizontal { width: 0; }");
-    layout->addWidget(scrollArea, 1);
+  auto *scrollArea = new QScrollArea(this);
+  scrollArea->setFrameShape( QFrame::NoFrame );
+  scrollArea->setWidgetResizable( true );
+  scrollArea->setHorizontalScrollBarPolicy( Qt::ScrollBarAsNeeded  );
+  scrollArea->setVerticalScrollBarPolicy(   Qt::ScrollBarAlwaysOff );
+  scrollArea->setFixedHeight( kTaskbarHeight );
+  scrollArea->setStyleSheet(
+    "QScrollArea { background: #f0f0f0; border: 0; }"
+    "QScrollBar:horizontal { background: #d8d8d8; height: 8px; margin: 0; }"
+    "QScrollBar::handle:horizontal { background: #b0b0b0; min-width: 20px; }"
+    "QScrollBar::add-line:horizontal, QScrollBar::sub-line:horizontal { width: 0; }"
+  );
+  layout->addWidget( scrollArea, 1 );
 
-    auto *applicationContainer = new QWidget(scrollArea);
-    auto *applicationLayout = new QHBoxLayout(applicationContainer);
-    applicationLayout->setContentsMargins(0, 0, 0, 0);
-    applicationLayout->setSpacing(0);
-    applicationLayout->addWidget(new ApplicationControl(session_, applicationContainer));
-    for (auto *application : session_.externalApplications()) {
-        if (application->showInShell()) {
-            applicationLayout->addWidget(new ExternalApplicationControl(*application, applicationContainer));
-        }
+  auto *applicationContainer = new QWidget(scrollArea);
+  auto *applicationLayout    = new QHBoxLayout(applicationContainer);
+  applicationLayout->setContentsMargins(0, 0, 0, 0);
+  applicationLayout->setSpacing(0);
+  applicationLayout->addWidget( new ApplicationControl( session_, applicationContainer ) );
+  for ( auto *application : session_.externalApplications() ) {
+    if ( application->showInShell() ) {
+      applicationLayout->addWidget(
+        new ExternalApplicationControl(*application, applicationContainer)
+      );
     }
-    applicationLayout->addStretch(1);
-    scrollArea->setWidget(applicationContainer);
+  }
 
-    audioController_    = new seb::shell::taskbar::platform::AudioController(this);
-    networkController_  = new seb::shell::taskbar::platform::NetworkController(this);
-    batteryController_  = new seb::shell::taskbar::platform::BatteryController(this);
-    keyboardController_ = new seb::shell::taskbar::platform::KeyboardController(this);
+  applicationLayout->addStretch(1);
+  scrollArea->setWidget(applicationContainer);
 
-    const auto model = seb::shell::taskbar::TaskbarService::buildModel(
-        settings
-      , batteryController_ -> state().available
-    );
+  audioController_    = new seb::shell::taskbar::platform::AudioController(this);
+  networkController_  = new seb::shell::taskbar::platform::NetworkController(this);
+  batteryController_  = new seb::shell::taskbar::platform::BatteryController(this);
+  keyboardController_ = new seb::shell::taskbar::platform::KeyboardController(this);
+
+  const auto model = seb::shell::taskbar::TaskbarService::buildModel(
+      settings
+    , batteryController_ -> state().available
+  );
 
     auto *notificationContainer = new QWidget(this);
-    auto *notificationLayout = new QHBoxLayout(notificationContainer);
+    auto *notificationLayout    = new QHBoxLayout( notificationContainer );
     notificationLayout->setContentsMargins(0, 0, 0, 0);
     notificationLayout->setSpacing(0);
-    if (model.showApplicationInfo) {
-        notificationLayout->addWidget(new NotificationControl(
+    if ( model.showApplicationInfo ) {
+        notificationLayout->addWidget( new NotificationControl(
             QStringLiteral(":/assets/taskbar/about.svg"),
             QStringLiteral("Application information"),
             false,
-            notificationContainer));
+            notificationContainer ) );
     }
-    if (model.showApplicationLog) {
-        notificationLayout->addWidget(new NotificationControl(
+    if ( model.showApplicationLog ) {
+        notificationLayout->addWidget( new NotificationControl(
             QStringLiteral(":/assets/taskbar/log.svg"),
             QStringLiteral("Application log"),
             false,
-            notificationContainer));
+            notificationContainer ) );
     }
-    if (model.showVerificator) {
-        notificationLayout->addWidget(new NotificationControl(
+    if ( model.showVerificator ) {
+        notificationLayout->addWidget( new NotificationControl(
             QStringLiteral(":/assets/taskbar/verificator.svg"),
             QStringLiteral("SEB Verificator"),
             false,
-            notificationContainer));
+            notificationContainer ) );
     }
-    if (model.showProctoring) {
-        notificationLayout->addWidget(new RaiseHandControl(notificationContainer));
+    if ( model.showProctoring ) {
+        notificationLayout->addWidget( new RaiseHandControl(notificationContainer) );
     }
-    layout->addWidget(notificationContainer);
+    layout->addWidget( notificationContainer );
 
     auto *systemContainer = new QWidget(this);
-    auto *systemLayout = new QHBoxLayout(systemContainer);
+    auto *systemLayout    = new QHBoxLayout(systemContainer);
     systemLayout->setContentsMargins(0, 0, 0, 0);
     systemLayout->setSpacing(0);
+
     if (model.showPower) {
         systemLayout->addWidget(new BatteryControl(*batteryController_, systemContainer));
     }
