@@ -59,7 +59,7 @@ TaskbarWidget::TaskbarWidget( SebSession &session, const seb::SebSettings &setti
   auto *applicationLayout    = new QHBoxLayout(applicationContainer);
   applicationLayout->setContentsMargins(0, 0, 0, 0);
   applicationLayout->setSpacing(0);
-  applicationLayout->addWidget( new ApplicationControl( session_, applicationContainer ) );
+  applicationLayout->addWidget( new WindowListControl( session_, applicationContainer ) );
   for ( auto *application : session_.externalApplications() ) {
     if ( application->showInShell() ) {
       applicationLayout->addWidget(

@@ -13,7 +13,7 @@
 
 namespace seb::ui::taskbar {
 
-ApplicationControl::ApplicationControl(SebSession &session, QWidget *parent)
+WindowListControl::WindowListControl(SebSession &session, QWidget *parent)
     : QWidget(parent)
     , session_(session)
 {
@@ -33,7 +33,7 @@ ApplicationControl::ApplicationControl(SebSession &session, QWidget *parent)
   hideTimer_ ->setInterval(250);
 
  connect( button_   , &QPushButton::clicked              , this
-        , &ApplicationControl::handleClicked
+        , &WindowListControl::handleClicked
         );
 
  connect( button_   , &QPushButton::pressed              , hideTimer_
@@ -45,7 +45,7 @@ ApplicationControl::ApplicationControl(SebSession &session, QWidget *parent)
           );
 
  connect( &session_ , &SebSession::browserWindowsChanged , this
-          , &ApplicationControl::updateState
+          , &WindowListControl::updateState
           );
 
  connect( windowListpopup_    , &WindowListPopup::windowSelected   , &session_
@@ -59,7 +59,7 @@ ApplicationControl::ApplicationControl(SebSession &session, QWidget *parent)
         );
 
  connect( hideTimer_ , &QTimer::timeout, this
-          , &ApplicationControl::hidePopupIfInactive
+          , &WindowListControl::hidePopupIfInactive
           );
 
     button_ ->installEventFilter(this);
@@ -68,7 +68,7 @@ ApplicationControl::ApplicationControl(SebSession &session, QWidget *parent)
     updateState();
 }
 
-bool ApplicationControl::eventFilter( QObject *watched, QEvent *event ) {
+bool WindowListControl::eventFilter( QObject *watched, QEvent *event ) {
 
   if (watched == button_) {
     if ( event->type() == QEvent::Enter ) {
@@ -88,7 +88,7 @@ bool ApplicationControl::eventFilter( QObject *watched, QEvent *event ) {
   return QWidget::eventFilter(watched, event);
 }
 
-void ApplicationControl::handleClicked()
+void WindowListControl::handleClicked()
 {
     const QList<BrowserWindow *> windows = session_.browserWindows();
     if (windows.isEmpty()) {
@@ -104,7 +104,7 @@ void ApplicationControl::handleClicked()
     windowListpopup_  ->showAbove(button_);
 }
 
-void ApplicationControl::showPopupIfNeeded()
+void WindowListControl::showPopupIfNeeded()
 {
     const QList<BrowserWindow *> windows = session_.browserWindows();
     if (windows.size() <= 1) {
@@ -115,14 +115,14 @@ void ApplicationControl::showPopupIfNeeded()
     windowListpopup_ ->showAbove(button_);
 }
 
-void ApplicationControl::hidePopupIfInactive()
+void WindowListControl::hidePopupIfInactive()
 {
     if (!button_ ->underMouse() && !windowListpopup_ ->underMouse()) {
         windowListpopup_ ->hide();
     }
 }
 
-void ApplicationControl::updateState()
+void WindowListControl::updateState()
 {
     const QList<BrowserWindow *> windows = session_.browserWindows();
     button_ ->setActiveLineVisible(!windows.isEmpty());

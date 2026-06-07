@@ -11,16 +11,18 @@ class SebSession;
 class BrowserWindow;
 
 namespace seb::ui::taskbar {
-
+  
 class TaskbarButton;
 class WindowListPopup;
 
-class ApplicationControl : public QWidget
-{
+  /*
+   * was: ApplicationControl
+   */
+class WindowListControl : public QWidget {
     Q_OBJECT
 
 public:
-    explicit ApplicationControl(SebSession &session, QWidget *parent = nullptr);
+    explicit WindowListControl(SebSession &session, QWidget *parent = nullptr);
 
 protected:
     bool eventFilter(QObject *watched, QEvent *event) override;
