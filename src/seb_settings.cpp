@@ -10,20 +10,27 @@
 #include <QUrl>
 
 namespace seb {
-namespace {
 
-QUrl normalizeSebResourceUrl(const QString &resource)
-{
-    QUrl url = QUrl::fromUserInput(resource.trimmed());
-    if (url.scheme() == QStringLiteral("seb")) {
-        url.setScheme(QStringLiteral("http"));
-    } else if (url.scheme() == QStringLiteral("sebs")) {
-        url.setScheme(QStringLiteral("https"));
-    }
-    return url;
+/*
+ * Url from file path. 
+ * Map seb:// and sebs:// to http:// and https://
+ */
+static
+QUrl normalizeSebResourceUrl( const QString &resource ) {
+  // Attempt to recognise file paths:
+  QUrl url = QUrl::fromUserInput( resource.trimmed() );
+  //
+  // seb://  -> http://
+  // sebs:// -> https://
+  //
+  if (        url.scheme() == QStringLiteral("seb") ) {
+    url.setScheme(QStringLiteral( "http" ));
+  } else if ( url.scheme() == QStringLiteral("sebs")) {
+    url.setScheme(QStringLiteral( "https" ));
+  }
+  return url;
 }
 
-}  // namespace
 
 SebSettings defaultSettings()
 {
