@@ -31,22 +31,23 @@ class NotificationControl;
 class RaiseHandControl;
 class TaskbarButton;
 
-class TaskbarWidget : public QWidget
-{
-    Q_OBJECT
+class TaskbarWidget : public QWidget {
+  Q_OBJECT
 
 public:
-    explicit TaskbarWidget(SebSession &session, const seb::SebSettings &settings, QWidget *parent = nullptr);
+  explicit TaskbarWidget(       SebSession&       session
+                        , const seb::SebSettings& settings
+                        ,       QWidget*          parent = nullptr );
 
 signals:
-    void quitRequested();
+  void quitRequested();
 
 private:
-    SebSession &session_;
-    seb::shell::taskbar::platform::AudioController *audioController_ = nullptr;
-    seb::shell::taskbar::platform::NetworkController *networkController_ = nullptr;
-    seb::shell::taskbar::platform::BatteryController *batteryController_ = nullptr;
-    seb::shell::taskbar::platform::KeyboardController *keyboardController_ = nullptr;
+  SebSession& session_;
+  seb::shell::taskbar::platform::AudioController    *audioController_    = nullptr;
+  seb::shell::taskbar::platform::NetworkController  *networkController_  = nullptr;
+  seb::shell::taskbar::platform::BatteryController  *batteryController_  = nullptr;
+  seb::shell::taskbar::platform::KeyboardController *keyboardController_ = nullptr;
 };
 
 }  // namespace seb::ui::taskbar
