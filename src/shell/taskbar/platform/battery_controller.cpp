@@ -31,7 +31,7 @@ void BatteryController::refresh()
         const QStringList lines = output.split('\n');
         for (const QString &line : lines) {
             const QString trimmed = line.trimmed();
-            if (trimmed.startsWith(QStringLiteral("percentage:"))) {
+            if (trimmed.startsWith(QStringLiteral( "percentage:" ))) {
                 const QRegularExpression re(QStringLiteral("([0-9]+)%"));
                 const auto match = re.match(trimmed);
                 if (match.hasMatch()) {
