@@ -12,12 +12,16 @@ PublicKeyEncryption::PublicKeyEncryption(contracts::cryptography::ICertificateSt
 {
 }
 
-contracts::LoadStatus PublicKeyEncryption::decrypt(const QByteArray &data, QByteArray &decrypted, QSslCertificate &certificate) const
+contracts::LoadStatus
+PublicKeyEncryption::decrypt( const QByteArray &data
+                            ,       QByteArray &decrypted
+                            ,  QSslCertificate &certificate /* out */
+                            ) const
 {
     if (data.size() < 20) return contracts::LoadStatus::InvalidData;
 
     const QByteArray keyHash = data.left(20);
-    if (!store_.tryGetCertificateWith(keyHash, certificate)) {
+    if ( !store_.tryGetCertificateWith( keyHash, certificate /* out */ ) ) {
         return contracts::LoadStatus::InvalidData;
     }
 

@@ -33,7 +33,7 @@ QUrl normalizeSebResourceUrl( const QString &resource ) {
 
 
 SebSettings defaultSettings() {
-    return settingsinternal::createDefaultSettings();
+  return settingsinternal::createDefaultSettings();
 }
 
 LoadResult loadSettingsFromData(
@@ -42,23 +42,29 @@ LoadResult loadSettingsFromData(
     const std::function<QString (bool)> &passwordProvider)
 {
     LoadResult result;
-    result.settings = defaultSettings();
+    result.settings            = defaultSettings();
     result.settings.sourceFile = sourceName;
 
+    // Handle gzipped
     QByteArray raw = sourceData;
-    if (raw.size() >= 2 &&
-        static_cast<unsigned char>(raw.at(0)) == 0x1f &&
-        static_cast<unsigned char>(raw.at(1)) == 0x8b) {
+    if (  raw.size() >= 2
+          && static_cast<unsigned char>(raw.at(0)) == 0x1f
+          && static_cast<unsigned char>(raw.at(1)) == 0x8b )
+      {
         QString error;
         raw = settingsinternal::inflateGzip(raw, &error);
-        if (raw.isEmpty()) {
+        if ( raw.isEmpty() ) {
             result.error = error;
             return result;
         }
         result.warnings << QStringLiteral("Loaded gzip-compressed configuration data.");
     }
 
-    if (!settingsinternal::startsWithXml(raw) && !raw.trimmed().startsWith('{')) {
+    //
+    if ( !settingsinternal::startsWithXml(raw)
+         && !raw.trimmed().startsWith('{')
+         )
+      {
         QString unwrapError;
         raw = settingsinternal::unwrapSebContainer(raw, &unwrapError, &result.warnings, passwordProvider);
         if (raw.isEmpty() && !unwrapError.isEmpty()) {

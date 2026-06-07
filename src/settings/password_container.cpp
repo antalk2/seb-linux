@@ -66,25 +66,25 @@ QByteArray inflateGzip(const QByteArray &data, QString *error) {
   return output;
 }
 
-constexpr int kSebPrefixLength = 4;
-constexpr int kSebCustomHeaderLength = 4;
-constexpr int kSebMultipartLength = 8;
+constexpr int kSebPrefixLength          = 4;
+constexpr int kSebCustomHeaderLength    = 4;
+constexpr int kSebMultipartLength       = 8;
 constexpr int kSebRncryptorHeaderLength = 2;
-constexpr int kSebRncryptorSaltLength = 8;
-constexpr int kSebRncryptorIvLength = 16;
-constexpr int kSebRncryptorKeyLength = 32;
-constexpr int kSebRncryptorIterations = 10000;
-constexpr int kSebRncryptorVersion2 = 0x2;
-constexpr int kSebRncryptorVersion3 = 0x3;
-constexpr int kSebRncryptorOptions = 0x1;
+constexpr int kSebRncryptorSaltLength   = 8;
+constexpr int kSebRncryptorIvLength     = 16;
+constexpr int kSebRncryptorKeyLength    = 32;
+constexpr int kSebRncryptorIterations   = 10000;
+constexpr int kSebRncryptorVersion2     = 0x2;
+constexpr int kSebRncryptorVersion3     = 0x3;
+constexpr int kSebRncryptorOptions      = 0x1;
 
-const QByteArray kPrefixPublicKey = "pkhs";
-const QByteArray kPrefixPublicKeySymmetric = "phsk";
-const QByteArray kPrefixPassword = "pswd";
+const QByteArray kPrefixPublicKey               = "pkhs";
+const QByteArray kPrefixPublicKeySymmetric      = "phsk";
+const QByteArray kPrefixPassword                = "pswd";
 const QByteArray kPrefixPasswordConfigureClient = "pwcc";
-const QByteArray kPrefixPlain = "plnd";
-const QByteArray kPrefixMultipart = "mphd";
-const QByteArray kPrefixCustomHeader = "cmhd";
+const QByteArray kPrefixPlain                   = "plnd";
+const QByteArray kPrefixMultipart               = "mphd";
+const QByteArray kPrefixCustomHeader            = "cmhd";
 
 QByteArray readPrefix(const QByteArray &data) {
   return data.left(kSebPrefixLength);
