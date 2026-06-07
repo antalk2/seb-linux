@@ -70,14 +70,7 @@ WindowListControl::WindowListControl(SebSession &session, QWidget *parent)
 
 bool WindowListControl::eventFilter( QObject *watched, QEvent *event ) {
 
-  if (watched == button_) {
-    if ( event->type() == QEvent::Enter ) {
-      hideTimer_ ->stop();
-      showPopupIfNeeded();
-    } else if ( event->type() == QEvent::Leave ) {
-      hideTimer_ ->start();
-    }
-  } else if ( watched == windowListpopup_ ) {
+if ( watched == windowListpopup_ ) {
     if (event->type() == QEvent::Enter) {
       hideTimer_ ->stop();
     } else if (event->type() == QEvent::Leave) {
@@ -94,25 +87,20 @@ void WindowListControl::handleClicked()
     if (windows.isEmpty()) {
         return;
     }
-    if (windows.size() == 1) {
-        session_.activateWindow(windows.first());
-        return;
-    }
-
     windowListpopup_  ->setWindows(windows);
     button_ ->setHasPopupOpen(true);
-    windowListpopup_  ->showAbove(button_);
+    windowListpopup_  ->showAbove( button_ , -1 );
 }
 
 void WindowListControl::showPopupIfNeeded()
 {
     const QList<BrowserWindow *> windows = session_.browserWindows();
-    if (windows.size() <= 1) {
+    if (windows.size() < 1) {
         return;
     }
     windowListpopup_ ->setWindows(windows);
     button_ ->setHasPopupOpen(true);
-    windowListpopup_ ->showAbove(button_);
+    windowListpopup_ ->showAbove( button_ , -1);
 }
 
 void WindowListControl::hidePopupIfInactive()
