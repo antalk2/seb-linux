@@ -98,8 +98,11 @@ const QByteArray kPrefixCustomHeader            = "cmhd";
  *  
  */
 std::vector<QByteArray> rncryptorPasswordByteCandidates(
-    const QString &password, unsigned char version) {
-  const QByteArray passwordBytes = password.toUtf8();
+    const QString& password
+  , unsigned char  version
+)
+{
+  const QByteArray        passwordBytes = password.toUtf8();
   std::vector<QByteArray> candidates;
 
   if (version == kSebRncryptorVersion2 &&
