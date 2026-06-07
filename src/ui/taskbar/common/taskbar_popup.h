@@ -15,7 +15,10 @@ class TaskbarPopup : public QFrame
 public:
     explicit TaskbarPopup(QWidget *parent = nullptr);
 
-    void showAbove(QWidget *anchor);
+  /*
+   * side : 0 -> center horizontally, negative -> align left edges , positive -> align right edges
+   */
+  void showAbove(QWidget *anchor, int side=0);
 
 signals:
     void popupHidden();

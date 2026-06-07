@@ -8,21 +8,30 @@
 
 namespace seb::ui::taskbar {
 
-TaskbarPopup::TaskbarPopup(QWidget *parent)
+  TaskbarPopup::TaskbarPopup(QWidget *parent )
     : QFrame(parent, Qt::Popup | Qt::FramelessWindowHint)
 {
     setAttribute(Qt::WA_DeleteOnClose, false);
     setStyleSheet(popupStyleSheet());
 }
 
-void TaskbarPopup::showAbove(QWidget *anchor)
+ 
+void TaskbarPopup::showAbove(QWidget *anchor, int side)
 {
     if (!anchor) {
         return;
     }
 
     adjustSize();
-    const QPoint global = anchor->mapToGlobal(QPoint((anchor->width() - width()) / 2, -height() - kPopupTopMargin));
+
+    int xpos =  anchor->width()/2 - width()/2;
+    if ( side < 0 ){
+      xpos = 0;
+    } else if ( side > 0 ){
+      xpos = anchor->width() - width();
+    }
+    int ypos =  -height() - kPopupTopMargin ;
+    const QPoint global = anchor->mapToGlobal( QPoint( xpos, ypos ) );
     move(global);
     show();
     raise();
