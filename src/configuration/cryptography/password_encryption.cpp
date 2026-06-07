@@ -20,11 +20,14 @@ constexpr int kHmacSize = 32;
 contracts::LoadStatus PasswordEncryption::decrypt(const QByteArray &data,
                                                   const QString &password,
                                                   QByteArray &decrypted) const {
-  if (password.isNull())
+  if (password.isNull()) {
     return contracts::LoadStatus::PasswordNeeded;
-  if (data.size() < (2 + 2 * kSaltSize + kIvSize + kHmacSize))
-    return contracts::LoadStatus::InvalidData;
+  }
 
+  if (data.size() < (2 + 2 * kSaltSize + kIvSize + kHmacSize)) {
+    return contracts::LoadStatus::InvalidData;
+  }
+  
   const char *ptr = data.constData();
   if (static_cast<unsigned char>(ptr[0]) != kVersion ||
       static_cast<unsigned char>(ptr[1]) != kOptions)
