@@ -1,0 +1,1094 @@
+= Structured JSON settings
+:toc:
+:toclevels: 6
+:title: Structured JSON settings 
+:sectids:
+
+
+
+* JSON format based on `applyStructuredSettings()`
+* They are parsed. But are they used?
+
+== The top level
+
+The top level is a dictionary with these keys:
+
+top :  {
+   xref:#applications["applications"],
+   xref:#browser["browser"],
+   xref:#security["security"],
+   xref:#taskbar["taskbar"]
+   }
+
+* cxx-type: `SebSettings`
+
+
+[#applications]
+== applications
+
+`"applications"` : {
+    xref:#applications-whitelist["whitelist"],
+    xref:#applications-blacklist["blacklist"]
+}
+
+
+* cxx-type: `ApplicationSettings`  cxx-loc: `SebSettings.applications`
+
+[#applications-whitelist]
+== applications / whitelist
+json-type: list of zero-or-more dicts +
+cxx-type: `QList<WhitelistApplicationSettings>` +
+cxx-loc:   `ApplicationSettings.whitelist` +
+seb-linux-status: Seems to work
+
+WhitelistApplicationSettings ::
+Purpose :::: Defines an application which is whitelisted, i.e. allowed to
+run during a session.
+
+[source, JSON]
+--
+# SebSettings
+{
+  # ApplicationSettings
+  applications = {
+      whitelist = [
+          # WhitelistApplicationSettings
+          {
+             allowCustomPath, # bool
+             allowRunning,    # bool
+             autoStart,       # bool
+             autoTerminate,   # bool
+             #
+             description,     # string
+             displayName,     # string
+             executableName,  # string
+             executablePath,  # string
+             originalName,    # string
+             showInShell,     # bool
+             signature,       # string
+             identifier,      # string
+             ## 
+             arguments = [ strings ],
+          } # repeated zero or more times
+      ]
+   }
+}
+--
+
+
+[%header,cols="2,8,2,8,5,20"]
+|===
+| json | name
+| cxx  | name
+| seb-linux status
+| purpose
+
+| bool | allowCustomPath
+| bool | allowCustomPath
+| unused
+| Determines whether
+  the user may choose a custom path
+  if the main executable cannot be found under "executablePath"
+
+
+
+| bool | allowRunning
+| bool | allowRunning
+| used
+| Determines whether the application may already be running when
+  initializing a session. If `true`, "autoTerminate"
+  will be ignored.
+
+| [string] | arguments
+| QStringList | arguments
+| 
+| The list of arguments to be used when starting the application.
+
+
+| bool | autoStart
+| bool | autoStart
+| used, works
+| Start the application? +
+  Determines whether the application will be
+  automatically started when initializing a session.
+
+
+| bool | autoTerminate
+| bool | autoTerminate
+| used, works if autostarted
+| Stop the (autostarted) application on quit? +
+  Specifies whether the application may be
+  automatically terminated when starting a session. +
+  Is ignored if "allowRunning" is set.
+
+| string | description
+| QString | description
+| 
+| Provides further information about the application.
+
+
+| string  | displayName
+| QString | displayName
+|
+| The display name to be used for the application (e.g. in the shell).
+
+| string  | executableName
+| QString | executableName
+|
+| The file name of the main executable of the application.
+
+| string  | executablePath
+| QString | executablePath
+|
+| The path where the main executable of the application is located.
+
+| string  | originalName
+| QString | originalName
+| unused
+| The original file name of the main executable of the application, if available.
+
+| bool |  showInShell
+| bool |  showInShell
+| (used)
+| Show in Taskbar. +
+  Determines whether the user will be able to access the application via the shell.
+
+| string | signature
+| QString | signature
+| (unused)
+| The signature of the main executable of the application, if available.
+
+| string  | identifier
+| QString | id
+| 
+| Unique identifier to be used to identify the application during runtime. +
+  win: Guid Id; +
+  Default: ensureApplicationId(application, executableName)
+
+|===
+
+[#applications-blacklist]
+== applications / blacklist
+
+json-type: list of zero-or-more dicts +
+cxx-type: `QList<BlacklistApplicationSettings>` +
+cxx-loc: `ApplicationSettings.blacklist` +
+seb-linux-status: Does not work. Maybe it does, should test without `--dev-bypass`
+
+2026-06-07: added blacklist-checking (git:6d8621b "check blacklist in SecurityService, Quit on match")
+- 
+
+QList<BlacklistApplicationSettings ::
+Purpose :::: Defines an application which is blacklisted, i.e. not allowed to run during a session.
+
+[source, JSON]
+--
+# SebSettings
+{
+  # ApplicationSettings
+  applications = {
+      blacklist = [
+          # BlacklistApplicationSettings
+          {
+             autoTerminate  # bool,   autoTerminate
+             executableName # string, executableName
+             originalName   # string, originalName
+          }  # repeated zero or more times
+      ]
+  }
+}
+--
+
+
+[%header,cols="2,8,2,8,5,20"]
+|===
+| json | name
+| cxx  | name
+| seb-linux status
+| purpose
+
+
+| bool | autoTerminate
+| bool | autoTerminate
+|
+| Specifies whether the application may be automatically terminated when starting a session.
+
+| string | executableName
+| QString | executableName
+|
+| The name of the main executable of the application.
+
+| string  | originalName
+| QString | originalName
+|
+| The original file name of the main executable of the application, if available.
+
+|===
+
+
+[#browser]
+== browser
+
+`"browser"` : {
+    xref:#browser-direct-entries[direct entries],
+    xref:#browser-mainWindow["mainWindow"],
+    xref:#browser-additionalWindow["additionalWindow"],
+    xref:#browser-filter["filter"],
+    xref:#browser-proxy["proxy"]
+}
+
+[#browser-direct-entries]
+== browser direct entries
+
+[source, JSON]
+--
+# SebSettings
+{
+  # BrowserSettings
+  browser = {
+     startUrl,
+     startUrlQuery
+     useQueryParameter,
+
+     useStartUrlAsHomeUrl,
+     homeUrl,
+     homeNavigationMessage,
+     homeNavigationRequiresPassword,
+
+     quitUrl,
+     confirmQuitUrl,
+     resetOnQuitUrl,
+
+     configurationKey,
+     customBrowserExamKey,
+     
+     sendBrowserExamKey,
+     sendConfigurationKey,
+     browserExamKeySalt,
+
+
+     useCustomUserAgent,
+     customUserAgent,
+     userAgentSuffix,
+
+     allowDownloads,
+     downloadDirectory,
+     allowCustomDownAndUploadLocation,
+     allowConfigurationDownloads,
+     useTemporaryDownAndUploadDirectory,
+
+     allowFind,
+     allowPageZoom,
+     allowPdfReader,
+     allowPdfReaderToolbar,
+     allowPrint,
+     allowSpellChecking,
+     
+     deleteCacheOnShutdown,
+     deleteCookiesOnShutdown,
+     deleteCookiesOnStartup,
+     
+     enableBrowser,
+     showFileSystemElementPath,
+     useIsolatedClipboard,
+     #
+     #
+     popupPolicy
+}
+}
+--
+
+[%header,cols="2,8,2,8,5"]
+|===
+| json | name
+| cxx  | name
+| seb-linux status
+
+
+5+| *startUrl*
+
+| string  | startUrl
+| QString | startUrl
+| used, works
+
+|
+4+| Note:  final slash is not seen by the URL filters.
+
+
+| string  | startUrlQuery
+| QString | startUrlQuery
+| used
+
+|
+4+| Ex: `"?name=ferret&color=purple"` +
+    Used in QUrl SebSession::initialUrl(). +
+    Used on startUrl. +
+    Only used if useQueryParameter=true
+
+| bool | useQueryParameter
+| bool | useQueryParameter
+| used
+ 
+
+5+| *homeUrl*
+
+| string | homeUrl
+| string | homeUrl
+| (used)
+
+
+|
+4+|   In BrowserWindow::shouldAllowNavigation()
+
+| bool | useStartUrlAsHomeUrl
+| bool | useStartUrlAsHomeUrl
+| used
+
+
+|
+4+| Make homeUrl default to startUrl. +
+    Used in void finalizeSettings(SebSettings &settings)
+
+| string  | homeNavigationMessage
+| QString | homeNavigationMessage
+|
+
+
+|
+4+| (linked to toolbar Home button, invisible)
+
+| bool | homeNavigationRequiresPassword
+| bool | homeNavigationRequiresPassword
+|
+
+
+|
+4+| (on toolbar Home button)
+
+5+| *Quit*
+
+| string  | quitUrl
+| QString | quitUrl
+| (used)
+
+
+|
+4+| Clicking on a link to this url requests Quit.
+
+| bool | confirmQuitUrl
+| bool | confirmQuitUrl
+| 
+
+| bool | resetOnQuitUrl
+| bool | resetOnQuitUrl
+|
+
+
+|
+4+| Go to homeUrl on quit (instead of quitting)
+
+5+| *Keys*
+
+| string  | configurationKey
+| QString |configurationKey
+|
+
+
+|
+4+| KeyGenerator::calculateConfigurationKeyHash()
+
+
+
+| string  | customBrowserExamKey
+| QString | customBrowserExamKey
+|
+
+
+|
+4+|  KeyGenerator::calculateBrowserExamKeyHash() +
+   KeyGenerator::computeBrowserExamKey()
+
+
+
+| bool | sendBrowserExamKey
+| bool | sendBrowserExamKey
+|
+ 
+
+| bool | sendConfigurationKey
+| bool | sendConfigurationKey
+|
+ 
+
+| string | browserExamKeySalt
+| bytes  | browserExamKeySalt
+|
+
+
+|
+4+| readBytes(browser.value("browserExamKeySalt")
+
+
+
+6+| *UserAgent*
+
+| bool | useCustomUserAgent
+| bool | useCustomUserAgent
+|
+ 
+
+| string  | customUserAgent
+| QString | customUserAgent
+|
+
+
+| string | userAgentSuffix
+| QString | userAgentSuffix
+|
+
+
+5+|
+      { useCustomUserAgent:true, customUserAgent:"bocika", userAgentSuffix:"// HiThere!" } +
+      yields: "bocika SEB/3.10.1 // HiThere!"
+5+|
+ { useCustomUserAgent:**false**, customUserAgent:"bocika", userAgentSuffix:"// HiThere!" } +
+ yields: "Mozilla/5.0 (Windows NT 10.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 SEB/3.10.1 // HiThere!" +
+ Uses userAgentSuffix, ignores customUserAgent.
+5+|
+ Note: "SEB/3.10.1" is included in both.
+
+5+| **Downloads and uploads**
+
+| bool | allowDownloads
+| bool | allowDownloads
+|
+
+
+| string  | downloadDirectory
+| QString | downloadDirectory
+|
+
+
+| bool | allowCustomDownAndUploadLocation
+| bool | allowCustomDownAndUploadLocation
+|
+
+
+|
+5+| Ask user for path via QFileDialog::getSaveFileName()
+
+| bool | allowConfigurationDownloads
+| bool | allowConfigurationDownloads
+|
+
+
+|
+5+|
+SebSession::handleDownloadRequested() +
+  Is downloading "*.seb" files allowed? +
+  Even if allowed, .seb is handled by "openSebResource(url, QApplication::activeWindow());", 
+                                        and not as a normal file download.
+
+
+| bool | allowUploads
+| bool | allowUploads
+| unused
+ 
+
+| bool | useTemporaryDownAndUploadDirectory
+| bool | useTemporaryDownAndUploadDirectory
+| used
+
+
+|
+4+| used in SebSession::SebSession()
+
+
+5+| **Keyboard and similar**
+
+| bool | allowFind
+| bool | allowFind
+| used 
+
+
+|
+4+| (Ctrl-F) Search in page
+
+| bool | allowPageZoom
+| bool | allowPageZoom
+|
+
+
+| bool | allowPdfReader
+| bool | allowPdfReader
+|
+
+
+| bool | allowPdfReaderToolbar
+| bool | allowPdfReaderToolbar
+|
+
+
+| bool | allowPrint
+| bool | allowPrint
+|
+
+
+| bool | allowSpellChecking
+| bool | allowSpellChecking
+|
+
+
+6+| **Cleanup**
+
+| bool | deleteCacheOnShutdown
+| bool | deleteCacheOnShutdown
+|
+
+
+| bool | deleteCookiesOnShutdown
+| bool | deleteCookiesOnShutdown
+|
+
+
+| bool | deleteCookiesOnStartup
+| bool | deleteCookiesOnStartupn
+|
+
+
+5+| *Misc*
+
+| bool | enableBrowser
+| bool | enableBrowser
+|
+
+
+|
+4+| Do not run the browser if false. +
+    Useful when running something else via WhitelistApplicationSettings
+
+
+| bool | showFileSystemElementPath
+| bool | showFileSystemElementPath
+|
+
+
+| bool | useIsolatedClipboard
+| bool | useIsolatedClipboard
+|
+
+
+| string      | popupPolicy
+| PopupPolicy | popupPolicy
+|
+
+
+|
+4+| parsePopupPolicyText(readString(browser, "popupPolicy") +
+         "allow"                  -> PopupPolicy::Allow     +
+         "allowsamehost"          -> PopupPolicy::AllowSameHost +
+         "allowsamehostandwindow" -> PopupPolicy::AllowSameHostAndWindow +
+         "allowsamewindow"        -> PopupPolicy::AllowSameWindow +
+         "block"                  -> PopupPolicy::Block
+
+|===
+
+
+
+[#browser-mainWindow]
+== browser / mainWindow
+
+[source,cxx]
+--
+applyStructuredWindowSettings(
+      settings.browser.mainWindow
+    , browser.value("mainWindow").toMap()
+);
+
+applyStructuredWindowSettings(
+      settings.browser.additionalWindow
+    , browser.value("additionalWindow").toMap()
+);
+--
+
+[source, JSON]
+--
+# SebSettings
+{
+  # BrowserSettings
+  browser = {
+
+     mainWindow = {
+        allowAddressBar,
+        allowBackwardNavigation,
+        allowForwardNavigation,
+        allowDeveloperConsole,
+        allowMinimize,
+        allowReloading,
+        alwaysOnTop,
+        frameless,
+        fullScreenMode,
+        showHomeButton,
+        showReloadButton,
+        showReloadWarning,
+        showToolbar,
+
+        absoluteWidth,
+        relativeWidth,
+        absoluteHeight,
+        relativeHeight,
+
+        position # "left" "right" "center"
+   }
+}
+--
+
+
+
+Settings for the main browser window.
+
+[%header,cols="2,8,2,8,5"]
+|===
+| json | name
+| cxx  | name
+| seb-linux status
+
+| bool | allowAddressBar
+| bool | allowAddressBar
+|
+
+| bool | allowBackwardNavigation
+| bool | allowBackwardNavigation
+|
+
+| bool | allowForwardNavigation
+| bool | allowForwardNavigation
+|
+
+| bool | allowDeveloperConsole 
+| bool | allowDeveloperConsole 
+| F12
+
+
+| bool | allowMinimize
+| bool | allowMinimize
+|
+
+| bool | allowReloading
+| bool | allowReloading
+|
+
+| bool | alwaysOnTop
+| bool | alwaysOnTop
+|
+
+| bool | frameless
+| bool | frameless
+|
+
+| bool | fullScreenMode
+| bool | fullScreenMode
+|
+
+| bool | showHomeButton
+| bool | showHomeButton
+|
+
+| bool | showReloadButton
+| bool | showReloadButton
+|
+
+| bool | showReloadWarning
+| bool | showReloadWarning
+|
+
+| bool | showToolbar
+| bool | showToolbar
+|
+
+| int | absoluteWidth
+| int | absoluteWidth
+|
+
+| int | relativeWidth
+| int | relativeWidth
+|
+
+| int | absoluteHeight
+| int | absoluteHeight
+|
+
+| int | relativeHeight
+| int | relativeHeight
+|
+
+|
+4+| When reading a positive (absolute\|relative)(Width\|Height), its
+    (relative\|absolute) pair is set non-positive.
+
+| string | position
+| WindowPosition | position
+|
+
+| 4+|
+target.position = parseWindowPositionText(readString(data, "position"), target.position); +
+"left"               -> WindowPosition::Left;   +
+"center" or "centre" -> WindowPosition::Center; +
+"right"              -> WindowPosition::Right; 
+
+|===
+
+[#browser-additionalWindow]
+== browser / additionalWindow
+
+* Same fields as for browser / mainWindow.
+
+[source, JSON]
+--
+# SebSettings
+{
+  # BrowserSettings
+  browser = {
+     additionalWindow = {
+        allowAddressBar
+        allowBackwardNavigation
+        allowForwardNavigation
+        allowDeveloperConsole
+        allowMinimize
+        allowReloading
+        alwaysOnTop
+        frameless
+        fullScreenMode
+        showHomeButton
+        showReloadButton
+        showReloadWarning
+        showToolbar
+
+        absoluteWidth
+        relativeWidth
+        
+        absoluteHeight
+        relativeHeight
+        
+        position
+        #  "left"               -> WindowPosition::Left;
+        #  "center" || "centre" -> WindowPosition::Center;
+        #  "right"              -> WindowPosition::Right;
+    }
+  }
+}
+--
+
+[#browser-filter]
+== browser / filter
+
+[source, cpp]
+--
+applyStructuredFilter(
+     settings.browser.filter
+   , browser.value("filter").toMap()
+);
+--
+
+
+
+[source, JSON]
+--
+# SebSettings
+{
+  # BrowserSettings
+  browser = {
+     filter = {
+        processMainRequests,
+        processContentRequests,
+        rules = [
+             # FilterRuleSettings rule;
+             {
+                 active,
+                 expression,
+                 result,
+                 type
+             } # repeat zero or more
+        ]
+     }
+   }
+}
+--
+
+cxx: `FilterSettings filter;`
+
+Processing: "block" rules are processed before "allow" rules.  First
+      match decides. 
+
+This matches
+link:https://safeexambrowser.org/windows/win_usermanual_en.html#NetworkPaneFilterSection[]
+
+[quote]
+--             
+The URL filter always first processes rules with the
+block action, if one matches, then the according http
+request is discarded.
+
+If no block rule matched, then rules with an allow
+action are processed. If one matches, then the request
+is loaded.
+
+If no allow rule matched, then the request is
+discarded.
+
+...
+
+SEB automatically creates an allow filter rule for the
+exact address of the Start URL defined in these
+settings.
+
+This means that if your Start URL is `example.com`, then
+all pages and resources in the domain `example.com` will
+be allowed.
+
+If your Start URL is
+`example.com/exams/engineering2015-1.html`, then only the
+pages with this exact address will be allowed. In this
+case you have to manually add an allow filter rule so
+all pages and resources your exam uses will be allowed
+(like `example.com/exams/*`).
+             
+--
+
+
+* Q: How to block everything except `"http://host/path/*"` ?
+* A: If startUrl is `"http://host/path"`, then no explicit filter
+     rules are needed. Note no slash at the end.
+** Otherwise: allow simplified `"http://host/path/*"` and `"http://host/path"`
+(to catch  `"http://host/path/"` after removal of the final slash).
+** All else is implicitly blocked.
+
+// -
+
+* https://deepwiki.com/SafeExamBrowser/seb-win-refactoring/5.1-request-handling-and-filtering
+* https://github.com/SafeExamBrowser/seb-win-refactoring/discussions/
+
+
+[%header,cols="2,8,2,8,5"]
+|===
+| json | name
+| cxx  | name
+| seb-linux status
+
+| bool | processMainRequests
+| bool | processMainRequests
+|
+
+| bool | processContentRequests
+| bool | processContentRequests
+|
+
+| [{}]                      | rules
+| QList<FilterRuleSettings> | rules
+|
+
+5+|  *In `FilterRuleSettings`*
+
+
+| bool | active
+| *NA* | *NA*
+|
+
+| 4+| Defaults to true. +
+Not Stored. +
+If false, the rule is not added to the parse result. +
+
+
+| string         | type
+| FilterRuleType | type
+|
+
+| 4+a| 
+
+* `"regex"      -> FilterRuleType::Regex;`
+* `"simplified" -> FilterRuleType::Simplified;`
+
+Used in `RequestFilter::RequestFilter().`
+
+`"simplified"` is compiled to regexp by _escaping_ and replacements:
+
+*  `+++"*"+++` -> `+++".*"+++` ((escaped) star to dot-star)
+*  `"?"` -> `"."` ((escaped) question mark to dot)
+* AddPrefix `"^"`
+* AddSuffix `"$"`
+
+Both "regex" and "simplified" are case insensitive.
+
+| string  | expression
+| QString | expression
+|
+
+| 4+a|
+* For simplified, e.g.:  `+++"http://example.com/path/*"+++`. Can be `+++"*://*/*"+++`
+* Or it can be a regular expression
+
+| string       | result
+| FilterResult | result
+|
+
+| 4+| 
+                 `"allow" -> FilterResult::Allow;` +
+                 `"block" -> FilterResult::Block;`
+
+
+
+|===
+
+
+[#browser-proxy]
+== browser / proxy
+
+
+[source, JSON]
+--
+# SebSettings
+{
+  # BrowserSettings
+  browser = {
+     # ProxySettings
+     proxy = {
+         autoConfigure,
+         autoDetect,
+         autoConfigureUrl,
+         policy,
+         #    
+         bypassList = [
+             strings # hostnames
+         ]
+         proxies = [
+            # ProxyConfiguration proxy
+            {
+               host,
+               password,
+               port,
+               protocol,
+               requiresAuthentication,
+               username
+            }
+         ]
+     }
+  }
+}
+--
+
+* `applyStructuredProxy( settings.browser.proxy,  browser.value("proxy").toMap());`
+* `void applyStructuredProxy(ProxySettings &target, const QVariantMap &data)`
+
+[%header,cols="2,8,2,8,5"]
+|===
+| json | name
+| cxx  | name
+| seb-linux status
+
+| bool | autoConfigure
+| bool | autoConfigure
+|
+
+| bool | autoDetect
+| bool | autoDetect
+|
+
+
+
+| string  | autoConfigureUrl
+| QString | autoConfigureUrl
+|
+
+
+| string      | policy
+| ProxyPolicy | policy
+|
+
+| 4+a|
+`"custom" -> ProxyPolicy::Custom;` +
+`"system" -> ProxyPolicy::System;`
+
+
+| [string]    | bypassList
+| QStringList | bypassList
+| (hostnames)
+
+
+
+| [{}]                      | proxies
+| QList<ProxyConfiguration> | proxies
+| 
+
+
+5+a| In `ProxyConfiguration`
+
+| string  | host
+| QString | host
+| (entry ignored if host is empty)
+
+| string | password
+| QString | password
+|
+
+| int | port
+| int | port
+| (entry ignored if port <= 0)
+
+| string        | protocol
+| ProxyProtocol | protocol
+|
+
+| 4+a|
+`"ftp"   -> ProxyProtocol::Ftp;`   +
+`"http"  -> ProxyProtocol::Http;`  +
+`"https" -> ProxyProtocol::Https;` +
+`"socks" -> ProxyProtocol::Socks;`
+
+| bool | requiresAuthentication
+| bool | requiresAuthentication
+| Default: `false`
+
+| string  | username
+| QString | username
+|
+
+|===
+
+[#security]
+== security
+
+[source, JSON]
+--
+# SebSettings
+{
+  # SecuritySettings
+  security = {
+        allowTermination # bool,   settings.security.allowTermination
+        quitPasswordHash # string, settings.security.quitPasswordHash
+  }
+}
+--
+
+
+[#taskbar]
+== taskbar
+
+
+[source, JSON]
+--
+# SebSettings
+{
+  # TaskbarSettings
+  taskbar = {
+        enableTaskbar              # bool, settings.taskbar.enableTaskbar
+        showApplicationInfo        # bool, settings.taskbar.showApplicationInfo
+        showApplicationLog         # bool, settings.taskbar.showApplicationLog
+        showAudio                  # bool, settings.taskbar.showAudio
+        showClock                  # bool, settings.taskbar.showClock
+        showKeyboardLayout         # bool, settings.taskbar.showKeyboardLayout
+        showNetwork                # bool, settings.taskbar.showNetwork
+        showVerificator            # bool, settings.taskbar.showVerificator
+        showProctoringNotification # bool, settings.taskbar.showProctoringNotification
+  }
+}
+--

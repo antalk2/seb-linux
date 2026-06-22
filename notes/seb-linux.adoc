@@ -1,0 +1,225 @@
+:title: seb-linux
+:toc:
+:!sectids:
+
+= seb-linux
+
+[#developer-links]
+== Links
+
+
+* Developer Overview https://safeexambrowser.org/developer/overview.html
+* Demo exam portal https://safeexambrowser.org/exams/
+*   https://deepwiki.com/SafeExamBrowser/seb-win-refactoring/5.1-request-handling-and-filtering
+
+
+[#seb-linux-command-line]
+== Command line
+
+
+....
+Usage: ./build/bin/safe-exam-browser [options] resource
+Safe Exam Browser for Linux with .seb file support, exam link handling, and Qt WebEngine or WebKitGTK browser backends.
+
+Options:
+  -h, --help           Displays help on commandline options.
+  --help-all           Displays help including Qt specific options.
+  -v, --version        Displays version information.
+  -c, --config <file>  Load settings from a JSON file or an unencrypted XML
+                       plist .seb file.
+  -u, --url <url>      Override the configured start URL.
+  --show-toolbar       Show the browser toolbar.
+  --allow-address-bar  Enable the address bar.
+  --allow-navigation   Enable back and forward navigation in the main window.
+  --allow-reload       Enable reload in the main window.
+  --allow-devtools     Enable the developer tools shortcut (F12).
+  --windowed           Force the main window to stay windowed.
+  --fullscreen         Force the main window to be fullscreen.
+  --always-on-top      Keep the main window above other windows.
+  --disable-minimize   Prevent minimizing the main exam window.
+  --disable-quit       Disable manual termination even if the configuration
+                       allows it.
+  --anti-cheat         Enable anticheat mode.
+  --menu-lockdown      Enable the protected start-menu lockdown mode.
+
+Arguments:
+  resource             Open a local .seb file, remote .seb URL, or seb:// /
+                       sebs:// resource.
+....
+
+If compiled with `-DQT_DEBUG` or `-DSEB_DEV_BYPASS_OPTION` then also:
+
+....
+  --dev-bypass         Skip strict lockdowns for development purposes.
+....
+
+=== --version
+
+Prints `"Safe Exam Browser 0.1.0"`
+
+
+=== --config <configPath> and <resource>
+
+configPath and resource seems to be used for the same purpose in main.cpp
+
+There are two locations where we load one of these:
+
+applyEarlyEnvironment ::
+* Can only load from file, not URL.
+* Loaded settings are used for proxy setup:
+   `seb::browser::applyWebEngineEnvironment( seb_settings );`
+** This may be required if SEB_HAS_QTWEBENGINE is true
+** Sets: env var "QTWEBENGINE_CHROMIUM_FLAGS"
+** Presumably affects QrWebEngine https://doc.qt.io/qt-6/qtwebengine-index.html
+* At this point, we do not yet have a `QApplication`
+
+Load link:#settings[settings] from a JSON file or an unencrypted XML plist .seb file.
+
+main ::
+* Has QApplication, thus  can ask for password for decoding.
+
+=== Idea
+
+* Assume
+** SEB is started at X11, and
+** can access <resource> without (modified proxy settings)
+
+// -
+
+1. Start an initial QApplication, so that we can ask for the password if necessary.
+2. Based on the command line and the settings loaded, we can decide if switch-VT is needed.
+3. Execute child with options telling it our decision on switch-VT and pass on SEB_PASSWORD
+** If switch-VT is needed, use pkexec on the child.
+
+
+* How about security? +
+   Does that need root permissions?  +
+   Does blacklist attempt to stop processes the user does not own?
+** No, currently it does not. It only reads world-readable stuff,
+    mostly from under /proc. Kills nothing, just quits SEB.
+** security does not care about blacklist in the settings. +
+    It has its own list of forbidden name-fragments.
+
+** (Maybe we should have a separate executable running as root and keep
+    the main body non-privileged.)
+
+
+[#settings]
+== Settings
+
+* Setings may come from a `.seb` file, an URL to a `.seb` file, a
+  `seb://\*` or `sebs://*` URL.
+* They may be encrypted, and gzipped.
+* The unencrypted format can be
+** a plist (Property List) XML file,
+** an old style (aka "raw") JSON,
+** or a "structured" (hierachical) JSON.
+
+=== Finding and decoding the settings
+
+link:https://github.com/Jvr2022/seb-linux/blob/0559afd3313a2cddc5875fe37819cd7a321268bf/src/main.cpp#L119[`+++QString
+findConfigPath(int argc, char *argv[])+++`] walks the command line arguments.
+
+* If it finds  `-c` or `--config`  at `argv[i]` then returns `argv[i+1]` (if available).
+* If `argv[i]` does not start with `-`, then it returns `argv[i]`
+* Otherwise returns empty `QString`
+
+
+* Default settings are created in
+link:https://github.com/Jvr2022/seb-linux/blob/0559afd3313a2cddc5875fe37819cd7a321268bf/src/settings/settings_defaults.cpp#L16[`SebSettings createDefaultSettings()`]
+
+* Parsing settings from an external source is
+  link:https://github.com/Jvr2022/seb-linux/blob/0559afd3313a2cddc5875fe37819cd7a321268bf/src/seb_settings.cpp#L33[loadSettingsFromData]
+
+** gunzip if necessary
+** If does not look like XML or JSON,
+link:https://github.com/Jvr2022/seb-linux/blob/0559afd3313a2cddc5875fe37819cd7a321268bf/src/settings/password_container.cpp#L238[unwrapSebContainer]
+*** Does it start with `"mphd"` (`kPrefixMultipart`)?
+**** Or `kPrefixCustomHeader="cmhd"`?
+**** Or `kPrefixPlain="plnd"` ?
+**** Or `kPrefixPassword="pswd"` or `kPrefixPasswordConfigureClient="pwcc"` ?
+***** Needs password. Ask  for password and decrypt. Gunzip decrypted if needed.
+**** Or `kPrefixPublicKey="pkhs"` or `kPrefixPublicKeySymmetric="phsk"` ? Decrypt the rest.
+** (back in loadSettingsFromData).
+*** If looks like JSON, link:https://github.com/Jvr2022/seb-linux/blob/0559afd3313a2cddc5875fe37819cd7a321268bf/src/settings/settings_parsing.cpp#L169[parseJson]
+*** If looks like XML, link:https://github.com/Jvr2022/seb-linux/blob/0559afd3313a2cddc5875fe37819cd7a321268bf/src/settings/settings_parsing.cpp#L138[parsePlist]
+*** In either case, we get a `QVariantMap` which may be "structured" or "raw" (flat).
+**** These are distinguished by `https://github.com/Jvr2022/seb-linux/blob/0559afd3313a2cddc5875fe37819cd7a321268bf/src/settings/settings_parsing.cpp#L138[hasStructuredSections()]`
+*** Call link:https://github.com/Jvr2022/seb-linux/blob/0559afd3313a2cddc5875fe37819cd7a321268bf/src/settings/settings_mapping.cpp#L350[`applyStructuredSettings()`] or link:https://github.com/Jvr2022/seb-linux/blob/0559afd3313a2cddc5875fe37819cd7a321268bf/src/settings/settings_mapping.cpp#L470[`applyRawSettings()`] accordingly.
+
+=== Structured JSON
+
+==== A minimal structured JSON example
+[%collapsible]
+====
+* Minimal example for a JSON file: from
+link:https://github.com/Jvr2022/seb-linux/blob/main/examples/minimal-config.json[`examples/minimal-config.json`]
+....
+{
+  "browser": {
+    "startUrl": "about:blank",
+    "homeUrl": "about:blank",
+    "confirmQuitUrl": true,
+    "quitUrl": "https://example.com/quit",
+    "allowDownloads": false,
+    "allowUploads": false,
+    "sendConfigurationKey": true,
+    "sendBrowserExamKey": true,
+    "browserExamKeySalt": "AQIDBA==",
+    "filter": {
+      "processMainRequests": false,
+      "processContentRequests": true,
+      "rules": [
+        {
+          "expression": "*://tracker.example/*",
+          "result": "block",
+          "type": "simplified"
+        }
+      ]
+    },
+    "mainWindow": {
+      "showToolbar": true,
+      "allowAddressBar": false,
+      "allowReloading": true,
+      "showReloadButton": true,
+      "alwaysOnTop": true,
+      "allowMinimize": false
+    }
+  },
+  "security": {
+    "allowTermination": true
+  }
+}
+....
+====
+
+xref:settings-structured-json.adoc[Details of Structured JSON settings]
+
+
+== Runtime
+
+=== commands used
+
+* command "xdotool" is used in e.g. `ExternalApplicationInstance::refreshWindows()`
+** via `runCommand()`
+* command "nmcli"  in `void NetworkController::refresh()`
+* command "upower" in `void BatteryController::refresh()` 
+* command "wpctl"  in `void AudioController::refresh()`,
+ `void AudioController::setMuted(bool muted)`, `void AudioController::setVolume(int volumePercent)`
+* command "localectl" in `void KeyboardController::refresh()`
+** Maybe "setxkbmap -query" would be better.
+
+=== keys
+
+- "QAction::event: Ambiguous shortcut overload: Ctrl+R"
+
+
+== include paths
+
+qmake uses 4 local include paths (relative to the build directory)
+
+-I../../seb-linux
+-I.
+-I../src
+-I.moc
+

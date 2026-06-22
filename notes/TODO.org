@@ -1,0 +1,79 @@
+
+* Ideas
+
+** Usual requirements
+
+- Browser connection to ExamPage
+  - ExamPage needs assurance that SecurityRestrictions are not broken.
+
+- Limit network access (1) for Browser (2) wget curl (3) others.
+- httpProxy can filter HTTP by full url, but HTTPS only shows host and
+  port, but not the path part of an url.
+- 
+
+** The switch-VT method is very restrictive
+- This is good, if only SEB is allowed to be used.
+- If usage of some other software is required, it is not obvious how
+  the switch-VT method is to be used.
+  - Maybe including a *preconfigured desktop environment* on the new VT
+    could be more flexible.
+    - Might also include *signed versions* of the allowed apps.
+      - Or a fixed version with *known checksum*.
+  - Using a *container*, it might be easier to control access to some
+    resources (USB drive, network proxy)
+    - However, the apps running in the container add to the memory
+      used by the base system. Memory starved systems may fail (or
+      start swapping).
+  - On the other end of the spectrum: *netboot* to a linux environment.
+    - (Something like this may already exist)
+    - Instructions for BYOD may become longish.
+
+
+
+** Security / blacklist
+*** In the process list we might want to identify the user
+- Identify current user.
+- Maybe compile a list of "usual" processes running at a pristine desktop
+  - This depends on the desktop: GNOME, xfce, xubuntu, etc. (And their versions)
+    - For BYOD, this may become a long list.
+    - It is probably more managable for "managed" setups (school owned machines)
+  
+*** Disallow multiple logins
+
+* Already done
+
+** blacklist
+*** Use the blacklist in SecurityService
+
+- https://github.com/antalk2/seb-linux/commit/6d8621b5087772f8d6f200b363b64be60e350803
+  check blacklist in SecurityService, Quit on match
+
+** whitelist
+*** Whitelisted apps in GUI
+
+- https://github.com/antalk2/seb-linux/commit/db23ca6bd2e65cd8dfa0384fe09b8fbabb49bd76
+  Try to find a real icon for whitelist apps
+  
+- https://github.com/antalk2/seb-linux/commit/9b242bee5cd07483fb6227b9dc34fe3af10baf2b
+  provide fixed icon for ExternalApplication::iconPath()
+
+  
+** Window List (The button in the bottom left corner)
+
+
+- WindowListControl show list even with a single entry, only popup on click
+  https://github.com/antalk2/seb-linux/commit/6eeb61a29b2ef01f13112c4ee0d81f3f0ffc3cef
+- showAbove can align edges
+  https://github.com/antalk2/seb-linux/commit/5164c0e2d4494d1f208e6df334ec6fdf3608a8ff
+- label WindowListPopup
+  https://github.com/antalk2/seb-linux/commit/0bd68d4c343ebd9f99ea967274ee816b4c012bde
+  
+**  --config <configPath> and <resource> on the command line
+
+The --config <file> and <resource> on the command line are parsed
+twice. I am trying to make the two parses return the same result.
+
+- Match findConfigPath (findConfigPath_preferConfig) to locating the resource in main()
+  - findConfigPath_preferConfig
+    https://github.com/antalk2/seb-linux/commit/56d946ed0910d3a070463ad099dab20cc7e7b537
+
